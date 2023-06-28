@@ -4,7 +4,8 @@ subtitle: "Feedback on requests and responses"
 controls: true
 format:
   revealjs: 
- #   scrollable: true
+    code-annotations: hover
+#    scrollable: true
     slide-number: true
     chalkboard: 
       buttons: true
@@ -32,30 +33,33 @@ resources:
 -   I want to know all locations from all organizations where data types relevant to my questions are collected 
 ::: 
 
+## /processes/findReferenceFeatures {auto-animate="true"}
 
-## Pretty Code {auto-animate="true"}
+::: {.fragment}
+-   query parameters:
+::: 
 
--   Over 20 syntax highlighting themes available
--   Default theme optimized for accessibility
 
+::: {.fragment}
+-   ?locationType=dam&state=OK
+::: 
 
-```{json}
-#| echo: true
-#| code-copy: true
-#| code-fold: true
-#| code-summary: "json response"
-#| code-line-numbers: "1-3|15|19"
-{
-    "type": "FeatureCollection",
-    "features": [
+::: {.fragment}
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+#| code-line-numbers: "1-3|10|19"
+{ # <1>
+    "type": "FeatureCollection", # <1>
+    "features": [ # <1>
         {
             "type": "Feature",
             "properties": {
                 "description": "Reference feature for USACE National Inventory of Dams: OK10440",
                 "name": "Yonkipin Lake",
                 "subjectof": "https://nid.usace.army.mil/#/dams/system/OK10440/summary",
-                "provider": "https://nid.usace.army.mil",
-                "provider_id": "OK10440",
+                "provider": "https://nid.usace.army.mil", # <2>
+                "provider_id": "OK10440", # <2>
                 "feature_data_source": "https://doi.org/10.5066/P92S9ZX6",
                 "uri": "https://geoconnex.us/ref/dams/1000001",
                 "fid": 1,
@@ -76,10 +80,12 @@ resources:
 }
 ```
 
-
+1. An explanatory annotation
+2. A second annotation (this how we know USACE is the source)
+::: 
 
 ::: footer
-Learn more: [Syntax Highlighting](https://quarto.org/docs/output-formats/html-code.html#highlighting)
+Learn more: [geoconnex.us](https://geoconnex.us)
 :::
 
 ## Code Animations {auto-animate="true"}
