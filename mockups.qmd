@@ -19,32 +19,31 @@ resources:
 
 ## Outline
 
-
 -   User Story - Data Publisher
 -   User Story - Data User
 -   Endpoints, requests, and responses
 
-## User Story - Data Publisher 
-::: {.fragment}
--   "As a water information tool/product developer…
-::: 
+## User Story - Data Publisher
 
-::: {.fragment}
--   I want to know all locations from all organizations where data types relevant to my questions are collected 
-::: 
+::: fragment
+-   "As a water information tool/product developer...
+:::
+
+::: fragment
+-   I want to know all locations from all organizations where data types relevant to my questions are collected
+:::
 
 ## /processes/findReferenceFeatures {auto-animate="true"}
 
-::: {.fragment}
+::: fragment
 -   query parameters:
-::: 
+:::
 
-
-::: {.fragment}
+::: fragment
 -   ?locationType=dam&state=OK
-::: 
+:::
 
-::: {.fragment}
+::: fragment
 ```{r}
 #| eval: FALSE
 #| echo: TRUE
@@ -80,9 +79,9 @@ resources:
 }
 ```
 
-1. An explanatory annotation
-2. A second annotation (this how we know USACE is the source)
-::: 
+1.  An explanatory annotation
+2.  A second annotation (this how we know USACE is the source)
+:::
 
 ::: footer
 Learn more: [geoconnex.us](https://geoconnex.us)
@@ -353,7 +352,7 @@ Learn more: [Auto-Animate](https://quarto.org/docs/presentations/revealjs/advanc
 The next few slides will transition using the `slide` transition
 
 | Transition | Description                                                            |
-|---------------|---------------------------------------------------------|
+|------------------|------------------------------------------------------|
 | `none`     | No transition (default, switch instantly)                              |
 | `fade`     | Cross fade                                                             |
 | `slide`    | Slide horizontally                                                     |
