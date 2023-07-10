@@ -20,17 +20,54 @@ resources:
 ## Outline
 
 -   User Story - Data Publisher
--   User Story - Data User
+-   User Story - Data Analyst/Tool Developer
 -   Endpoints, requests, and responses
 
-## User Story - Data Publisher
+## User Story - Water Data Publisher
+
+::: fragment
+-   "As a water data publisher...
+:::
+
+::: fragment
+-   I want to know all locations from all organizations where data is currently being collected that are near my own monitoring locations
+:::
+
+::: fragment
+-   So that I know whether to submit reference features to geoconnex.us, and so I know which reference features to tag my own data with when I publish it.
+:::
+
+## User Story - Water Data Analyst/Tool Developer
 
 ::: fragment
 -   "As a water information tool/product developer...
 :::
 
 ::: fragment
--   I want to know all locations from all organizations where data types relevant to my questions are collected
+-   I want to know all locations from all organizations where data types relevant to my questions are collected, and where that data can be accessed
+:::
+
+::: fragment
+-   So that I can build my tool using all as much relevant data as possible
+:::
+
+## Top-level Endpoints
+
+::: fragment
+https://api.geoconnex.us
+
+-   Services to discover and filter water datasets by:
+
+    |                                      |                             |
+    |--------------------------------------|-----------------------------|
+    | Space/Geometry                       | Measurement/Modeling Method |
+    | Organization/ data provider          | Temporal resolution         |
+    | Site Type                            | Temporal coverage           |
+    | Parameter/Variable/Observed Property | Feature of Interest         |
+:::
+
+::: fragment
+https://reference.geoconnex.us
 :::
 
 ## /processes/findReferenceFeatures {auto-animate="true"}
@@ -352,7 +389,7 @@ Learn more: [Auto-Animate](https://quarto.org/docs/presentations/revealjs/advanc
 The next few slides will transition using the `slide` transition
 
 | Transition | Description                                                            |
-|------------------|------------------------------------------------------|
+|--------------------|----------------------------------------------------|
 | `none`     | No transition (default, switch instantly)                              |
 | `fade`     | Cross fade                                                             |
 | `slide`    | Slide horizontally                                                     |
