@@ -482,28 +482,31 @@
 </ul>
 </div>
 </section>
-<section id="top-level-endpoints-1" class="slide level2">
+<section id="top-level-endpoints-1" class="slide level2 smaller">
 <h2>Top-level Endpoints</h2>
 <div class="columns">
 <div>
 <p>https://api.geoconnex.us…</p>
 <ul>
-<li class="fragment">/locationTypes <a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a></li>
-<li class="fragment">/catalogingFeatureCollections <a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a></li>
-<li class="fragment">/catalogingFeatures/{catalogingFeatureType} <a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a></li>
-<li class="fragment">/providers <a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a></li>
-<li class="fragment">/observedProperties <a href="#/footnotes" class="footnote-ref" id="fnref5" role="doc-noteref" data-footnote-href="#/fn5" onclick=""><sup>5</sup></a></li>
-<li class="fragment">/methodsTypes <a href="#/footnotes" class="footnote-ref" id="fnref6" role="doc-noteref" data-footnote-href="#/fn6" onclick=""><sup>6</sup></a></li>
-<li class="fragment">/methods <a href="#/footnotes" class="footnote-ref" id="fnref7" role="doc-noteref" data-footnote-href="#/fn7" onclick=""><sup>7</sup></a></li>
-<li class="fragment">/timeSpacing <a href="#/footnotes" class="footnote-ref" id="fnref8" role="doc-noteref" data-footnote-href="#/fn8" onclick=""><sup>8</sup></a></li>
-<li class="fragment">/processes <a href="#/footnotes" class="footnote-ref" id="fnref9" role="doc-noteref" data-footnote-href="#/fn9" onclick=""><sup>9</sup></a></li>
+<li class="fragment">/processes <a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a></li>
+<li class="fragment">/locationTypes <a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a></li>
+<li class="fragment">/catalogingFeatureCollections <a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a></li>
+<li class="fragment">/catalogingFeatures/{catalogingFeatureType} <a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a></li>
+<li class="fragment">/providers <a href="#/footnotes" class="footnote-ref" id="fnref5" role="doc-noteref" data-footnote-href="#/fn5" onclick=""><sup>5</sup></a></li>
+<li class="fragment">/observedProperties <a href="#/footnotes" class="footnote-ref" id="fnref6" role="doc-noteref" data-footnote-href="#/fn6" onclick=""><sup>6</sup></a></li>
+<li class="fragment">/methodsTypes <a href="#/footnotes" class="footnote-ref" id="fnref7" role="doc-noteref" data-footnote-href="#/fn7" onclick=""><sup>7</sup></a></li>
+<li class="fragment">/methods <a href="#/footnotes" class="footnote-ref" id="fnref8" role="doc-noteref" data-footnote-href="#/fn8" onclick=""><sup>8</sup></a></li>
+<li class="fragment">/timeSpacing <a href="#/footnotes" class="footnote-ref" id="fnref9" role="doc-noteref" data-footnote-href="#/fn9" onclick=""><sup>9</sup></a></li>
 </ul>
 </div>
 </div>
 <aside></aside></section>
 <section id="processes" class="slide level2">
 <h2>Processes</h2>
-<p>https://</p>
+<p>Data discovery tools follow the <a href="https://ogcapi.ogc.org/processes">OGC-API Processes</a> standard</p>
+<ul>
+<li>/processes ^[a nested array of process names and descriptions and key words. eg [ { “type”: “process”, “processor”: { “name”: “RiverRunner” }, “title”: “River Runner”, “description”: “A process that takes a set of coordinates in the world, and returns the largest flowpath from it to its terminal flowpoint.”, “keywords”: [ “rivers”, “river-runner”]]</li>
+</ul>
 <p>-find reference features near my features</p>
 <p>-find sites by query parameter</p>
 <p>-find sites that are hydrologically related to a given site URI</p>
@@ -560,11 +563,11 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="1,2,3" data-code-annotation="1">An explanatory annotation</span>
+<span data-code-lines="1,2,3" data-code-cell="annotated-cell-1" data-code-annotation="1">An explanatory annotation</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="10,11" data-code-annotation="2">A second annotation (this how we know USACE is the source)</span>
+<span data-code-lines="10,11" data-code-cell="annotated-cell-1" data-code-annotation="2">A second annotation (this how we know USACE is the source)</span>
 </dd>
 </dl>
 </div>
@@ -1411,8 +1414,8 @@ a_{21}&amp; =b_{21}&amp;
 <p>Include Jupyter widgets and htmlwidgets in your presentations</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-63bc1288cd8a7f195663" style="width:960px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-63bc1288cd8a7f195663">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[-36.852,174.768,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"The birthplace of R",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-36.852,-36.852],"lng":[174.768,174.768]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-473e7dfa7d532f43cccb" style="width:960px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-473e7dfa7d532f43cccb">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[-36.852,174.768,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"The birthplace of R",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-36.852,-36.852],"lng":[174.768,174.768]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="footer">
@@ -1577,15 +1580,15 @@ a_{21}&amp; =b_{21}&amp;
 <section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>a nested json array of types of locations available and their definition for each (e.g.&nbsp;[{“id”:“dam”, “name”:“dam”, “description”: “a structure creating an impounded body of water on a stream”)},{“name”:“stream”, “description”: “a flowing body of water on the surface”}])</p></li>
-<li id="fn2"><p>types of area summary features (e.g.&nbsp;HUC8, catchment, county, state)</p></li>
-<li id="fn3"><p>paginated (limit=x&amp;offset=y) geojson with attributes eg “id”:“https://geoconnex.us/ref/hu02/14”,“name”:“Upper Colorado”</p></li>
-<li id="fn4"><p>nested json array with four elements per object e.g.&nbsp;{“id”: “rise”, “name”: “Reclamation Information Sharing Environment”, “url”:“https://data.usbr.gov”, “parent_organization_url”:“https://usbr.gov”}</p></li>
-<li id="fn5"><p>nested json array with three elements per object e.g.&nbsp;{“id”:“a http uri”,“name”:“Lake/Reservoir Inflow”,“provider”:“usgs”}</p></li>
-<li id="fn6"><p>a nested json array of broad categories of methods eg {“id”:“obs”,“name”:“in-situ observation”,“definition”:“observation from an in-situ sensor or sample from a site visit”}. Also include “remote sensing”, “estimation”, “simulation model”, “forecast”, “statistical summary”</p></li>
-<li id="fn7"><p>a nested json array of specific data production methods/sensor eg {“id”:“noaa-ahps” ,“provider”:“noaa”, “name”:“ahps”, “description”:“NOAA Advanced Hydrologic Prediction Service River Forecast Model”,methodType”:“forecast”, “url”: “https://water.weather.gov/ahps/about/about.php”}</p></li>
-<li id="fn8"><p>an array of time spacings of datasets available from sites eg [“unknown”,“intermittent”,“discrete”,“event”,“1 second”, “15 minute”, “1 day”, “1 year”]</p></li>
-<li id="fn9"><p>an array of API endpoints in the <a href="https://ogcapi.ogc.org/processes/">OGC-API Processes</a> standard for more specific queries that may use the below as query parameters</p></li>
+<li id="fn1"><p>an array of API endpoints in the <a href="https://ogcapi.ogc.org/processes/">OGC-API Processes</a> standard for more specific queries that may use the below as query parameters</p></li>
+<li id="fn2"><p>a nested json array of types of locations available and their definition for each (e.g.&nbsp;[{“id”:“dam”, “name”:“dam”, “description”: “a structure creating an impounded body of water on a stream”)},{“name”:“stream”, “description”: “a flowing body of water on the surface”}])</p></li>
+<li id="fn3"><p>types of area summary features (e.g.&nbsp;HUC8, catchment, county, state)</p></li>
+<li id="fn4"><p>paginated (limit=x&amp;offset=y) geojson with attributes eg “id”:“https://geoconnex.us/ref/hu02/14”,“name”:“Upper Colorado”</p></li>
+<li id="fn5"><p>nested json array with four elements per object e.g.&nbsp;{“id”: “rise”, “name”: “Reclamation Information Sharing Environment”, “url”:“https://data.usbr.gov”, “parent_organization_url”:“https://usbr.gov”}</p></li>
+<li id="fn6"><p>nested json array with three elements per object e.g.&nbsp;{“id”:“a http uri”,“name”:“Lake/Reservoir Inflow”,“provider”:“usgs”}</p></li>
+<li id="fn7"><p>a nested json array of broad categories of methods eg {“id”:“obs”,“name”:“in-situ observation”,“definition”:“observation from an in-situ sensor or sample from a site visit”}. Also include “remote sensing”, “estimation”, “simulation model”, “forecast”, “statistical summary”</p></li>
+<li id="fn8"><p>a nested json array of specific data production methods/sensor eg {“id”:“noaa-ahps” ,“provider”:“noaa”, “name”:“ahps”, “description”:“NOAA Advanced Hydrologic Prediction Service River Forecast Model”,methodType”:“forecast”, “url”: “https://water.weather.gov/ahps/about/about.php”}</p></li>
+<li id="fn9"><p>an array of time spacings of datasets available from sites eg [“unknown”,“intermittent”,“discrete”,“event”,“1 second”, “15 minute”, “1 day”, “1 year”]</p></li>
 </ol>
 </section>
     </div>

@@ -67,12 +67,13 @@ https://api.geoconnex.us
     | Parameter/Variable/Observed Property | Feature of Interest         |
 :::
 
-## Top-level Endpoints
+## Top-level Endpoints {.smaller}
 :::: {.columns}
 
 ::: {.incremental}
 https://api.geoconnex.us...
 
+- /processes ^[an array of API endpoints in the [OGC-API Processes](https://ogcapi.ogc.org/processes/) standard for more specific queries that may use the below as query parameters]
 - /locationTypes ^[a nested json array of types of locations available and their definition for each (e.g. [{"id":"dam", "name":"dam", "description": "a structure creating an impounded body of water on a stream")},{"name":"stream", "description": "a flowing body of water on the surface"}])]
 - /catalogingFeatureCollections ^[types of area summary features (e.g. HUC8, catchment, county, state)]
 - /catalogingFeatures/{catalogingFeatureType} ^[paginated (limit=x&offset=y) geojson with attributes eg "id":"https://geoconnex.us/ref/hu02/14","name":"Upper Colorado"]
@@ -81,14 +82,20 @@ https://api.geoconnex.us...
 - /methodsTypes ^[a nested json array of broad categories of methods eg {"id":"obs","name":"in-situ observation","definition":"observation from an in-situ sensor or sample from a site visit"}. Also include "remote sensing", "estimation", "simulation model", "forecast", "statistical summary"]
 - /methods ^[a nested json array of specific data production methods/sensor eg {"id":"noaa-ahps" ,"provider":"noaa", "name":"ahps", "description":"NOAA Advanced Hydrologic Prediction Service River Forecast Model",methodType":"forecast", "url": "https://water.weather.gov/ahps/about/about.php"}]
 - /timeSpacing ^[an array of time spacings of datasets available from sites eg ["unknown","intermittent","discrete","event","1 second", "15 minute", "1 day", "1 year"]]
-- /processes ^[an array of API endpoints in the [OGC-API Processes](https://ogcapi.ogc.org/processes/) standard for more specific queries that may use the below as query parameters]
 :::
 
 ::::
 
 ## Processes
 
-https://
+Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/processes) standard
+
+- /processes ^[a nested array of process names and descriptions and key words]
+- /processes/{process_name} ^[a nested array describing process inputs and outputs]
+- /processes/{process_name}/execution ^[the endpoint at which to issue GET or POST request for the process] 
+- /processes/{process_name}/jobs
+
+## Processes available
 
 -find reference features near my features
 
