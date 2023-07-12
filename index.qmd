@@ -24,6 +24,10 @@ resources:
 -   User Story - Data Analyst/Tool Developer
 -   Endpoints, requests, and responses
 
+::: {.notes}
+Thank you for participating etc. What I'll do for you today is introduce the main use cases we imagine for the geoconnex API, and then go through a number of endpoints we are in the early design phases of. This is truly the first draft so your input could have a dramatic effect on the production API. Geoconnex itself will be a metadata catalog that includes minimally standardized metadata about all sites that all participating organizations publish data about. The geoconnex API will allow programmatic access to this metadata catalog.
+:::
+
 ## User Story - Water Data Publisher
 
 ::: fragment
@@ -52,7 +56,7 @@ resources:
 -   So that I can build my tool or conduct my analysis using as much relevant data as possible
 :::
 
-## Top-level Endpoints
+## Top-level Endpoints {.smaller}
 
 ::: fragment
 https://api.geoconnex.us
@@ -83,6 +87,10 @@ https://api.geoconnex.us...
 -   /methods [^8]
 -   /timeSpacing [^9]
 :::
+:::
+
+::: {.notes}
+THe first endpoint, processes, will describe the actual metadata search and retrieval services. The other endpoints are all  codelists for filters that can be used to subset all of the sites. After reviewing each one (remember to hover over the footnote for examples of how they would be structured), do you have any opinions on if any of these are not useful? If there are other such codelists that might be useful. And how the actual endpoints are structured, if more or less information might be needed?
 :::
 
 [^1]: an array of API endpoints in the [OGC-API Processes](https://ogcapi.ogc.org/processes/) standard for more specific queries that may use the below as query parameters
@@ -125,8 +133,27 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
 |-----------------|-------------------------------------------------------|
 | referenceMyLocations     | POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already             |
 | findFeatures     | GET or POST query parameters to find features of relevance                                                              |
-| navigateMonitoringFeatures | GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier                       |
+| navigateFeatures | GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier                       |
 | findDatasets   | POST an array of feature identifiers and an array of query parameters to find relevant dataset metadata|
+
+
+## /processes Data publisher use case {.smaller}
+
+- As a data publisher, would use referenceMyLocations to see if any existing locations in the database exist that are likely the same site/ real-world object as sits I want to publish data about. I could then add links in my metadata that I publish to ensure others know I have data about the same site
+
+:::{.notes}
+Read use case ask if they have any questions, concerns, suggestions at a high level for other services that could be useful to a data publisher
+:::
+
+## /processes Data user imagined workflow {.smaller}
+
+- use findFeatures to do this
+- then use navigateFeatures to do this
+- and then use findDatasets to do this
+
+:::{.notes}
+
+:::
 
 ## /processes?f=json {.smaller}
 
@@ -179,7 +206,14 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
 }
 ```
 
+
+
+
 ## /processes/referenceMyLocations?f=json {.smaller}
+
+::: {.notes}
+You can scroll up and down and side to side to reveal what would be seen at this endpoint, which describes the inputs and outputs of the API endpoint as well as provides an example. Annotations are available if you hover over the circled numbers on the right.
+:::
 
 ```{r}
 #| eval: FALSE
@@ -333,6 +367,7 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
 ::: footer
 Learn more: [geoconnex.us](https://geoconnex.us)
 :::
+
 
 ## /processes/referenceMyLocations?f=json {.smaller}
 

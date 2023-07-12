@@ -406,6 +406,19 @@
 <li>User Story - Data Analyst/Tool Developer</li>
 <li>Endpoints, requests, and responses</li>
 </ul>
+<aside class="notes">
+<p>Thank you for participating etc. What I’ll do for you today is introduce the main use cases we imagine for the geoconnex API, and then go through a number of endpoints we are in the early design phases of. This is truly the first draft so your input could have a dramatic effect on the production API. Geoconnex itself will be a metadata catalog that includes minimally standardized metadata about all sites that all participating organizations publish data about. The geoconnex API will allow programmatic access to this metadata catalog.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="user-story---water-data-publisher" class="slide level2">
 <h2>User Story - Water Data Publisher</h2>
@@ -443,7 +456,7 @@
 </ul>
 </div>
 </section>
-<section id="top-level-endpoints" class="slide level2">
+<section id="top-level-endpoints" class="slide level2 smaller">
 <h2>Top-level Endpoints</h2>
 <div class="fragment">
 <p>https://api.geoconnex.us</p>
@@ -490,6 +503,19 @@
 </ul>
 </div>
 </div>
+<aside class="notes">
+<p>THe first endpoint, processes, will describe the actual metadata search and retrieval services. The other endpoints are all codelists for filters that can be used to subset all of the sites. After reviewing each one (remember to hover over the footnote for examples of how they would be structured), do you have any opinions on if any of these are not useful? If there are other such codelists that might be useful. And how the actual endpoints are structured, if more or less information might be needed?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <aside></aside></section>
 <section id="processes---general-pattern" class="slide level2">
 <h2>Processes - general pattern</h2>
@@ -525,7 +551,7 @@
 <td>GET or POST query parameters to find features of relevance</td>
 </tr>
 <tr class="odd">
-<td>navigateMonitoringFeatures</td>
+<td>navigateFeatures</td>
 <td>GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier</td>
 </tr>
 <tr class="even">
@@ -534,6 +560,46 @@
 </tr>
 </tbody>
 </table>
+</section>
+<section id="processes-data-publisher-use-case" class="slide level2 smaller">
+<h2>/processes Data publisher use case</h2>
+<ul>
+<li>As a data publisher, would use referenceMyLocations to see if any existing locations in the database exist that are likely the same site/ real-world object as sits I want to publish data about. I could then add links in my metadata that I publish to ensure others know I have data about the same site</li>
+</ul>
+<aside class="notes">
+<p>Read use case ask if they have any questions, concerns, suggestions at a high level for other services that could be useful to a data publisher</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="processes-data-user-imagined-workflow" class="slide level2 smaller">
+<h2>/processes Data user imagined workflow</h2>
+<ul>
+<li>use findFeatures to do this</li>
+<li>then use navigateFeatures to do this</li>
+<li>and then use findDatasets to do this</li>
+</ul>
+<aside class="notes">
+
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="processesfjson" class="slide level2 smaller">
 <h2>/processes?f=json</h2>
@@ -586,6 +652,19 @@
 </section>
 <section id="processesreferencemylocationsfjson" class="slide level2 smaller">
 <h2>/processes/referenceMyLocations?f=json</h2>
+<aside class="notes">
+<p>You can scroll up and down and side to side to reveal what would be seen at this endpoint, which describes the inputs and outputs of the API endpoint as well as provides an example. Annotations are available if you hover over the circled numbers on the right.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1"></a>{</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2"></a>    <span class="st">"type"</span><span class="sc">:</span> <span class="st">"process"</span>,</span>
@@ -721,55 +800,55 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="10" data-code-annotation="1">specification of inputs for POST request</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="10">specification of inputs for POST request</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="11" data-code-annotation="2">the required input of a geojson feature collection of candidate features</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="11">the required input of a geojson feature collection of candidate features</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="22" data-code-annotation="3">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="3" data-code-lines="22">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="33" data-code-annotation="4">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="4" data-code-lines="33">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="45" data-code-annotation="5">the specification of the output that will be received in the response to the API POST request</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="5" data-code-lines="45">the specification of the output that will be received in the response to the API POST request</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="55" data-code-annotation="6">a set of example inputs and outputs for this API endpoint</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="6" data-code-lines="55">a set of example inputs and outputs for this API endpoint</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="56" data-code-annotation="7">an example geojson FeatureCollection input</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="7" data-code-lines="56">an example geojson FeatureCollection input</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="63" data-code-annotation="8">example geojson FeatureCollection includes id property</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="8" data-code-lines="63">example geojson FeatureCollection includes id property</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="88" data-code-annotation="9">an example distance threshold input</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="9" data-code-lines="88,89">example distance and locationType threshold inputs</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="91" data-code-annotation="10">an example output geojson FeatureCollection</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="10" data-code-lines="91">an example output geojson FeatureCollection</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="98" data-code-annotation="11">each feature includes the identifier from the input geojson that the feature is matched with</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="11" data-code-lines="98">each feature includes the identifier from the input geojson that the feature is matched with</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="99" data-code-annotation="12">each feature includes its own identifier</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="12" data-code-lines="99">each feature includes its own identifier</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="100" data-code-annotation="13">each feature includes the distance between the matched feature and the input feature :::</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="13" data-code-lines="100">each feature includes the distance between the matched feature and the input feature :::</span>
 </dd>
 </dl>
 </div>
