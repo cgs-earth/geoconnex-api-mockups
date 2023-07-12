@@ -6,7 +6,8 @@ format:
   revealjs: 
     reference-location: document
     code-annotations: hover
-    scrollable: true
+#    scrollable: true
+    code-overflow: wrap
     slide-number: true
     chalkboard: 
       buttons: true
