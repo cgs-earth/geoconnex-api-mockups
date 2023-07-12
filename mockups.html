@@ -309,6 +309,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -385,17 +386,6 @@
       margin-right: 0; 
     }
   </style>
-  <script type="module" src="mockups_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
-  <link href="mockups_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
-  <script src="mockups_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-  <script src="mockups_files/libs/jquery-1.12.4/jquery.min.js"></script>
-  <link href="mockups_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
-  <script src="mockups_files/libs/leaflet-1.3.1/leaflet.js"></script>
-  <link href="mockups_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
-  <script src="mockups_files/libs/proj4-2.6.2/proj4.min.js"></script>
-  <script src="mockups_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-  <link href="mockups_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-  <script src="mockups_files/libs/leaflet-binding-2.1.1/leaflet.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -449,7 +439,7 @@
 </div>
 <div class="fragment">
 <ul>
-<li>So that I can build my tool using all as much relevant data as possible</li>
+<li>So that I can build my tool or conduct my analysis using as much relevant data as possible</li>
 </ul>
 </div>
 </section>
@@ -494,1087 +484,294 @@
 <li class="fragment">/catalogingFeatures/{catalogingFeatureType} <a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a></li>
 <li class="fragment">/providers <a href="#/footnotes" class="footnote-ref" id="fnref5" role="doc-noteref" data-footnote-href="#/fn5" onclick=""><sup>5</sup></a></li>
 <li class="fragment">/observedProperties <a href="#/footnotes" class="footnote-ref" id="fnref6" role="doc-noteref" data-footnote-href="#/fn6" onclick=""><sup>6</sup></a></li>
-<li class="fragment">/methodsTypes <a href="#/footnotes" class="footnote-ref" id="fnref7" role="doc-noteref" data-footnote-href="#/fn7" onclick=""><sup>7</sup></a></li>
+<li class="fragment">/methodTypes <a href="#/footnotes" class="footnote-ref" id="fnref7" role="doc-noteref" data-footnote-href="#/fn7" onclick=""><sup>7</sup></a></li>
 <li class="fragment">/methods <a href="#/footnotes" class="footnote-ref" id="fnref8" role="doc-noteref" data-footnote-href="#/fn8" onclick=""><sup>8</sup></a></li>
 <li class="fragment">/timeSpacing <a href="#/footnotes" class="footnote-ref" id="fnref9" role="doc-noteref" data-footnote-href="#/fn9" onclick=""><sup>9</sup></a></li>
 </ul>
 </div>
 </div>
 <aside></aside></section>
-<section id="processes" class="slide level2">
-<h2>Processes</h2>
+<section id="processes---general-pattern" class="slide level2">
+<h2>Processes - general pattern</h2>
 <p>Data discovery tools follow the <a href="https://ogcapi.ogc.org/processes">OGC-API Processes</a> standard</p>
+<div>
 <ul>
-<li>/processes ^[a nested array of process names and descriptions and key words. eg [ { “type”: “process”, “processor”: { “name”: “RiverRunner” }, “title”: “River Runner”, “description”: “A process that takes a set of coordinates in the world, and returns the largest flowpath from it to its terminal flowpoint.”, “keywords”: [ “rivers”, “river-runner”]]</li>
+<li class="fragment">/processes <a href="#/footnotes" class="footnote-ref" id="fnref10" role="doc-noteref" data-footnote-href="#/fn10" onclick=""><sup>10</sup></a> ?f={html,json} - GET</li>
+<li class="fragment">/processes/{process_name} <a href="#/footnotes" class="footnote-ref" id="fnref11" role="doc-noteref" data-footnote-href="#/fn11" onclick=""><sup>11</sup></a> ?f={html,json} - GET</li>
+<li class="fragment">/processes/{process_name}/execution <a href="#/footnotes" class="footnote-ref" id="fnref12" role="doc-noteref" data-footnote-href="#/fn12" onclick=""><sup>12</sup></a> ?f={html,json,csv} - GET or POST</li>
 </ul>
-<p>-find reference features near my features</p>
-<p>-find sites by query parameter</p>
-<p>-find sites that are hydrologically related to a given site URI</p>
-<ul>
-<li><p>mainstem</p></li>
-<li><p>mainstem + nth-order tributaries</p></li>
-</ul>
-<p>-filter sites by other query parameters</p>
+</div>
+<aside></aside></section>
+<section id="processesfhtml" class="slide level2 smaller">
+<h2>/processes?f=html</h2>
+<table>
+<colgroup>
+<col style="width: 23%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>referenceMyLocations</td>
+<td>POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already</td>
+</tr>
+<tr class="even">
+<td>findFeatures</td>
+<td>GET or POST query parameters to find features of relevance</td>
+</tr>
+<tr class="odd">
+<td>navigateMonitoringFeatures</td>
+<td>GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier</td>
+</tr>
+<tr class="even">
+<td>findDatasets</td>
+<td>POST an array of feature identifiers and an array of query parameters to find relevant dataset metadata</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="processesfindreferencefeatures" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">/processes/findReferenceFeatures</h2>
-<div class="fragment">
-<ul>
-<li>query parameters:</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li>?locationType=dam&amp;state=OK</li>
-</ul>
-</div>
-<div class="fragment">
+<section id="processesfjson" class="slide level2 smaller">
+<h2>/processes?f=json</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-1" data-code-line-numbers="1-3|10|19"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated" data-id="quarto-animate-code"><code class="sourceCode r hljs"><button class="code-annotation-anchor hljs-ln-code" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target hljs-ln-code"><a href="#annotated-cell-1-1"></a>{</span>
-<span id="annotated-cell-1-2" class="hljs-ln-code"><a href="#annotated-cell-1-2"></a>    <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
-<span id="annotated-cell-1-3" class="hljs-ln-code"><a href="#annotated-cell-1-3"></a>    <span class="st">"features"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-1-4" class="hljs-ln-code"><a href="#annotated-cell-1-4"></a>        {</span>
-<span id="annotated-cell-1-5" class="hljs-ln-code"><a href="#annotated-cell-1-5"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
-<span id="annotated-cell-1-6" class="hljs-ln-code"><a href="#annotated-cell-1-6"></a>            <span class="st">"properties"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-1-7" class="hljs-ln-code"><a href="#annotated-cell-1-7"></a>                <span class="st">"description"</span><span class="sc">:</span> <span class="st">"Reference feature for USACE National Inventory of Dams: OK10440"</span>,</span>
-<span id="annotated-cell-1-8" class="hljs-ln-code"><a href="#annotated-cell-1-8"></a>                <span class="st">"name"</span><span class="sc">:</span> <span class="st">"Yonkipin Lake"</span>,</span>
-<span id="annotated-cell-1-9" class="hljs-ln-code"><a href="#annotated-cell-1-9"></a>                <span class="st">"subjectof"</span><span class="sc">:</span> <span class="st">"https://nid.usace.army.mil/#/dams/system/OK10440/summary"</span>,</span>
-<button class="code-annotation-anchor hljs-ln-code" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-10" class="code-annotation-target hljs-ln-code"><a href="#annotated-cell-1-10"></a>                <span class="st">"provider"</span><span class="sc">:</span> <span class="st">"https://nid.usace.army.mil"</span>,</span>
-<span id="annotated-cell-1-11" class="hljs-ln-code"><a href="#annotated-cell-1-11"></a>                <span class="st">"provider_id"</span><span class="sc">:</span> <span class="st">"OK10440"</span>,</span>
-<span id="annotated-cell-1-12" class="hljs-ln-code"><a href="#annotated-cell-1-12"></a>                <span class="st">"feature_data_source"</span><span class="sc">:</span> <span class="st">"https://doi.org/10.5066/P92S9ZX6"</span>,</span>
-<span id="annotated-cell-1-13" class="hljs-ln-code"><a href="#annotated-cell-1-13"></a>                <span class="st">"uri"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/dams/1000001"</span>,</span>
-<span id="annotated-cell-1-14" class="hljs-ln-code"><a href="#annotated-cell-1-14"></a>                <span class="st">"fid"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
-<span id="annotated-cell-1-15" class="hljs-ln-code"><a href="#annotated-cell-1-15"></a>                <span class="st">"nhdpv2_comid"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/nhdplusv2/comid/832952"</span></span>
-<span id="annotated-cell-1-16" class="hljs-ln-code"><a href="#annotated-cell-1-16"></a>            },</span>
-<span id="annotated-cell-1-17" class="hljs-ln-code"><a href="#annotated-cell-1-17"></a>            <span class="st">"id"</span><span class="sc">:</span> <span class="dv">1000001</span>,</span>
-<span id="annotated-cell-1-18" class="hljs-ln-code"><a href="#annotated-cell-1-18"></a>            <span class="st">"geometry"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-1-19" class="hljs-ln-code"><a href="#annotated-cell-1-19"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span>,</span>
-<span id="annotated-cell-1-20" class="hljs-ln-code"><a href="#annotated-cell-1-20"></a>                <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-1-21" class="hljs-ln-code"><a href="#annotated-cell-1-21"></a>                    <span class="sc">-</span><span class="fl">95.71632747020249</span>,</span>
-<span id="annotated-cell-1-22" class="hljs-ln-code"><a href="#annotated-cell-1-22"></a>                    <span class="fl">36.21964114065486</span></span>
-<span id="annotated-cell-1-23" class="hljs-ln-code"><a href="#annotated-cell-1-23"></a>                ]</span>
-<span id="annotated-cell-1-24" class="hljs-ln-code"><a href="#annotated-cell-1-24"></a>            }</span>
-<span id="annotated-cell-1-25" class="hljs-ln-code"><a href="#annotated-cell-1-25"></a>        }</span>
-<span id="annotated-cell-1-26" class="hljs-ln-code"><a href="#annotated-cell-1-26"></a>    ],</span>
-<span id="annotated-cell-1-27" class="hljs-ln-code"><a href="#annotated-cell-1-27"></a>    <span class="st">"numberMatched"</span><span class="sc">:</span> <span class="dv">98535</span>,</span>
-<span id="annotated-cell-1-28" class="hljs-ln-code"><a href="#annotated-cell-1-28"></a>    <span class="st">"numberReturned"</span><span class="sc">:</span> <span class="dv">100</span></span>
-<span id="annotated-cell-1-29" class="hljs-ln-code"><a href="#annotated-cell-1-29"></a>}</span><div class="code-annotation-gutter-bg hljs-ln-code"></div><div class="code-annotation-gutter hljs-ln-code"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>{</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="st">"processes"</span><span class="sc">:</span> [</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  {</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.2.0"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"referenceMyLocations"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Reference My Locations"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already "</span>,</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="st">"jobControlOptions"</span><span class="sc">:</span> [</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="st">"sync"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="st">"async"</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>  ]</span>
+<span id="cb1-12"><a href="#cb1-12"></a>  },</span>
+<span id="cb1-13"><a href="#cb1-13"></a> {</span>
+<span id="cb1-14"><a href="#cb1-14"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.2.0"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"findFeatures"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Find Features"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"GET or POST query parameters to find features of relevance"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="st">"jobControlOptions"</span><span class="sc">:</span> [</span>
+<span id="cb1-19"><a href="#cb1-19"></a>  <span class="st">"sync"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="st">"async"</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>  ]</span>
+<span id="cb1-22"><a href="#cb1-22"></a>  },</span>
+<span id="cb1-23"><a href="#cb1-23"></a> {</span>
+<span id="cb1-24"><a href="#cb1-24"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.2.0"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"navigateMonitoringFeatures"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"find up or downstream monitoring features"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="st">"jobControlOptions"</span><span class="sc">:</span> [</span>
+<span id="cb1-29"><a href="#cb1-29"></a>  <span class="st">"sync"</span>,</span>
+<span id="cb1-30"><a href="#cb1-30"></a>  <span class="st">"async"</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>  ]</span>
+<span id="cb1-32"><a href="#cb1-32"></a>  },</span>
+<span id="cb1-33"><a href="#cb1-33"></a> {</span>
+<span id="cb1-34"><a href="#cb1-34"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.2.0"</span>,</span>
+<span id="cb1-35"><a href="#cb1-35"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"findDatasets"</span>,</span>
+<span id="cb1-36"><a href="#cb1-36"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Find relevant dataset metadata"</span>,</span>
+<span id="cb1-37"><a href="#cb1-37"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"POST an array of feature identifiers and an array of query parameters to find relevant dataset metadata"</span>,</span>
+<span id="cb1-38"><a href="#cb1-38"></a><span class="st">"jobControlOptions"</span><span class="sc">:</span> [</span>
+<span id="cb1-39"><a href="#cb1-39"></a>  <span class="st">"sync"</span>,</span>
+<span id="cb1-40"><a href="#cb1-40"></a>  <span class="st">"async"</span></span>
+<span id="cb1-41"><a href="#cb1-41"></a>  ]</span>
+<span id="cb1-42"><a href="#cb1-42"></a>  }</span>
+<span id="cb1-43"><a href="#cb1-43"></a></span>
+<span id="cb1-44"><a href="#cb1-44"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="processesreferencemylocationsfjson" class="slide level2 smaller">
+<h2>/processes/referenceMyLocations?f=json</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1"></a>{</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2"></a>    <span class="st">"type"</span><span class="sc">:</span> <span class="st">"process"</span>,</span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3"></a>    <span class="st">"processor"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a>        <span class="st">"name"</span><span class="sc">:</span> <span class="st">"referenceMyLocations"</span></span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5"></a>    },</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Reference My Locations"</span>,</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already."</span>,</span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.5.0"</span>,</span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"referenceMyLocations"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-10" class="code-annotation-target"><a href="#annotated-cell-2-10"></a>    <span class="st">"inputs"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-11" class="code-annotation-target"><a href="#annotated-cell-2-11"></a>        <span class="st">"geojson"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of points of potential reference features"</span>,</span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17"></a>            },</span>
+<span id="annotated-cell-2-18"><a href="#annotated-cell-2-18"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-2-21"><a href="#annotated-cell-2-21"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-22" class="code-annotation-target"><a href="#annotated-cell-2-22"></a>        <span class="st">"distance_threshold_km"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Distance threshold (km)"</span>,</span>
+<span id="annotated-cell-2-24"><a href="#annotated-cell-2-24"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"Maximum distance from input features to return candidate reference features"</span>,</span>
+<span id="annotated-cell-2-25"><a href="#annotated-cell-2-25"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-26"><a href="#annotated-cell-2-26"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"number"</span>,</span>
+<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27"></a>                <span class="st">"default"</span><span class="sc">:</span> <span class="st">"0.1"</span></span>
+<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28"></a>            },</span>
+<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-30"><a href="#annotated-cell-2-30"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-31"><a href="#annotated-cell-2-31"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32"></a>        }</span>
+<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33"></a>          </span>
+<span id="annotated-cell-2-34"><a href="#annotated-cell-2-34"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-35" class="code-annotation-target"><a href="#annotated-cell-2-35"></a>    <span class="st">"outputs"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-36"><a href="#annotated-cell-2-36"></a>        <span class="st">"path"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-37"><a href="#annotated-cell-2-37"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-2-38"><a href="#annotated-cell-2-38"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites"</span>,</span>
+<span id="annotated-cell-2-39"><a href="#annotated-cell-2-39"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-40"><a href="#annotated-cell-2-40"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-41"><a href="#annotated-cell-2-41"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-42"><a href="#annotated-cell-2-42"></a>            }</span>
+<span id="annotated-cell-2-43"><a href="#annotated-cell-2-43"></a>        }</span>
+<span id="annotated-cell-2-44"><a href="#annotated-cell-2-44"></a>    },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-45" class="code-annotation-target"><a href="#annotated-cell-2-45"></a>    <span class="st">"example"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-46" class="code-annotation-target"><a href="#annotated-cell-2-46"></a>        <span class="st">"inputs"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-47"><a href="#annotated-cell-2-47"></a>          <span class="st">"geojson"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-48"><a href="#annotated-cell-2-48"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-2-49"><a href="#annotated-cell-2-49"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-50"><a href="#annotated-cell-2-50"></a>              {</span>
+<span id="annotated-cell-2-51"><a href="#annotated-cell-2-51"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-2-52"><a href="#annotated-cell-2-52"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="7">7</button><span id="annotated-cell-2-53" class="code-annotation-target"><a href="#annotated-cell-2-53"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"station A"</span></span>
+<span id="annotated-cell-2-54"><a href="#annotated-cell-2-54"></a>                },</span>
+<span id="annotated-cell-2-55"><a href="#annotated-cell-2-55"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-56"><a href="#annotated-cell-2-56"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-57"><a href="#annotated-cell-2-57"></a>                    <span class="sc">-</span><span class="fl">79.07158950388026</span>,</span>
+<span id="annotated-cell-2-58"><a href="#annotated-cell-2-58"></a>                    <span class="fl">35.898135796576824</span></span>
+<span id="annotated-cell-2-59"><a href="#annotated-cell-2-59"></a>                  ],</span>
+<span id="annotated-cell-2-60"><a href="#annotated-cell-2-60"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-2-61"><a href="#annotated-cell-2-61"></a>                }</span>
+<span id="annotated-cell-2-62"><a href="#annotated-cell-2-62"></a>              },</span>
+<span id="annotated-cell-2-63"><a href="#annotated-cell-2-63"></a>              {</span>
+<span id="annotated-cell-2-64"><a href="#annotated-cell-2-64"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-2-65"><a href="#annotated-cell-2-65"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-66"><a href="#annotated-cell-2-66"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"station B"</span></span>
+<span id="annotated-cell-2-67"><a href="#annotated-cell-2-67"></a>                },</span>
+<span id="annotated-cell-2-68"><a href="#annotated-cell-2-68"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-69"><a href="#annotated-cell-2-69"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-70"><a href="#annotated-cell-2-70"></a>                    <span class="sc">-</span><span class="fl">79.06653548565708</span>,</span>
+<span id="annotated-cell-2-71"><a href="#annotated-cell-2-71"></a>                    <span class="fl">35.89697449172864</span></span>
+<span id="annotated-cell-2-72"><a href="#annotated-cell-2-72"></a>                  ],</span>
+<span id="annotated-cell-2-73"><a href="#annotated-cell-2-73"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-2-74"><a href="#annotated-cell-2-74"></a>                }</span>
+<span id="annotated-cell-2-75"><a href="#annotated-cell-2-75"></a>              }</span>
+<span id="annotated-cell-2-76"><a href="#annotated-cell-2-76"></a>            ]</span>
+<span id="annotated-cell-2-77"><a href="#annotated-cell-2-77"></a>          },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="8">8</button><span id="annotated-cell-2-78" class="code-annotation-target"><a href="#annotated-cell-2-78"></a>          <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.3</span></span>
+<span id="annotated-cell-2-79"><a href="#annotated-cell-2-79"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="9">9</button><span id="annotated-cell-2-80" class="code-annotation-target"><a href="#annotated-cell-2-80"></a>      <span class="st">"output"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-81"><a href="#annotated-cell-2-81"></a>        {</span>
+<span id="annotated-cell-2-82"><a href="#annotated-cell-2-82"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-2-83"><a href="#annotated-cell-2-83"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-84"><a href="#annotated-cell-2-84"></a>              {</span>
+<span id="annotated-cell-2-85"><a href="#annotated-cell-2-85"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-2-86"><a href="#annotated-cell-2-86"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="10">10</button><span id="annotated-cell-2-87" class="code-annotation-target"><a href="#annotated-cell-2-87"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station A"</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="11">11</button><span id="annotated-cell-2-88" class="code-annotation-target"><a href="#annotated-cell-2-88"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000001"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="12">12</button><span id="annotated-cell-2-89" class="code-annotation-target"><a href="#annotated-cell-2-89"></a>                  <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.1</span></span>
+<span id="annotated-cell-2-90"><a href="#annotated-cell-2-90"></a>                },</span>
+<span id="annotated-cell-2-91"><a href="#annotated-cell-2-91"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-92"><a href="#annotated-cell-2-92"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-93"><a href="#annotated-cell-2-93"></a>                    <span class="sc">-</span><span class="fl">79.076</span>,</span>
+<span id="annotated-cell-2-94"><a href="#annotated-cell-2-94"></a>                    <span class="fl">35.89</span></span>
+<span id="annotated-cell-2-95"><a href="#annotated-cell-2-95"></a>                  ],</span>
+<span id="annotated-cell-2-96"><a href="#annotated-cell-2-96"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-2-97"><a href="#annotated-cell-2-97"></a>                }</span>
+<span id="annotated-cell-2-98"><a href="#annotated-cell-2-98"></a>              },</span>
+<span id="annotated-cell-2-99"><a href="#annotated-cell-2-99"></a>              {</span>
+<span id="annotated-cell-2-100"><a href="#annotated-cell-2-100"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-2-101"><a href="#annotated-cell-2-101"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-102"><a href="#annotated-cell-2-102"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station B"</span></span>
+<span id="annotated-cell-2-103"><a href="#annotated-cell-2-103"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000002"</span>,</span>
+<span id="annotated-cell-2-104"><a href="#annotated-cell-2-104"></a>                  <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.14</span></span>
+<span id="annotated-cell-2-105"><a href="#annotated-cell-2-105"></a>                },</span>
+<span id="annotated-cell-2-106"><a href="#annotated-cell-2-106"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-107"><a href="#annotated-cell-2-107"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-108"><a href="#annotated-cell-2-108"></a>                    <span class="sc">-</span><span class="fl">79.06653548565708</span>,</span>
+<span id="annotated-cell-2-109"><a href="#annotated-cell-2-109"></a>                    <span class="fl">35.89697449172864</span></span>
+<span id="annotated-cell-2-110"><a href="#annotated-cell-2-110"></a>                  ],</span>
+<span id="annotated-cell-2-111"><a href="#annotated-cell-2-111"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-2-112"><a href="#annotated-cell-2-112"></a>                }</span>
+<span id="annotated-cell-2-113"><a href="#annotated-cell-2-113"></a>              }</span>
+<span id="annotated-cell-2-114"><a href="#annotated-cell-2-114"></a>            ]</span>
+<span id="annotated-cell-2-115"><a href="#annotated-cell-2-115"></a>          }</span>
+<span id="annotated-cell-2-116"><a href="#annotated-cell-2-116"></a>        }</span>
+<span id="annotated-cell-2-117"><a href="#annotated-cell-2-117"></a>      }</span>
+<span id="annotated-cell-2-118"><a href="#annotated-cell-2-118"></a>    }</span>
+<span id="annotated-cell-2-119"><a href="#annotated-cell-2-119"></a><span class="er">}</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1,2,3" data-code-cell="annotated-cell-1" data-code-annotation="1">An explanatory annotation</span>
+<span data-code-lines="10" data-code-cell="annotated-cell-2" data-code-annotation="1">specification of inputs for POST request</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="10,11" data-code-cell="annotated-cell-1" data-code-annotation="2">A second annotation (this how we know USACE is the source)</span>
+<span data-code-lines="11" data-code-cell="annotated-cell-2" data-code-annotation="2">the required input of a geojson feature collection of candidate features</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-lines="22" data-code-cell="annotated-cell-2" data-code-annotation="3">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-lines="35" data-code-cell="annotated-cell-2" data-code-annotation="4">the specification of the output that will be received in the response to the API POST request</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-lines="45" data-code-cell="annotated-cell-2" data-code-annotation="5">a set of example inputs and outputs for this API endpoint</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-lines="46" data-code-cell="annotated-cell-2" data-code-annotation="6">an example geojson FeatureCollection input</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-lines="53" data-code-cell="annotated-cell-2" data-code-annotation="7">example geojson FeatureCollection includes id property</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-lines="78" data-code-cell="annotated-cell-2" data-code-annotation="8">an example distance threshold input</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-lines="80" data-code-cell="annotated-cell-2" data-code-annotation="9">an example output geojson FeatureCollection</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-lines="87" data-code-cell="annotated-cell-2" data-code-annotation="10">each feature includes the identifier from the input geojson that the feature is matched with</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-lines="88" data-code-cell="annotated-cell-2" data-code-annotation="11">each feature includes its own identifier</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="12">12</dt>
+<dd>
+<span data-code-lines="89" data-code-cell="annotated-cell-2" data-code-annotation="12">each feature includes the distance between the matched feature and the input feature :::</span>
 </dd>
 </dl>
-</div>
 </div>
 </div>
 <div class="footer">
 <p>Learn more: <a href="https://geoconnex.us">geoconnex.us</a></p>
 </div>
 </section>
-<section id="code-animations" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Code Animations</h2>
+<section id="processesreferencemylocationsfjson-1" class="slide level2 smaller">
+<h2>/processes/referenceMyLocations?f=json</h2>
 <ul>
 <li>Over 20 syntax highlighting themes available</li>
 <li>Default theme optimized for accessibility</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb1-1" class="hljs-ln-code"><a href="#cb1-1"></a><span class="co"># Define a server for the Shiny app</span></span>
-<span id="cb1-2" class="hljs-ln-code"><a href="#cb1-2"></a><span class="cf">function</span>(input, output) {</span>
-<span id="cb1-3" class="hljs-ln-code"><a href="#cb1-3"></a>  </span>
-<span id="cb1-4" class="hljs-ln-code"><a href="#cb1-4"></a>  <span class="co"># Fill in the spot we created for a plot</span></span>
-<span id="cb1-5" class="hljs-ln-code"><a href="#cb1-5"></a>  output<span class="sc">$</span>phonePlot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb1-6" class="hljs-ln-code"><a href="#cb1-6"></a>    <span class="co"># Render a barplot</span></span>
-<span id="cb1-7" class="hljs-ln-code"><a href="#cb1-7"></a>    <span class="fu">barplot</span>(WorldPhones[,input<span class="sc">$</span>region]<span class="sc">*</span><span class="dv">1000</span>, </span>
-<span id="cb1-8" class="hljs-ln-code"><a href="#cb1-8"></a>            <span class="at">main=</span>input<span class="sc">$</span>region,</span>
-<span id="cb1-9" class="hljs-ln-code"><a href="#cb1-9"></a>            <span class="at">ylab=</span><span class="st">"Number of Telephones"</span>,</span>
-<span id="cb1-10" class="hljs-ln-code"><a href="#cb1-10"></a>            <span class="at">xlab=</span><span class="st">"Year"</span>)</span>
-<span id="cb1-11" class="hljs-ln-code"><a href="#cb1-11"></a>  })</span>
-<span id="cb1-12" class="hljs-ln-code"><a href="#cb1-12"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/advanced.html#code-animations">Code Animations</a></p>
-</div>
-</section>
-<section id="line-highlighting" class="slide level2">
-<h2>Line Highlighting</h2>
-<ul>
-<li>Highlight specific lines for emphasis</li>
-<li>Incrementally highlight additional lines</li>
-</ul>
-<div class="sourceCode" id="cb2" data-code-line-numbers="4-5|7|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.01</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
-<span id="cb2-6"><a href="#cb2-6"></a>fig, ax <span class="op">=</span> plt.subplots(subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'polar'</span>})</span>
-<span id="cb2-7"><a href="#cb2-7"></a>ax.plot(theta, r)</span>
-<span id="cb2-8"><a href="#cb2-8"></a>ax.set_rticks([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
-<span id="cb2-9"><a href="#cb2-9"></a>ax.grid(<span class="va">True</span>)</span>
-<span id="cb2-10"><a href="#cb2-10"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/#line-highlighting">Line Highlighting</a></p>
-</div>
-</section>
-<section id="executable-code" class="slide level2">
-<h2>Executable Code</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(hp, mpg, <span class="at">color =</span> am)) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">method =</span> <span class="st">"loess"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-</div>
-<img data-src="mockups_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"><div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/#executable-code">Executable Code</a></p>
-</div>
-</section>
-<section id="latex-equations" class="slide level2">
-<h2>LaTeX Equations</h2>
-<p><a href="https://www.mathjax.org/">MathJax</a> rendering of equations to HTML</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource tex number-lines code-with-copy"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">\begin</span>{<span class="ex">gather*</span>}</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="ss">a_1=b_1+c_1</span><span class="sc">\\</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="ss">a_2=b_2+c_2-d_2+e_2</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="kw">\end</span>{<span class="ex">gather*</span>}</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="kw">\begin</span>{<span class="ex">align</span>}</span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="ss">a_{11}&amp; =b_{11}&amp;</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="ss">  a_{12}&amp; =b_{12}</span><span class="sc">\\</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="ss">a_{21}&amp; =b_{21}&amp;</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="ss">  a_{22}&amp; =b_{22}+c_{22}</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="kw">\end</span>{<span class="ex">align</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:60%;">
-<span class="math display">\[\begin{gather*}
-a_1=b_1+c_1\\
-a_2=b_2+c_2-d_2+e_2
-\end{gather*}\]</span>
-<span class="math display">\[\begin{align}
-a_{11}&amp; =b_{11}&amp;
-  a_{12}&amp; =b_{12}\\
-a_{21}&amp; =b_{21}&amp;
-  a_{22}&amp; =b_{22}+c_{22}
-\end{align}\]</span>
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/authoring/markdown-basics.html#equations">LaTeX Equations</a></p>
-</div>
-</section>
-<section id="column-layout" class="slide level2 smaller">
-<h2>Column Layout</h2>
-<p>Arrange content into columns of varying widths:</p>
-<div class="columns">
-<div class="column" style="width:35%;">
-<h4 id="motor-trend-car-road-tests">Motor Trend Car Road Tests</h4>
-<p>The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles.</p>
-</div><div class="column" style="width:3%;">
-
-</div><div class="column" style="width:62%;">
-<div class="cell">
-<div class="cell-output-display">
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">mpg</th>
-<th style="text-align: right;">cyl</th>
-<th style="text-align: right;">disp</th>
-<th style="text-align: right;">hp</th>
-<th style="text-align: right;">wt</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Mazda RX4</td>
-<td style="text-align: right;">21.0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">2.620</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mazda RX4 Wag</td>
-<td style="text-align: right;">21.0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">2.875</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Datsun 710</td>
-<td style="text-align: right;">22.8</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">93</td>
-<td style="text-align: right;">2.320</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Hornet 4 Drive</td>
-<td style="text-align: right;">21.4</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">258</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">3.215</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hornet Sportabout</td>
-<td style="text-align: right;">18.7</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">360</td>
-<td style="text-align: right;">175</td>
-<td style="text-align: right;">3.440</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Valiant</td>
-<td style="text-align: right;">18.1</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">225</td>
-<td style="text-align: right;">105</td>
-<td style="text-align: right;">3.460</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/#multiple-columns">Multiple Columns</a></p>
-</div>
-</section>
-<section id="incremental-lists" class="slide level2">
-<h2>Incremental Lists</h2>
-<p>Lists can optionally be displayed incrementally:</p>
-<div>
-<ul>
-<li class="fragment">First item</li>
-<li class="fragment">Second item</li>
-<li class="fragment">Third item</li>
-</ul>
-</div>
-<div class="fragment">
-<p><br> Insert pauses to make other types of content display incrementally.</p>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/#incremental-lists">Incremental Lists</a></p>
-</div>
-</div>
-</section>
-<section id="fragments" class="slide level2">
-<h2>Fragments</h2>
-<p>Incremental text display and animation with fragments:</p>
-<p><br></p>
-<div class="fragment fade-in">
-<p>Fade in</p>
-</div>
-<div class="fragment fade-up">
-<p>Slide up while fading in</p>
-</div>
-<div class="fragment fade-left">
-<p>Slide left while fading in</p>
-</div>
-<div class="fragment fade-in-then-semi-out">
-<p>Fade in then semi out</p>
-</div>
-<div class="fragment">
-<div class="fragment strike">
-<p>Strike</p>
-</div>
-<div class="fragment highlight-red">
-<p>Highlight red</p>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/advanced.html#fragments">Fragments</a></p>
-</div>
-</div>
-</section>
-<section id="slide-backgrounds" class="slide level2" data-background="#43464B">
-<h2>Slide Backgrounds</h2>
-<p>Set the <code>background</code> attribute on a slide to change the background color (all CSS color formats are supported).</p>
-<p>Different background transitions are available via the <code>background-transition</code> option.</p>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/#color-backgrounds">Slide Backgrounds</a></p>
-</div>
-</section>
-<section id="media-backgrounds" class="slide level2" data-background="#43464B" data-background-image="images/milky-way.jpeg">
-<h2>Media Backgrounds</h2>
-<p>You can also use the following as a slide background:</p>
-<ul>
-<li><p>An image: <code>background-image</code></p></li>
-<li><p>A video: <code>background-video</code></p></li>
-<li><p>An iframe: <code>background-iframe</code></p></li>
-</ul>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/#image-backgrounds">Media Backgrounds</a></p>
-</div>
-</section>
-<section id="absolute-position" class="slide level2">
-<h2>Absolute Position</h2>
-<p>Position images or other elements at precise locations</p>
-<p><img data-src="mini/images/kitten-400-350.jpeg" class="absolute" style="top: 170px; left: 30px; width: 400px; height: 400px; "></p>
-<p><img data-src="mini/images/kitten-450-250.jpeg" class="absolute fragment" style="top: 150px; right: 80px; width: 450px; "></p>
-<p><img data-src="mini/images/kitten-300-200.jpeg" class="absolute fragment" style="bottom: 110px; right: 130px; width: 300px; "></p>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/advanced.html#absolute-position">Absolute Position</a></p>
-</div>
-</section>
-<section id="auto-animate" class="slide level2" data-auto-animate="true" data-auto-animate-easing="ease-in-out">
-<h2 data-id="quarto-animate-title">Auto-Animate</h2>
-<p>Automatically animate matching elements across slides with Auto-Animate.</p>
-<div class="r-hstack">
-<div data-id="box1" data-auto-animate-delay="0" style="background: #2780e3; width: 200px; height: 150px; margin: 10px;">
-
-</div>
-<div data-id="box2" data-auto-animate-delay="0.1" style="background: #3fb618; width: 200px; height: 150px; margin: 10px;">
-
-</div>
-<div data-id="box3" data-auto-animate-delay="0.2" style="background: #e83e8c; width: 200px; height: 150px; margin: 10px;">
-
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/advanced.html#auto-animate">Auto-Animate</a></p>
-</div>
-</section>
-<section id="auto-animate-1" class="slide level2" data-auto-animate="true" data-auto-animate-easing="ease-in-out">
-<h2 data-id="quarto-animate-title">Auto-Animate</h2>
-<p>Automatically animate matching elements across slides with Auto-Animate.</p>
-<div class="r-stack">
-<div data-id="box1" style="background: #2780e3; width: 350px; height: 350px; border-radius: 200px;">
-
-</div>
-<div data-id="box2" style="background: #3fb618; width: 250px; height: 250px; border-radius: 200px;">
-
-</div>
-<div data-id="box3" style="background: #e83e8c; width: 150px; height: 150px; border-radius: 200px;">
-
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/advanced.html#auto-animate">Auto-Animate</a></p>
-</div>
-</section>
-<section id="slide-transitions" class="slide level2 smaller">
-<h2>Slide Transitions</h2>
-<p>The next few slides will transition using the <code>slide</code> transition</p>
-<table>
-<colgroup>
-<col style="width: 30%">
-<col style="width: 69%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Transition</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>none</code></td>
-<td>No transition (default, switch instantly)</td>
-</tr>
-<tr class="even">
-<td><code>fade</code></td>
-<td>Cross fade</td>
-</tr>
-<tr class="odd">
-<td><code>slide</code></td>
-<td>Slide horizontally</td>
-</tr>
-<tr class="even">
-<td><code>convex</code></td>
-<td>Slide at a convex angle</td>
-</tr>
-<tr class="odd">
-<td><code>concave</code></td>
-<td>Slide at a concave angle</td>
-</tr>
-<tr class="even">
-<td><code>zoom</code></td>
-<td>Scale the incoming slide so it grows in from the center of the screen.</td>
-</tr>
-</tbody>
-</table>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/advanced.html#slide-transitions">Slide Transitions</a></p>
-</div>
-</section>
-<section id="tabsets" class="slide level2 smaller scrollable" data-transition="slide">
-<h2>Tabsets</h2>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Plot</a></li><li><a href="#tabset-1-2">Data</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<div class="cell">
-<div class="cell-output-display">
-<p><img data-src="mockups_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
-</div>
-</div>
-</div>
-<div id="tabset-1-2">
-<div class="cell">
-<div class="cell-output-display">
-<table style="width:100%;">
-<colgroup>
-<col style="width: 27%">
-<col style="width: 6%">
-<col style="width: 5%">
-<col style="width: 8%">
-<col style="width: 5%">
-<col style="width: 6%">
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">mpg</th>
-<th style="text-align: right;">cyl</th>
-<th style="text-align: right;">disp</th>
-<th style="text-align: right;">hp</th>
-<th style="text-align: right;">drat</th>
-<th style="text-align: right;">wt</th>
-<th style="text-align: right;">qsec</th>
-<th style="text-align: right;">vs</th>
-<th style="text-align: right;">am</th>
-<th style="text-align: right;">gear</th>
-<th style="text-align: right;">carb</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Mazda RX4</td>
-<td style="text-align: right;">21.0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">160.0</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">3.90</td>
-<td style="text-align: right;">2.620</td>
-<td style="text-align: right;">16.46</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mazda RX4 Wag</td>
-<td style="text-align: right;">21.0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">160.0</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">3.90</td>
-<td style="text-align: right;">2.875</td>
-<td style="text-align: right;">17.02</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Datsun 710</td>
-<td style="text-align: right;">22.8</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">108.0</td>
-<td style="text-align: right;">93</td>
-<td style="text-align: right;">3.85</td>
-<td style="text-align: right;">2.320</td>
-<td style="text-align: right;">18.61</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Hornet 4 Drive</td>
-<td style="text-align: right;">21.4</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">258.0</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">3.08</td>
-<td style="text-align: right;">3.215</td>
-<td style="text-align: right;">19.44</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hornet Sportabout</td>
-<td style="text-align: right;">18.7</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">360.0</td>
-<td style="text-align: right;">175</td>
-<td style="text-align: right;">3.15</td>
-<td style="text-align: right;">3.440</td>
-<td style="text-align: right;">17.02</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Valiant</td>
-<td style="text-align: right;">18.1</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">225.0</td>
-<td style="text-align: right;">105</td>
-<td style="text-align: right;">2.76</td>
-<td style="text-align: right;">3.460</td>
-<td style="text-align: right;">20.22</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Duster 360</td>
-<td style="text-align: right;">14.3</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">360.0</td>
-<td style="text-align: right;">245</td>
-<td style="text-align: right;">3.21</td>
-<td style="text-align: right;">3.570</td>
-<td style="text-align: right;">15.84</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Merc 240D</td>
-<td style="text-align: right;">24.4</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">146.7</td>
-<td style="text-align: right;">62</td>
-<td style="text-align: right;">3.69</td>
-<td style="text-align: right;">3.190</td>
-<td style="text-align: right;">20.00</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Merc 230</td>
-<td style="text-align: right;">22.8</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">140.8</td>
-<td style="text-align: right;">95</td>
-<td style="text-align: right;">3.92</td>
-<td style="text-align: right;">3.150</td>
-<td style="text-align: right;">22.90</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Merc 280</td>
-<td style="text-align: right;">19.2</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">167.6</td>
-<td style="text-align: right;">123</td>
-<td style="text-align: right;">3.92</td>
-<td style="text-align: right;">3.440</td>
-<td style="text-align: right;">18.30</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Merc 280C</td>
-<td style="text-align: right;">17.8</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">167.6</td>
-<td style="text-align: right;">123</td>
-<td style="text-align: right;">3.92</td>
-<td style="text-align: right;">3.440</td>
-<td style="text-align: right;">18.90</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Merc 450SE</td>
-<td style="text-align: right;">16.4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">275.8</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">3.07</td>
-<td style="text-align: right;">4.070</td>
-<td style="text-align: right;">17.40</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Merc 450SL</td>
-<td style="text-align: right;">17.3</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">275.8</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">3.07</td>
-<td style="text-align: right;">3.730</td>
-<td style="text-align: right;">17.60</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Merc 450SLC</td>
-<td style="text-align: right;">15.2</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">275.8</td>
-<td style="text-align: right;">180</td>
-<td style="text-align: right;">3.07</td>
-<td style="text-align: right;">3.780</td>
-<td style="text-align: right;">18.00</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Cadillac Fleetwood</td>
-<td style="text-align: right;">10.4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">472.0</td>
-<td style="text-align: right;">205</td>
-<td style="text-align: right;">2.93</td>
-<td style="text-align: right;">5.250</td>
-<td style="text-align: right;">17.98</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Lincoln Continental</td>
-<td style="text-align: right;">10.4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">460.0</td>
-<td style="text-align: right;">215</td>
-<td style="text-align: right;">3.00</td>
-<td style="text-align: right;">5.424</td>
-<td style="text-align: right;">17.82</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Chrysler Imperial</td>
-<td style="text-align: right;">14.7</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">440.0</td>
-<td style="text-align: right;">230</td>
-<td style="text-align: right;">3.23</td>
-<td style="text-align: right;">5.345</td>
-<td style="text-align: right;">17.42</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Fiat 128</td>
-<td style="text-align: right;">32.4</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">78.7</td>
-<td style="text-align: right;">66</td>
-<td style="text-align: right;">4.08</td>
-<td style="text-align: right;">2.200</td>
-<td style="text-align: right;">19.47</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Honda Civic</td>
-<td style="text-align: right;">30.4</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">75.7</td>
-<td style="text-align: right;">52</td>
-<td style="text-align: right;">4.93</td>
-<td style="text-align: right;">1.615</td>
-<td style="text-align: right;">18.52</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Toyota Corolla</td>
-<td style="text-align: right;">33.9</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">71.1</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">4.22</td>
-<td style="text-align: right;">1.835</td>
-<td style="text-align: right;">19.90</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Toyota Corona</td>
-<td style="text-align: right;">21.5</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">120.1</td>
-<td style="text-align: right;">97</td>
-<td style="text-align: right;">3.70</td>
-<td style="text-align: right;">2.465</td>
-<td style="text-align: right;">20.01</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Dodge Challenger</td>
-<td style="text-align: right;">15.5</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">318.0</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">2.76</td>
-<td style="text-align: right;">3.520</td>
-<td style="text-align: right;">16.87</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">AMC Javelin</td>
-<td style="text-align: right;">15.2</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">304.0</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">3.15</td>
-<td style="text-align: right;">3.435</td>
-<td style="text-align: right;">17.30</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Camaro Z28</td>
-<td style="text-align: right;">13.3</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">350.0</td>
-<td style="text-align: right;">245</td>
-<td style="text-align: right;">3.73</td>
-<td style="text-align: right;">3.840</td>
-<td style="text-align: right;">15.41</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Pontiac Firebird</td>
-<td style="text-align: right;">19.2</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">400.0</td>
-<td style="text-align: right;">175</td>
-<td style="text-align: right;">3.08</td>
-<td style="text-align: right;">3.845</td>
-<td style="text-align: right;">17.05</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Fiat X1-9</td>
-<td style="text-align: right;">27.3</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">79.0</td>
-<td style="text-align: right;">66</td>
-<td style="text-align: right;">4.08</td>
-<td style="text-align: right;">1.935</td>
-<td style="text-align: right;">18.90</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Porsche 914-2</td>
-<td style="text-align: right;">26.0</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">120.3</td>
-<td style="text-align: right;">91</td>
-<td style="text-align: right;">4.43</td>
-<td style="text-align: right;">2.140</td>
-<td style="text-align: right;">16.70</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Lotus Europa</td>
-<td style="text-align: right;">30.4</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">95.1</td>
-<td style="text-align: right;">113</td>
-<td style="text-align: right;">3.77</td>
-<td style="text-align: right;">1.513</td>
-<td style="text-align: right;">16.90</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ford Pantera L</td>
-<td style="text-align: right;">15.8</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">351.0</td>
-<td style="text-align: right;">264</td>
-<td style="text-align: right;">4.22</td>
-<td style="text-align: right;">3.170</td>
-<td style="text-align: right;">14.50</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ferrari Dino</td>
-<td style="text-align: right;">19.7</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">145.0</td>
-<td style="text-align: right;">175</td>
-<td style="text-align: right;">3.62</td>
-<td style="text-align: right;">2.770</td>
-<td style="text-align: right;">15.50</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">6</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Maserati Bora</td>
-<td style="text-align: right;">15.0</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">301.0</td>
-<td style="text-align: right;">335</td>
-<td style="text-align: right;">3.54</td>
-<td style="text-align: right;">3.570</td>
-<td style="text-align: right;">14.60</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">8</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Volvo 142E</td>
-<td style="text-align: right;">21.4</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">121.0</td>
-<td style="text-align: right;">109</td>
-<td style="text-align: right;">4.11</td>
-<td style="text-align: right;">2.780</td>
-<td style="text-align: right;">18.60</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/#tabsets">Tabsets</a></p>
-</div>
-</section>
-<section id="interactive-slides" class="slide level2 smaller" data-transition="slide">
-<h2>Interactive Slides</h2>
-<p>Include Jupyter widgets and htmlwidgets in your presentations</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="htmlwidget-473e7dfa7d532f43cccb" style="width:960px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-473e7dfa7d532f43cccb">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[-36.852,174.768,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"The birthplace of R",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-36.852,-36.852],"lng":[174.768,174.768]}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/interactive/widgets/jupyter.html">Jupyter widgets</a>, <a href="https://quarto.org/docs/interactive/widgets/htmlwidgets.html">htmlwidgets</a></p>
-</div>
-<!-- ## Interactive Slides {.smaller transition="slide"} -->
-<!-- Turn presentations into applications with Observable and Shiny. Use component layout to position inputs and outputs. -->
-<!-- ```{r} -->
-<!-- ojs_define(actors = data.frame( -->
-<!--   x = rnorm(100), -->
-<!--   y = rnorm(100) -->
-<!-- )) -->
-<!-- ``` -->
-<!-- ```{ojs} -->
-<!-- //| panel: sidebar -->
-<!-- viewof talentWeight = Inputs.range([-2, 2], { value: 0.7, step: 0.01, label: "talent weight" }) -->
-<!-- viewof looksWeight = Inputs.range([-2, 2], { value: 0.7, step: 0.01, label: "looks weight" }) -->
-<!-- viewof minimum = Inputs.range([-2, 2], { value: 1, step: 0.01, label: "min fame" }) -->
-<!-- ``` -->
-<!-- ```{ojs} -->
-<!-- //| panel: fill -->
-<!-- import { plotActors } from './actors.js'; -->
-<!-- plotActors(actors, talentWeight, looksWeight, minimum) -->
-<!-- ``` -->
-<!-- ::: footer -->
-<!-- Learn more: [Observable](https://quarto.org/docs/interactive/ojs/), [Shiny](https://quarto.org/docs/interactive/shiny/), [Component Layout](https://quarto.org/docs/interactive/layout.html) -->
-<!-- ::: -->
-</section>
-<section id="preview-links" class="slide level2">
-<h2>Preview Links</h2>
-<p>Navigate to hyperlinks without disrupting the flow of your presentation.</p>
-<p>Use the <code>preview-links</code> option to open links in an iframe on top of your slides. Try clicking the link below for a demonstration:</p>
-<div style="text-align: center; margin-top: 1em">
-<p><a href="https://matplotlib.org/" data-preview-link="true" style="text-align: center">Matplotlib: Visualization with Python</a></p>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/presenting.html#preview-links">Preview Links</a></p>
-</div>
-</section>
-<section id="themes" class="slide level2">
-<h2>Themes</h2>
-<p>10 Built-in Themes (or <a href="https://quarto.org/docs/presentations/revealjs/themes.html#creating-themes">create your own</a>)</p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="images/moon.png"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="images/sky.png"></p>
-</div>
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/themes.html">Themes</a></p>
-</div>
-</section>
-<section id="easy-navigation" class="slide level2">
-<h2>Easy Navigation</h2>
-<div style="margin-bottom: 0.9em;">
-<p>Quickly jump to other parts of your presentation</p>
-</div>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 4.8%;justify-content: center;">
-<p><img data-src="images/presentation-menu.png" width="41"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 95.2%;justify-content: center;">
-<p>Toggle the slide menu with the menu button (bottom left of slide) to go to other slides and access presentation tools.</p>
-</div>
-</div>
-</div>
-<p>You can also press <code>m</code> to toggle the menu open and closed.</p>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/presenting.html#navigation-menu">Navigation</a></p>
-</div>
-</section>
-<section id="chalkboard" class="slide level2" data-chalkboard-buttons="true">
-<h2>Chalkboard</h2>
-<div style="margin-bottom: 0.9em;">
-<p>Free form drawing and slide annotations</p>
-</div>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 4.8%;justify-content: center;">
-<p><img data-src="images/presentation-chalkboard.png" width="41"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 95.2%;justify-content: center;">
-<p>Use the chalkboard button at the bottom left of the slide to toggle the chalkboard.</p>
-</div>
-</div>
-</div>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 4.8%;justify-content: center;">
-<p><img data-src="images/presentation-notes-canvas.png" width="41"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 95.2%;justify-content: center;">
-<p>Use the notes canvas button at the bottom left of the slide to toggle drawing on top of the current slide.</p>
-</div>
-</div>
-</div>
-<p>You can also press <code>b</code> to toggle the chalkboard or <code>c</code> to toggle the notes canvas.</p>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/presenting.html#chalkboard">Chalkboard</a></p>
-</div>
-</section>
-<section id="point-of-view" class="slide level2">
-<h2>Point of View</h2>
-<p>Press <code>o</code> to toggle overview mode:</p>
-
-<img data-src="images/overview-mode.png" class="border r-stretch"><p>Hold down the <code>Alt</code> key (or <code>Ctrl</code> in Linux) and click on any element to zoom towards it—try it now on this slide.</p>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/presenting.html#overview-mode">Overview Mode</a>, <a href="https://quarto.org/docs/presentations/revealjs/presenting.html#slide-zoom">Slide Zoom</a></p>
-</div>
-</section>
-<section id="speaker-view" class="slide level2">
-<h2>Speaker View</h2>
-<p>Press <code>s</code> (or use the presentation menu) to open speaker view</p>
-
-<img data-src="images/speaker-view.png" width="780" class="r-stretch quarto-figure-center"><div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/presenting.html#speaker-view">Speaker View</a></p>
-</div>
-</section>
-<section id="authoring-tools" class="slide level2 smaller">
-<h2>Authoring Tools</h2>
-<p>Live side-by-side preview for any notebook or text editor including Jupyter and VS Code</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="images/jupyter-edit.png" class="border border-thick"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="images/jupyter-preview.png" class="border border-thick"></p>
-</div>
-</div>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/tools/jupyter-lab.html">Jupyter</a>, <a href="https://quarto.org/docs/tools/vscode.html">VS Code</a>, <a href="https://quarto.org/docs/tools/text-editors.html">Text Editors</a></p>
-</div>
-</section>
-<section id="authoring-tools-1" class="slide level2 smaller">
-<h2>Authoring Tools</h2>
-<p>RStudio includes an integrated presentation preview pane</p>
-
-<img data-src="images/rstudio.png" class="border r-stretch" width="900"><div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/tools/rstudio.html">RStudio</a></p>
-</div>
-</section>
-<section id="and-more" class="slide level2">
-<h2>And More…</h2>
-<ul>
-<li><a href="https://quarto.org/docs/presentations/revealjs/advanced.html#touch-navigation">Touch</a> optimized (presentations look great on mobile, swipe to navigate slides)</li>
-<li><a href="https://quarto.org/docs/presentations/revealjs/#footer-logo">Footer &amp; Logo</a> (optionally specify custom footer per-slide)</li>
-<li><a href="https://quarto.org/docs/presentations/revealjs/presenting.html#auto-slide">Auto-Slide</a> (step through slides automatically, without any user input)</li>
-<li><a href="https://quarto.org/docs/presentations/revealjs/presenting.html#multiplex">Multiplex</a> (allows your audience to follow the slides of the presentation you are controlling on their own phone, tablet or laptop).</li>
-</ul>
-<div class="footer">
-<p>Learn more: <a href="https://quarto.org/docs/presentations/revealjs/">Quarto Presentations</a></p>
-</div>
-
-<img src="images/quarto.png" class="slide-logo r-stretch"><div class="footer footer-default">
-<p><a href="https://quarto.org" class="uri">https://quarto.org</a></p>
+<img src="images/geoconnex-logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+<p><a href="https://docs.geoconnex.us" class="uri">https://docs.geoconnex.us</a></p>
 </div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
@@ -1587,8 +784,11 @@ a_{21}&amp; =b_{21}&amp;
 <li id="fn5"><p>nested json array with four elements per object e.g.&nbsp;{“id”: “rise”, “name”: “Reclamation Information Sharing Environment”, “url”:“https://data.usbr.gov”, “parent_organization_url”:“https://usbr.gov”}</p></li>
 <li id="fn6"><p>nested json array with three elements per object e.g.&nbsp;{“id”:“a http uri”,“name”:“Lake/Reservoir Inflow”,“provider”:“usgs”}</p></li>
 <li id="fn7"><p>a nested json array of broad categories of methods eg {“id”:“obs”,“name”:“in-situ observation”,“definition”:“observation from an in-situ sensor or sample from a site visit”}. Also include “remote sensing”, “estimation”, “simulation model”, “forecast”, “statistical summary”</p></li>
-<li id="fn8"><p>a nested json array of specific data production methods/sensor eg {“id”:“noaa-ahps” ,“provider”:“noaa”, “name”:“ahps”, “description”:“NOAA Advanced Hydrologic Prediction Service River Forecast Model”,methodType”:“forecast”, “url”: “https://water.weather.gov/ahps/about/about.php”}</p></li>
+<li id="fn8"><p>a nested json array of specific data production methods/sensor eg {“id”:“noaa-ahps” ,“provider”:“noaa”, “name”:“ahps”, “description”:“NOAA Advanced Hydrologic Prediction Service River Forecast Model”,“methodType”:“forecast”, “url”: “https://water.weather.gov/ahps/about/about.php”}</p></li>
 <li id="fn9"><p>an array of time spacings of datasets available from sites eg [“unknown”,“intermittent”,“discrete”,“event”,“1 second”, “15 minute”, “1 day”, “1 year”]</p></li>
+<li id="fn10"><p>a nested array of process names and descriptions and key words</p></li>
+<li id="fn11"><p>a nested array describing process inputs and outputs</p></li>
+<li id="fn12"><p>the endpoint at which to issue GET or POST request for the process</p></li>
 </ol>
 </section>
     </div>
@@ -1803,17 +1003,6 @@ a_{21}&amp; =b_{21}&amp;
           RevealZoom
         ]
       });
-    </script>
-    <script type="ojs-module-contents">
-    {"contents":[]}
-    </script>
-    <script type="module">
-    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-    window._ojs.paths.runtimeToDoc = "../../..";
-    window._ojs.paths.runtimeToRoot = "../../..";
-    window._ojs.paths.docToRoot = "";
-    window._ojs.selfContained = false;
-    window._ojs.runtime.interpretFromScriptTags();
     </script>
     
     <script>
