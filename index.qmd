@@ -272,7 +272,7 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
             ]
           },
           "distance_km": 0.3, # <9>
-          "locationType": "streamgage"
+          "locationType": "streamgage"  # <9>
         },
       "output": { # <10>
         {
@@ -323,7 +323,7 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
 6.  a set of example inputs and outputs for this API endpoint
 7.  an example geojson FeatureCollection input
 8.  example geojson FeatureCollection includes id property
-9.  an example distance threshold input
+9.  example distance and locationType threshold inputs
 10.  an example output geojson FeatureCollection
 11. each feature includes the identifier from the input geojson that the feature is matched with
 12. each feature includes its own identifier
