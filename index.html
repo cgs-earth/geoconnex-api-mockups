@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="mockups_files/libs/clipboard/clipboard.min.js"></script>
-<script src="mockups_files/libs/quarto-html/tabby.min.js"></script>
-<script src="mockups_files/libs/quarto-html/popper.min.js"></script>
-<script src="mockups_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="mockups_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="mockups_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="mockups_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="mockups_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.353">
 
   <title>Geoconnex API</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="mockups_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="mockups_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -94,13 +94,13 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="mockups_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="mockups_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="mockups_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="mockups_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="mockups_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="mockups_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="mockups_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -721,55 +721,55 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="10">specification of inputs for POST request</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="10" data-code-annotation="1">specification of inputs for POST request</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="11">the required input of a geojson feature collection of candidate features</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="11" data-code-annotation="2">the required input of a geojson feature collection of candidate features</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="3" data-code-lines="22">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="22" data-code-annotation="3">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="4" data-code-lines="33">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="33" data-code-annotation="4">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="5" data-code-lines="45">the specification of the output that will be received in the response to the API POST request</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="45" data-code-annotation="5">the specification of the output that will be received in the response to the API POST request</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="6" data-code-lines="55">a set of example inputs and outputs for this API endpoint</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="55" data-code-annotation="6">a set of example inputs and outputs for this API endpoint</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="7" data-code-lines="56">an example geojson FeatureCollection input</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="56" data-code-annotation="7">an example geojson FeatureCollection input</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="8" data-code-lines="63">example geojson FeatureCollection includes id property</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="63" data-code-annotation="8">example geojson FeatureCollection includes id property</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="9" data-code-lines="88">an example distance threshold input</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="88" data-code-annotation="9">an example distance threshold input</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="10" data-code-lines="91">an example output geojson FeatureCollection</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="91" data-code-annotation="10">an example output geojson FeatureCollection</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="11" data-code-lines="98">each feature includes the identifier from the input geojson that the feature is matched with</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="98" data-code-annotation="11">each feature includes the identifier from the input geojson that the feature is matched with</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="12" data-code-lines="99">each feature includes its own identifier</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="99" data-code-annotation="12">each feature includes its own identifier</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-annotation="13" data-code-lines="100">each feature includes the distance between the matched feature and the input feature :::</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="100" data-code-annotation="13">each feature includes the distance between the matched feature and the input feature :::</span>
 </dd>
 </dl>
 </div>
@@ -810,20 +810,20 @@
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="mockups_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="mockups_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="mockups_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="mockups_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

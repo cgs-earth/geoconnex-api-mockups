@@ -215,10 +215,20 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
             "minOccurs": 0,
             "maxOccurs": 1,
             "metadata": null
+        },
+      "locationType": { # <4>
+          "title": "Location type",
+            "description": "the type of location that the input represents. Should be from the codelist provided at the endpoint /locationTypes",
+            "schema": {
+                "type": "string"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
         }
           
         },
-    "outputs": { # <4>
+    "outputs": { # <5>
         "path": {
             "title": "FeatureCollection",
             "description": "A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites",
@@ -228,15 +238,15 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
             }
         }
     },
-    "example": { # <5>
-        "inputs": { # <6>
+    "example": { # <6>
+        "inputs": { # <7>
           "geojson": {
             "type": "FeatureCollection",
             "features": [
               {
                 "type": "Feature",
                 "properties": {
-                  "id": "station A" # <7>
+                  "id": "station A" # <8>
                 },
                 "geometry": {
                   "coordinates": [
@@ -261,18 +271,19 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
               }
             ]
           },
-          "distance_km": 0.3 # <8>
+          "distance_km": 0.3, # <9>
+          "locationType": "streamgage"
         },
-      "output": { # <9>
+      "output": { # <10>
         {
             "type": "FeatureCollection",
             "features": [
               {
                 "type": "Feature",
                 "properties": {
-                  "input_id": "station A" # <10>
-                  "id": "https://geoconnex.us/ref/gages/1000001", # <11>
-                  "distance_km": 0.1 # <12>
+                  "input_id": "station A" # <11>
+                  "id": "https://geoconnex.us/ref/gages/1000001", # <12>
+                  "distance_km": 0.1 # <13>
                 },
                 "geometry": {
                   "coordinates": [
@@ -307,15 +318,16 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
 1.  specification of inputs for POST request
 2.  the required input of a geojson feature collection of candidate features
 3.  the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)
-4.  the specification of the output that will be received in the response to the API POST request
-5.  a set of example inputs and outputs for this API endpoint
-6.  an example geojson FeatureCollection input
-7.  example geojson FeatureCollection includes id property
-8.  an example distance threshold input
-9.  an example output geojson FeatureCollection
-10. each feature includes the identifier from the input geojson that the feature is matched with
-11. each feature includes its own identifier
-12. each feature includes the distance between the matched feature and the input feature
+4.  the required input of the locationType that the input features represent and that the reference feature subset will be matched to
+5.  the specification of the output that will be received in the response to the API POST request
+6.  a set of example inputs and outputs for this API endpoint
+7.  an example geojson FeatureCollection input
+8.  example geojson FeatureCollection includes id property
+9.  an example distance threshold input
+10.  an example output geojson FeatureCollection
+11. each feature includes the identifier from the input geojson that the feature is matched with
+12. each feature includes its own identifier
+13. each feature includes the distance between the matched feature and the input feature
 :::
 
 ::: footer
