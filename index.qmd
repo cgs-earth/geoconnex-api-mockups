@@ -19,14 +19,31 @@ resources:
   - demo.pdf
 ---
 
+## Introduction {.smaller}
+
+-   Geoconnex is a knowledge graph incorporating relationships between:
+-   hydrologic features (rivers, waterbodies, aquifers, catchments/watersheds)
+-   cataloging features (counties, states, HUCs, adminsitrative boundaries)
+-   monitoring locations (stream gages, water quality stations, wells, dams, etc.)
+
+## Introduction {.smaller}
+
+-   Geoconnex harvests metadata about monitoring locations and the datasets about them that all organizations publish on the web with parseable metadata.
+-   The Geoconnex API we are designing aims to provide programmatic access to this metadata
+-   The Geoconnex API thus provides data discovery services, but not necessarily observation/model data access. It will point users to relevant datasets with as much useful metadata as possible
+
+::: notes
+Thank you for participating etc. What I'll do for you today is introduce the main use cases we imagine for the geoconnex API, and then go through a number of endpoints we are in the early design phases of. This is truly the first draft so your input could have a dramatic effect on the production API. Geoconnex itself will be a metadata catalog that includes minimally standardized metadata about all sites (eg gages, wells, dams, public water systems, water quality sample stations, etc.) that all participating organizations (eg federal, state, local, Tribal, NGO, academic) publish data about. The geoconnex API will allow programmatic access to this metadata catalog. First I'll introduce you to the two high level use cases we imagine this API meeting, and then show you mockups of the API endpoints, their inputs, and responses.
+:::
+
 ## Outline
 
 -   User Story - Data Publisher
 -   User Story - Data Analyst/Tool Developer
 -   Endpoints, requests, and responses
 
-::: {.notes}
-Thank you for participating etc. What I'll do for you today is introduce the main use cases we imagine for the geoconnex API, and then go through a number of endpoints we are in the early design phases of. This is truly the first draft so your input could have a dramatic effect on the production API. Geoconnex itself will be a metadata catalog that includes minimally standardized metadata about all sites that all participating organizations publish data about. The geoconnex API will allow programmatic access to this metadata catalog.
+::: notes
+The Geoconnex API we have designed around two main user groups, data publishers looking to get their datasets represented in the system, and data analysts or tool developers who need to discover water datasets across all organizations that might be relevant to their questions
 :::
 
 ## User Story - Water Data Publisher
@@ -68,8 +85,12 @@ https://api.geoconnex.us
     |--------------------------------------|-----------------------------|
     | Space/Geometry                       | Measurement/Modeling Method |
     | Organization/ data provider          | Temporal resolution         |
-    | Site Type                            | Temporal coverage           |
+    | Site Type (eg stream, well, dam)     | Temporal coverage           |
     | Parameter/Variable/Observed Property | Feature of Interest         |
+:::
+
+::: notes
+THe top level endpoint for the geoconnex APIs will be api.geoconnex.us. There will be several endpoints under this one. Most importantly, there will be a suite of services that allow users to discover and filter water datasets by these kinds of attributes.
 :::
 
 ## Top-level Endpoints {.smaller}
@@ -90,15 +111,11 @@ https://api.geoconnex.us...
 :::
 :::
 
-::: {.notes}
-THe first endpoint, processes, will describe the actual metadata search and retrieval services. The other endpoints are all  codelists for filters that can be used to subset all of the sites. After reviewing each one (remember to hover over the footnote for examples of how they would be structured), do you have any opinions on if any of these are not useful? If there are other such codelists that might be useful. And how the actual endpoints are structured, if more or less information might be needed?
-:::
-
 [^1]: an array of API endpoints in the [OGC-API Processes](https://ogcapi.ogc.org/processes/) standard for more specific queries that may use the below as query parameters
 
 [^2]: a nested json array of types of locations available and their definition for each (e.g. \[{"id":"dam", "name":"dam", "description": "a structure creating an impounded body of water on a stream")},{"name":"stream", "description": "a flowing body of water on the surface"}\])
 
-[^3]: types of area summary features (e.g. HUC8, catchment, county, state)
+[^3]: types of areal summary features (e.g. HUC8, catchment, county, state)
 
 [^4]: paginated (limit=x&offset=y) geojson with attributes eg "id":"https://geoconnex.us/ref/hu02/14","name":"Upper Colorado"
 
@@ -111,6 +128,10 @@ THe first endpoint, processes, will describe the actual metadata search and retr
 [^8]: a nested json array of specific data production methods/sensor eg {"id":"noaa-ahps" ,"provider":"noaa", "name":"ahps", "description":"NOAA Advanced Hydrologic Prediction Service River Forecast Model","methodType":"forecast", "url": "https://water.weather.gov/ahps/about/about.php"}
 
 [^9]: an array of time spacings of datasets available from sites eg \["unknown","intermittent","discrete","event","1 second", "15 minute", "1 day", "1 year"\]
+
+::: notes
+THe first endpoint, processes, will describe the actual metadata search and retrieval services. The other endpoints are all codelists for filters that can be used to subset all of the sites. After reviewing each one (remember to hover over the footnote for examples of how they would be structured), do you have any opinions on if any of these are not useful? If there are other such codelists that might be useful. And how the actual endpoints are structured, if more or less information might be needed?
+:::
 
 ## Processes - general pattern
 
@@ -130,90 +151,42 @@ Data discovery tools follow the [OGC-API Processes](https://ogcapi.ogc.org/proce
 
 ## /processes?f=html {.smaller}
 
-| name                       | description                                                                                                                        |
-|-----------------|-------------------------------------------------------|
-| referenceMyLocations     | POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already             |
-| findFeatures     | GET or POST query parameters to find features of relevance                                                              |
-| navigateFeatures | GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier                       |
-| findDatasets   | POST an array of feature identifiers and an array of query parameters to find relevant dataset metadata|
-
+| process name         | description                                                                                                            |
+|-------------------|-----------------------------------------------------|
+| referenceMyLocations | POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already |
+| findFeatures ^[similar to NWIS Site Service]         | GET or POST query parameters to find features of relevance                                                             |
+| navigateFeatures ^[similar to NLDI or upstream/downstream EPA RAD/WATERS]     | GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier           |
+| findDatasets ^[similar to whatNWISdata function from dataRetrieval]         | POST an array of feature identifiers and an array of query parameters to find relevant dataset metadata]                |
 
 ## /processes Data publisher use case {.smaller}
 
-- As a data publisher, would use referenceMyLocations to see if any existing locations in the database exist that are likely the same site/ real-world object as sits I want to publish data about. I could then add links in my metadata that I publish to ensure others know I have data about the same site
+-   As a data publisher, would use **referenceMyLocations** to see if any existing locations in the database exist that are likely the same site/ real-world object as sits I want to publish data about. I could then add links in my metadata that I publish to ensure others know I have data about the same site
 
-:::{.notes}
+::: notes
 Read use case ask if they have any questions, concerns, suggestions at a high level for other services that could be useful to a data publisher
 :::
 
 ## /processes Data user imagined workflow {.smaller}
 
-- use findFeatures to do this
-- then use navigateFeatures to do this
-- and then use findDatasets to do this
+1.  use **findFeatures** discover locations within a bounding box, radius around a point, or arbitrary spatial polygon
 
-:::{.notes}
+    -   receive geojson file, including attribute id populated with geoconnex http URIs (e.g. https://geoconnex.us/usgs/monitoring-location/1000001)
 
+2.  If desired, use **navigateFeatures** to find all sites downstream and/or upstream of a site identified by a geoconnex http URI or a latitude/longitude
+
+3.  use **findDatasets**, given a list of URIs and query parameters for provider, observedProperty, period of record, etc., be given links to datasets relevant to your question that are about the locations found by **findFeatures** and/or **navigateFeatures** calls
+
+::: notes
+go through imagined workflow, ask if they have questions, concerns, suggestions at a high level for other services, or a different configuration of services, that could bee useful to a data user.
 :::
 
-## /processes?f=json {.smaller}
+## /processes/referenceMyLocations {.smaller}
 
-```{r}
-#| eval: FALSE
-#| echo: TRUE
-{
-"processes": [
-  {
-    "version": "0.2.0",
-    "id": "referenceMyLocations",
-    "title": "Reference My Locations",
-    "description": "POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already ",
-"jobControlOptions": [
-  "sync",
-  "async"
-  ]
-  },
- {
-    "version": "0.2.0",
-    "id": "findFeatures",
-    "title": "Find Features",
-    "description": "GET or POST query parameters to find features of relevance",
-"jobControlOptions": [
-  "sync",
-  "async"
-  ]
-  },
- {
-    "version": "0.2.0",
-    "id": "navigateMonitoringFeatures",
-    "title": "find up or downstream monitoring features",
-    "description": "GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier",
-"jobControlOptions": [
-  "sync",
-  "async"
-  ]
-  },
- {
-    "version": "0.2.0",
-    "id": "findDatasets",
-    "title": "Find relevant dataset metadata",
-    "description": "POST an array of feature identifiers and an array of query parameters to find relevant dataset metadata",
-"jobControlOptions": [
-  "sync",
-  "async"
-  ]
-  }
+* processes/referenceMyLocations = API Documentation of **input** POST body requirements/options and **output** response body geojson format
+* processes/referenceMyLocations/execution = endpoint to POST **input**/ retrieve **output** response
 
-}
-```
-
-
-
-
-## /processes/referenceMyLocations?f=json {.smaller}
-
-::: {.notes}
-You can scroll up and down and side to side to reveal what would be seen at this endpoint, which describes the inputs and outputs of the API endpoint as well as provides an example. Annotations are available if you hover over the circled numbers on the right.
+::: notes
+You can scroll up and down and side to side to reveal what would be seen at this endpoint, which describes the inputs and outputs of the API endpoint as well as provides an example. Annotations are available if you hover over the circled numbers on the right. ask if they have questions, concerns, suggestions for more or different inputs, and more or different elements of the output.
 :::
 
 ```{r}
@@ -350,6 +323,7 @@ You can scroll up and down and side to side to reveal what would be seen at this
     }
 }
 ```
+
 1.  specification of inputs for POST request
 2.  the required input of a geojson feature collection of candidate features
 3.  the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)
@@ -359,18 +333,353 @@ You can scroll up and down and side to side to reveal what would be seen at this
 7.  an example geojson FeatureCollection input
 8.  example geojson FeatureCollection includes id property
 9.  example distance and locationType threshold inputs
-10.  an example output geojson FeatureCollection
+10. an example output geojson FeatureCollection
 11. each feature includes the identifier from the input geojson that the feature is matched with
 12. each feature includes its own identifier
-13. each feature includes the distance between the matched feature and the input feature
-:::
+13. each feature includes the distance between the matched feature and the input feature 
+
 
 ::: footer
 Learn more: [geoconnex.us](https://geoconnex.us)
 :::
 
+## /processes/findFeatures {.smaller}
 
-## /processes/referenceMyLocations?f=json {.smaller}
+* processes/findFeatures = API Documentation of **input** POST body requirements/options and **output** response body geojson format
+* processes/findFeatures/execution = endpoint to POST **input**/ retrieve **output** response
 
--   Over 20 syntax highlighting themes available
--   Default theme optimized for accessibility
+- geojson
+- bbox
+- census place/ incorporated place/ municipality
+- county
+- state
+- core-based statistical area
+- HUC2,4,6,8,10, or 12
+- mainstem river
+- locationType
+- provider
+- observedProperty
+   * methodType
+   * timeSpacing
+   * phenomenonTime
+
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+{
+    "type": "process",
+    "processor": {
+        "name": "findLocations"
+    },
+    "title": "Reference My Locations",
+    "description": "POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations",
+    "version": "0.5.0",
+    "id": "findLocations",
+    "inputs": { # <1>
+        "geojson": { # <2>
+            "title": "FeatureCollection",
+            "description": "A geoJSON FeatureCollection of polygons, so that all locations will be within one of the polygons",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+        "providers": { # <4>
+          "title": "provider",
+            "description": "a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+      "locationTypes": { # <4>
+          "title": "Location type",
+            "description": "a json array of the types of location that the outputs could be. Should be from the codelist provided at the endpoint /locationTypes",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        }
+          
+        },
+    "outputs": { # <5>
+        "path": {
+            "title": "FeatureCollection",
+            "description": "A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            }
+        }
+    },
+    "example": { # <6>
+        "inputs": { # <7>
+          "geojson": {
+            "type": "FeatureCollection",
+            "features": [
+              {
+                "type": "Feature",
+                "properties": {
+                  "id": "station A" # <8>
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.07158950388026,
+                    35.898135796576824
+                  ],
+                  "type": "Point"
+                }
+              },
+              {
+                "type": "Feature",
+                "properties": {
+                  "id": "station B"
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.06653548565708,
+                    35.89697449172864
+                  ],
+                  "type": "Point"
+                }
+              }
+            ]
+          },
+          "distance_km": 0.3, # <9>
+          "locationType": "streamgage"  # <9>
+        },
+      "output": { # <10>
+        {
+            "type": "FeatureCollection",
+            "features": [
+              {
+                "type": "Feature",
+                "properties": {
+                  "input_id": "station A" # <11>
+                  "id": "https://geoconnex.us/ref/gages/1000001", # <12>
+                  "distance_km": 0.1 # <13>
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.076,
+                    35.89
+                  ],
+                  "type": "Point"
+                }
+              },
+              {
+                "type": "Feature",
+                "properties": {
+                  "input_id": "station B"
+                  "id": "https://geoconnex.us/ref/gages/1000002",
+                  "distance_km": 0.14
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.06653548565708,
+                    35.89697449172864
+                  ],
+                  "type": "Point"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+}
+```
+
+1.  specification of inputs for POST request
+2.  the required input of a geojson feature collection of candidate features
+3.  the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)
+4.  the required input of the locationType that the input features represent and that the reference feature subset will be matched to
+5.  the specification of the output that will be received in the response to the API POST request
+6.  a set of example inputs and outputs for this API endpoint
+7.  an example geojson FeatureCollection input
+8.  example geojson FeatureCollection includes id property
+9.  example distance and locationType threshold inputs
+10. an example output geojson FeatureCollection
+11. each feature includes the identifier from the input geojson that the feature is matched with
+12. each feature includes its own identifier
+13. each feature includes the distance between the matched feature and the input feature 
+
+
+## /processes/navigateFeatures {.smaller}
+
+* processes/navigateFeatures = API Documentation of **input** POST body requirements/options and **output** response body geojson format
+* processes/navigateFeatures/execution = endpoint to POST **input**/ retrieve **output** response
+
+- uri
+- pointLocation
+ * y
+ * x
+ * crs
+- navigation
+ * upstream: 
+   * y/n
+   * tributary order: -1,0,1,2..
+ * downstream:
+   * y/n
+   * diversion order: -1,0,1,2...
+
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+{
+    "type": "process",
+    "processor": {
+        "name": "findLocations"
+    },
+    "title": "Reference My Locations",
+    "description": "POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations",
+    "version": "0.5.0",
+    "id": "findLocations",
+    "inputs": { # <1>
+        "geojson": { # <2>
+            "title": "FeatureCollection",
+            "description": "A geoJSON FeatureCollection of polygons, so that all locations will be within one of the polygons",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+        "providers": { # <4>
+          "title": "provider",
+            "description": "a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+      "locationTypes": { # <4>
+          "title": "Location type",
+            "description": "a json array of the types of location that the outputs could be. Should be from the codelist provided at the endpoint /locationTypes",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        }
+          
+        },
+    "outputs": { # <5>
+        "path": {
+            "title": "FeatureCollection",
+            "description": "A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            }
+        }
+    },
+    "example": { # <6>
+        "inputs": { # <7>
+          "geojson": {
+            "type": "FeatureCollection",
+            "features": [
+              {
+                "type": "Feature",
+                "properties": {
+                  "id": "station A" # <8>
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.07158950388026,
+                    35.898135796576824
+                  ],
+                  "type": "Point"
+                }
+              },
+              {
+                "type": "Feature",
+                "properties": {
+                  "id": "station B"
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.06653548565708,
+                    35.89697449172864
+                  ],
+                  "type": "Point"
+                }
+              }
+            ]
+          },
+          "distance_km": 0.3, # <9>
+          "locationType": "streamgage"  # <9>
+        },
+      "output": { # <10>
+        {
+            "type": "FeatureCollection",
+            "features": [
+              {
+                "type": "Feature",
+                "properties": {
+                  "input_id": "station A" # <11>
+                  "id": "https://geoconnex.us/ref/gages/1000001", # <12>
+                  "distance_km": 0.1 # <13>
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.076,
+                    35.89
+                  ],
+                  "type": "Point"
+                }
+              },
+              {
+                "type": "Feature",
+                "properties": {
+                  "input_id": "station B"
+                  "id": "https://geoconnex.us/ref/gages/1000002",
+                  "distance_km": 0.14
+                },
+                "geometry": {
+                  "coordinates": [
+                    -79.06653548565708,
+                    35.89697449172864
+                  ],
+                  "type": "Point"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+}
+```
+
+1.  specification of inputs for POST request
+2.  the required input of a geojson feature collection of candidate features
+3.  the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)
+4.  the required input of the locationType that the input features represent and that the reference feature subset will be matched to
+5.  the specification of the output that will be received in the response to the API POST request
+6.  a set of example inputs and outputs for this API endpoint
+7.  an example geojson FeatureCollection input
+8.  example geojson FeatureCollection includes id property
+9.  example distance and locationType threshold inputs
+10. an example output geojson FeatureCollection
+11. each feature includes the identifier from the input geojson that the feature is matched with
+12. each feature includes its own identifier
+13. each feature includes the distance between the matched feature and the input feature 
