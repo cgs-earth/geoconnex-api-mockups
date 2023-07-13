@@ -349,7 +349,6 @@ Learn more: [geoconnex.us](https://geoconnex.us)
 * processes/findFeatures/execution = endpoint to POST **input**/ retrieve **output** response
 
 - geojson
-- bbox
 - census place/ incorporated place/ municipality
 - county
 - state
@@ -372,12 +371,12 @@ Learn more: [geoconnex.us](https://geoconnex.us)
     "processor": {
         "name": "findLocations"
     },
-    "title": "Reference My Locations",
+    "title": "find Locations",
     "description": "POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations",
     "version": "0.5.0",
     "id": "findLocations",
-    "inputs": { # <1>
-        "geojson": { # <2>
+    "inputs": { 
+        "geojson": { 
             "title": "FeatureCollection",
             "description": "A geoJSON FeatureCollection of polygons, so that all locations will be within one of the polygons",
             "schema": {
@@ -398,8 +397,8 @@ Learn more: [geoconnex.us](https://geoconnex.us)
             "minOccurs": 0,
             "maxOccurs": 1,
             "metadata": null
-        },
-      "locationTypes": { # <4>
+        }, 
+        "locationTypes": { 
           "title": "Location type",
             "description": "a json array of the types of location that the outputs could be. Should be from the codelist provided at the endpoint /locationTypes",
             "schema": {
@@ -409,65 +408,153 @@ Learn more: [geoconnex.us](https://geoconnex.us)
             "minOccurs": 0,
             "maxOccurs": 1,
             "metadata": null
-        }
-          
+        },
+        "places": {
+          "title": "Census place",
+            "description": "a json array of GEOIDs of census places (available at https://reference.geoconnex.us/collections/places/items)",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+        "states": {
+                    "title": "Census place",
+            "description": "a json array of GEOIDs of US States and Territories (available at https://reference.geoconnex.us/collections/states/items)",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+        "counties": {
+            "title": "Census place",
+            "description": "a json array of GEOIDs of US counties (available at https://reference.geoconnex.us/collections/counties/items)",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+        "cbsa": {
+          "title": "Core-based statistical areas",
+            "description": "a json array GEOIDs US core-based statistical areas (available at https://reference.geoconnex.us/collections/cbsa/items)",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null
+        },
+        "huc": {
+            "title": "hydrologic unit code",
+            "description": "a json array HUC codes, any digit level",
+            "schema": {
+                "type": "number",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null},
+        "mainstems": {
+          "title": "Core-based statistical areas",
+            "description": "a json array of geoconnex URIs of US river mainstems (available at https://reference.geoconnex.us/collections/mainstems/items)",
+            "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null},
+        "observedProperties": {
+          "title": "observedProperties"
+          "description": "a nested json array of observedProperties and desired relevant methodType, minimum timeSpacing, and period of record (available), such that returned sites must be associated with least one such dataset"
+           "schema": {
+                "type": "object",
+                "contentMediaType": "application/json"
+            },
+            "minOccurs": 0,
+            "maxOccurs": 1,
+            "metadata": null}
         },
     "outputs": { # <5>
         "path": {
             "title": "FeatureCollection",
-            "description": "A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites",
+            "description": "A geoJSON FeatureCollection of sites meeting the filters specified in the inputs",
             "schema": {
                 "type": "object",
                 "contentMediaType": "application/json"
             }
         }
     },
-    "example": { # <6>
-        "inputs": { # <7>
-          "geojson": {
-            "type": "FeatureCollection",
-            "features": [
-              {
-                "type": "Feature",
-                "properties": {
-                  "id": "station A" # <8>
-                },
-                "geometry": {
-                  "coordinates": [
-                    -79.07158950388026,
-                    35.898135796576824
-                  ],
-                  "type": "Point"
-                }
-              },
-              {
-                "type": "Feature",
-                "properties": {
-                  "id": "station B"
-                },
-                "geometry": {
-                  "coordinates": [
-                    -79.06653548565708,
-                    35.89697449172864
-                  ],
-                  "type": "Point"
-                }
-              }
-            ]
-          },
-          "distance_km": 0.3, # <9>
-          "locationType": "streamgage"  # <9>
-        },
-      "output": { # <10>
+    "example": { 
+        "inputs": { 
+          "geojson": { # <6>
+            "type": "FeatureCollection", # <6>
+            "features": [ # <6>
+              { # <6>
+                "type": "Feature", # <6>
+                "properties": { # <6>
+                  "id": "water management area" # <6>
+                }, # <6>
+                "geometry": { # <6>
+                  "coordinates": [ # <6>
+          [ # <6>
+            [ # <6>
+              -97.29, # <6>
+              37.56 # <6>
+            ], # <6>
+            [ # <6>
+              -97.29, # <6>
+              37.53 # <6>
+            ], # <6>
+            [ # <6>
+              -97.25, # <6>
+              37.53 # <6>
+            ], # <6>
+            [ # <6>
+              -97.25, # <6>
+              37.56 # <6>
+            ], # <6>
+            [ # <6>
+              -97.29, # <6>
+              37.56 # <6>
+            ] # <6>
+          ] # <6>
+        ], # <6>
+        "type": "Polygon" # <6>
+                } # <6>
+              } # <6>
+        }, # <6>
+        "states": ["06","04"] # <7>
+        "mainstems": ["https://geoconnex.us/ref/mainstems/29559"] # <8>
+        "observedProperties": { # <9>
+          "name": "streamflow", # <10>
+          "methodType": ["in-site observation","forecast"], # <11>
+          "timeSpacing": "1 hour", # <12>
+          "phenomenonTime": "2022-01-01/.." # <13>
+        }    
+          }
+      
+          
+ 
+      "output": { # <14>
         {
             "type": "FeatureCollection",
             "features": [
               {
                 "type": "Feature",
                 "properties": {
-                  "input_id": "station A" # <11>
-                  "id": "https://geoconnex.us/ref/gages/1000001", # <12>
-                  "distance_km": 0.1 # <13>
+                  "input_id": "station A" 
+                  "id": "https://geoconnex.us/ref/gages/1000001", 
+      
                 },
                 "geometry": {
                   "coordinates": [
@@ -482,12 +569,11 @@ Learn more: [geoconnex.us](https://geoconnex.us)
                 "properties": {
                   "input_id": "station B"
                   "id": "https://geoconnex.us/ref/gages/1000002",
-                  "distance_km": 0.14
                 },
                 "geometry": {
                   "coordinates": [
-                    -79.06653548565708,
-                    35.89697449172864
+                    -79.066,
+                    35.896
                   ],
                   "type": "Point"
                 }

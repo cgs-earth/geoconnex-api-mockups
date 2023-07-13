@@ -625,7 +625,7 @@
 <section id="processes-data-user-imagined-workflow" class="slide level2 smaller">
 <h2>/processes Data user imagined workflow</h2>
 <ol type="1">
-<li><p>use f<strong>indFeatures</strong> discover locations within a bounding box, radius around a point, or arbitrary spatial polygon</p>
+<li><p>use <strong>findFeatures</strong> discover locations within a bounding box, radius around a point, or arbitrary spatial polygon</p>
 <ul>
 <li>receive geojson file, including attribute id populated with geoconnex http URIs (e.g.&nbsp;https://geoconnex.us/usgs/monitoring-location/1000001)</li>
 </ul></li>
@@ -648,6 +648,10 @@
 </section>
 <section id="processesreferencemylocations" class="slide level2 smaller">
 <h2>/processes/referenceMyLocations</h2>
+<ul>
+<li>processes/referenceMyLocations = API Documentation of <strong>input</strong> POST body requirements/options and <strong>output</strong> response body geojson format</li>
+<li>processes/referenceMyLocations/execution = endpoint to POST <strong>input</strong>/ retrieve <strong>output</strong> response</li>
+</ul>
 <aside class="notes">
 <p>You can scroll up and down and side to side to reveal what would be seen at this endpoint, which describes the inputs and outputs of the API endpoint as well as provides an example. Annotations are available if you hover over the circled numbers on the right. ask if they have questions, concerns, suggestions for more or different inputs, and more or different elements of the output.</p>
 <style type="text/css">
@@ -796,55 +800,55 @@
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="10" data-code-annotation="1">specification of inputs for POST request</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="10">specification of inputs for POST request</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="11" data-code-annotation="2">the required input of a geojson feature collection of candidate features</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="11">the required input of a geojson feature collection of candidate features</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="22" data-code-annotation="3">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-1" data-code-lines="22">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="33" data-code-annotation="4">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-1" data-code-lines="33">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="45" data-code-annotation="5">the specification of the output that will be received in the response to the API POST request</span>
+<span data-code-annotation="5" data-code-cell="annotated-cell-1" data-code-lines="45">the specification of the output that will be received in the response to the API POST request</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="55" data-code-annotation="6">a set of example inputs and outputs for this API endpoint</span>
+<span data-code-annotation="6" data-code-cell="annotated-cell-1" data-code-lines="55">a set of example inputs and outputs for this API endpoint</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="56" data-code-annotation="7">an example geojson FeatureCollection input</span>
+<span data-code-annotation="7" data-code-cell="annotated-cell-1" data-code-lines="56">an example geojson FeatureCollection input</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="63" data-code-annotation="8">example geojson FeatureCollection includes id property</span>
+<span data-code-annotation="8" data-code-cell="annotated-cell-1" data-code-lines="63">example geojson FeatureCollection includes id property</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="88,89" data-code-annotation="9">example distance and locationType threshold inputs</span>
+<span data-code-annotation="9" data-code-cell="annotated-cell-1" data-code-lines="88,89">example distance and locationType threshold inputs</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="91" data-code-annotation="10">an example output geojson FeatureCollection</span>
+<span data-code-annotation="10" data-code-cell="annotated-cell-1" data-code-lines="91">an example output geojson FeatureCollection</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="98" data-code-annotation="11">each feature includes the identifier from the input geojson that the feature is matched with</span>
+<span data-code-annotation="11" data-code-cell="annotated-cell-1" data-code-lines="98">each feature includes the identifier from the input geojson that the feature is matched with</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="99" data-code-annotation="12">each feature includes its own identifier</span>
+<span data-code-annotation="12" data-code-cell="annotated-cell-1" data-code-lines="99">each feature includes its own identifier</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="100" data-code-annotation="13">each feature includes the distance between the matched feature and the input feature</span>
+<span data-code-annotation="13" data-code-cell="annotated-cell-1" data-code-lines="100">each feature includes the distance between the matched feature and the input feature</span>
 </dd>
 </dl>
 </div>
@@ -853,20 +857,39 @@
 <p>Learn more: <a href="https://geoconnex.us">geoconnex.us</a></p>
 </div>
 </section>
-<section id="processesfindfeaturesfjson" class="slide level2 smaller">
-<h2>/processes/findFeatures?f=json</h2>
+<section id="processesfindfeatures" class="slide level2 smaller">
+<h2>/processes/findFeatures</h2>
+<ul>
+<li><p>processes/findFeatures = API Documentation of <strong>input</strong> POST body requirements/options and <strong>output</strong> response body geojson format</p></li>
+<li><p>processes/findFeatures/execution = endpoint to POST <strong>input</strong>/ retrieve <strong>output</strong> response</p></li>
+<li><p>geojson</p></li>
+<li><p>census place/ incorporated place/ municipality</p></li>
+<li><p>county</p></li>
+<li><p>state</p></li>
+<li><p>core-based statistical area</p></li>
+<li><p>HUC2,4,6,8,10, or 12</p></li>
+<li><p>mainstem river</p></li>
+<li><p>locationType</p></li>
+<li><p>provider</p></li>
+<li><p>observedProperty</p>
+<ul>
+<li>methodType</li>
+<li>timeSpacing</li>
+<li>phenomenonTime</li>
+</ul></li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1"></a>{</span>
 <span id="annotated-cell-2-2"><a href="#annotated-cell-2-2"></a>    <span class="st">"type"</span><span class="sc">:</span> <span class="st">"process"</span>,</span>
 <span id="annotated-cell-2-3"><a href="#annotated-cell-2-3"></a>    <span class="st">"processor"</span><span class="sc">:</span> {</span>
 <span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a>        <span class="st">"name"</span><span class="sc">:</span> <span class="st">"findLocations"</span></span>
 <span id="annotated-cell-2-5"><a href="#annotated-cell-2-5"></a>    },</span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Reference My Locations"</span>,</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"find Locations"</span>,</span>
 <span id="annotated-cell-2-7"><a href="#annotated-cell-2-7"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations"</span>,</span>
 <span id="annotated-cell-2-8"><a href="#annotated-cell-2-8"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.5.0"</span>,</span>
 <span id="annotated-cell-2-9"><a href="#annotated-cell-2-9"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"findLocations"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-10" class="code-annotation-target"><a href="#annotated-cell-2-10"></a>    <span class="st">"inputs"</span><span class="sc">:</span> {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-11" class="code-annotation-target"><a href="#annotated-cell-2-11"></a>        <span class="st">"geojson"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10"></a>    <span class="st">"inputs"</span><span class="sc">:</span> { </span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11"></a>        <span class="st">"geojson"</span><span class="sc">:</span> { </span>
 <span id="annotated-cell-2-12"><a href="#annotated-cell-2-12"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
 <span id="annotated-cell-2-13"><a href="#annotated-cell-2-13"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of polygons, so that all locations will be within one of the polygons"</span>,</span>
 <span id="annotated-cell-2-14"><a href="#annotated-cell-2-14"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
@@ -887,8 +910,8 @@
 <span id="annotated-cell-2-29"><a href="#annotated-cell-2-29"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
 <span id="annotated-cell-2-30"><a href="#annotated-cell-2-30"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
 <span id="annotated-cell-2-31"><a href="#annotated-cell-2-31"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
-<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32"></a>        },</span>
-<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33"></a>      <span class="st">"locationTypes"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32"></a>        }, </span>
+<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33"></a>        <span class="st">"locationTypes"</span><span class="sc">:</span> { </span>
 <span id="annotated-cell-2-34"><a href="#annotated-cell-2-34"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Location type"</span>,</span>
 <span id="annotated-cell-2-35"><a href="#annotated-cell-2-35"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of the types of location that the outputs could be. Should be from the codelist provided at the endpoint /locationTypes"</span>,</span>
 <span id="annotated-cell-2-36"><a href="#annotated-cell-2-36"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
@@ -898,144 +921,431 @@
 <span id="annotated-cell-2-40"><a href="#annotated-cell-2-40"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
 <span id="annotated-cell-2-41"><a href="#annotated-cell-2-41"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
 <span id="annotated-cell-2-42"><a href="#annotated-cell-2-42"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
-<span id="annotated-cell-2-43"><a href="#annotated-cell-2-43"></a>        }</span>
-<span id="annotated-cell-2-44"><a href="#annotated-cell-2-44"></a>          </span>
-<span id="annotated-cell-2-45"><a href="#annotated-cell-2-45"></a>        },</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-46" class="code-annotation-target"><a href="#annotated-cell-2-46"></a>    <span class="st">"outputs"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-47"><a href="#annotated-cell-2-47"></a>        <span class="st">"path"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-48"><a href="#annotated-cell-2-48"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
-<span id="annotated-cell-2-49"><a href="#annotated-cell-2-49"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites"</span>,</span>
-<span id="annotated-cell-2-50"><a href="#annotated-cell-2-50"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-51"><a href="#annotated-cell-2-51"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
-<span id="annotated-cell-2-52"><a href="#annotated-cell-2-52"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
-<span id="annotated-cell-2-53"><a href="#annotated-cell-2-53"></a>            }</span>
-<span id="annotated-cell-2-54"><a href="#annotated-cell-2-54"></a>        }</span>
-<span id="annotated-cell-2-55"><a href="#annotated-cell-2-55"></a>    },</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-56" class="code-annotation-target"><a href="#annotated-cell-2-56"></a>    <span class="st">"example"</span><span class="sc">:</span> {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="7">7</button><span id="annotated-cell-2-57" class="code-annotation-target"><a href="#annotated-cell-2-57"></a>        <span class="st">"inputs"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-58"><a href="#annotated-cell-2-58"></a>          <span class="st">"geojson"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-59"><a href="#annotated-cell-2-59"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
-<span id="annotated-cell-2-60"><a href="#annotated-cell-2-60"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-2-61"><a href="#annotated-cell-2-61"></a>              {</span>
-<span id="annotated-cell-2-62"><a href="#annotated-cell-2-62"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
-<span id="annotated-cell-2-63"><a href="#annotated-cell-2-63"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="8">8</button><span id="annotated-cell-2-64" class="code-annotation-target"><a href="#annotated-cell-2-64"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"station A"</span></span>
-<span id="annotated-cell-2-65"><a href="#annotated-cell-2-65"></a>                },</span>
-<span id="annotated-cell-2-66"><a href="#annotated-cell-2-66"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-67"><a href="#annotated-cell-2-67"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-2-68"><a href="#annotated-cell-2-68"></a>                    <span class="sc">-</span><span class="fl">79.07158950388026</span>,</span>
-<span id="annotated-cell-2-69"><a href="#annotated-cell-2-69"></a>                    <span class="fl">35.898135796576824</span></span>
-<span id="annotated-cell-2-70"><a href="#annotated-cell-2-70"></a>                  ],</span>
-<span id="annotated-cell-2-71"><a href="#annotated-cell-2-71"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
-<span id="annotated-cell-2-72"><a href="#annotated-cell-2-72"></a>                }</span>
-<span id="annotated-cell-2-73"><a href="#annotated-cell-2-73"></a>              },</span>
-<span id="annotated-cell-2-74"><a href="#annotated-cell-2-74"></a>              {</span>
-<span id="annotated-cell-2-75"><a href="#annotated-cell-2-75"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
-<span id="annotated-cell-2-76"><a href="#annotated-cell-2-76"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-77"><a href="#annotated-cell-2-77"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"station B"</span></span>
-<span id="annotated-cell-2-78"><a href="#annotated-cell-2-78"></a>                },</span>
-<span id="annotated-cell-2-79"><a href="#annotated-cell-2-79"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-80"><a href="#annotated-cell-2-80"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-2-81"><a href="#annotated-cell-2-81"></a>                    <span class="sc">-</span><span class="fl">79.06653548565708</span>,</span>
-<span id="annotated-cell-2-82"><a href="#annotated-cell-2-82"></a>                    <span class="fl">35.89697449172864</span></span>
-<span id="annotated-cell-2-83"><a href="#annotated-cell-2-83"></a>                  ],</span>
-<span id="annotated-cell-2-84"><a href="#annotated-cell-2-84"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
-<span id="annotated-cell-2-85"><a href="#annotated-cell-2-85"></a>                }</span>
-<span id="annotated-cell-2-86"><a href="#annotated-cell-2-86"></a>              }</span>
-<span id="annotated-cell-2-87"><a href="#annotated-cell-2-87"></a>            ]</span>
-<span id="annotated-cell-2-88"><a href="#annotated-cell-2-88"></a>          },</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="9">9</button><span id="annotated-cell-2-89" class="code-annotation-target"><a href="#annotated-cell-2-89"></a>          <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.3</span>,</span>
-<span id="annotated-cell-2-90"><a href="#annotated-cell-2-90"></a>          <span class="st">"locationType"</span><span class="sc">:</span> <span class="st">"streamgage"</span></span>
-<span id="annotated-cell-2-91"><a href="#annotated-cell-2-91"></a>        },</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="10">10</button><span id="annotated-cell-2-92" class="code-annotation-target"><a href="#annotated-cell-2-92"></a>      <span class="st">"output"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-93"><a href="#annotated-cell-2-93"></a>        {</span>
-<span id="annotated-cell-2-94"><a href="#annotated-cell-2-94"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
-<span id="annotated-cell-2-95"><a href="#annotated-cell-2-95"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-2-96"><a href="#annotated-cell-2-96"></a>              {</span>
-<span id="annotated-cell-2-97"><a href="#annotated-cell-2-97"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
-<span id="annotated-cell-2-98"><a href="#annotated-cell-2-98"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="11">11</button><span id="annotated-cell-2-99" class="code-annotation-target"><a href="#annotated-cell-2-99"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station A"</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="12">12</button><span id="annotated-cell-2-100" class="code-annotation-target"><a href="#annotated-cell-2-100"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000001"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="13">13</button><span id="annotated-cell-2-101" class="code-annotation-target"><a href="#annotated-cell-2-101"></a>                  <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.1</span></span>
-<span id="annotated-cell-2-102"><a href="#annotated-cell-2-102"></a>                },</span>
-<span id="annotated-cell-2-103"><a href="#annotated-cell-2-103"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-104"><a href="#annotated-cell-2-104"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-2-105"><a href="#annotated-cell-2-105"></a>                    <span class="sc">-</span><span class="fl">79.076</span>,</span>
-<span id="annotated-cell-2-106"><a href="#annotated-cell-2-106"></a>                    <span class="fl">35.89</span></span>
-<span id="annotated-cell-2-107"><a href="#annotated-cell-2-107"></a>                  ],</span>
-<span id="annotated-cell-2-108"><a href="#annotated-cell-2-108"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
-<span id="annotated-cell-2-109"><a href="#annotated-cell-2-109"></a>                }</span>
-<span id="annotated-cell-2-110"><a href="#annotated-cell-2-110"></a>              },</span>
-<span id="annotated-cell-2-111"><a href="#annotated-cell-2-111"></a>              {</span>
-<span id="annotated-cell-2-112"><a href="#annotated-cell-2-112"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
-<span id="annotated-cell-2-113"><a href="#annotated-cell-2-113"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-114"><a href="#annotated-cell-2-114"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station B"</span></span>
-<span id="annotated-cell-2-115"><a href="#annotated-cell-2-115"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000002"</span>,</span>
-<span id="annotated-cell-2-116"><a href="#annotated-cell-2-116"></a>                  <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.14</span></span>
-<span id="annotated-cell-2-117"><a href="#annotated-cell-2-117"></a>                },</span>
-<span id="annotated-cell-2-118"><a href="#annotated-cell-2-118"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
-<span id="annotated-cell-2-119"><a href="#annotated-cell-2-119"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
-<span id="annotated-cell-2-120"><a href="#annotated-cell-2-120"></a>                    <span class="sc">-</span><span class="fl">79.06653548565708</span>,</span>
-<span id="annotated-cell-2-121"><a href="#annotated-cell-2-121"></a>                    <span class="fl">35.89697449172864</span></span>
-<span id="annotated-cell-2-122"><a href="#annotated-cell-2-122"></a>                  ],</span>
-<span id="annotated-cell-2-123"><a href="#annotated-cell-2-123"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
-<span id="annotated-cell-2-124"><a href="#annotated-cell-2-124"></a>                }</span>
-<span id="annotated-cell-2-125"><a href="#annotated-cell-2-125"></a>              }</span>
-<span id="annotated-cell-2-126"><a href="#annotated-cell-2-126"></a>            ]</span>
-<span id="annotated-cell-2-127"><a href="#annotated-cell-2-127"></a>          }</span>
-<span id="annotated-cell-2-128"><a href="#annotated-cell-2-128"></a>        }</span>
-<span id="annotated-cell-2-129"><a href="#annotated-cell-2-129"></a>      }</span>
-<span id="annotated-cell-2-130"><a href="#annotated-cell-2-130"></a>    }</span>
-<span id="annotated-cell-2-131"><a href="#annotated-cell-2-131"></a><span class="er">}</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-2-43"><a href="#annotated-cell-2-43"></a>        },</span>
+<span id="annotated-cell-2-44"><a href="#annotated-cell-2-44"></a>        <span class="st">"places"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-45"><a href="#annotated-cell-2-45"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Census place"</span>,</span>
+<span id="annotated-cell-2-46"><a href="#annotated-cell-2-46"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of GEOIDs of census places (available at https://reference.geoconnex.us/collections/places/items)"</span>,</span>
+<span id="annotated-cell-2-47"><a href="#annotated-cell-2-47"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-48"><a href="#annotated-cell-2-48"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-49"><a href="#annotated-cell-2-49"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-50"><a href="#annotated-cell-2-50"></a>            },</span>
+<span id="annotated-cell-2-51"><a href="#annotated-cell-2-51"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-52"><a href="#annotated-cell-2-52"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-53"><a href="#annotated-cell-2-53"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-2-54"><a href="#annotated-cell-2-54"></a>        },</span>
+<span id="annotated-cell-2-55"><a href="#annotated-cell-2-55"></a>        <span class="st">"states"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-56"><a href="#annotated-cell-2-56"></a>                    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Census place"</span>,</span>
+<span id="annotated-cell-2-57"><a href="#annotated-cell-2-57"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of GEOIDs of US States and Territories (available at https://reference.geoconnex.us/collections/states/items)"</span>,</span>
+<span id="annotated-cell-2-58"><a href="#annotated-cell-2-58"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-59"><a href="#annotated-cell-2-59"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-60"><a href="#annotated-cell-2-60"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-61"><a href="#annotated-cell-2-61"></a>            },</span>
+<span id="annotated-cell-2-62"><a href="#annotated-cell-2-62"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-63"><a href="#annotated-cell-2-63"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-64"><a href="#annotated-cell-2-64"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-2-65"><a href="#annotated-cell-2-65"></a>        },</span>
+<span id="annotated-cell-2-66"><a href="#annotated-cell-2-66"></a>        <span class="st">"counties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-67"><a href="#annotated-cell-2-67"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Census place"</span>,</span>
+<span id="annotated-cell-2-68"><a href="#annotated-cell-2-68"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of GEOIDs of US counties (available at https://reference.geoconnex.us/collections/counties/items)"</span>,</span>
+<span id="annotated-cell-2-69"><a href="#annotated-cell-2-69"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-70"><a href="#annotated-cell-2-70"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-71"><a href="#annotated-cell-2-71"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-72"><a href="#annotated-cell-2-72"></a>            },</span>
+<span id="annotated-cell-2-73"><a href="#annotated-cell-2-73"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-74"><a href="#annotated-cell-2-74"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-75"><a href="#annotated-cell-2-75"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-2-76"><a href="#annotated-cell-2-76"></a>        },</span>
+<span id="annotated-cell-2-77"><a href="#annotated-cell-2-77"></a>        <span class="st">"cbsa"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-78"><a href="#annotated-cell-2-78"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Core-based statistical areas"</span>,</span>
+<span id="annotated-cell-2-79"><a href="#annotated-cell-2-79"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array GEOIDs US core-based statistical areas (available at https://reference.geoconnex.us/collections/cbsa/items)"</span>,</span>
+<span id="annotated-cell-2-80"><a href="#annotated-cell-2-80"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-81"><a href="#annotated-cell-2-81"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-82"><a href="#annotated-cell-2-82"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-83"><a href="#annotated-cell-2-83"></a>            },</span>
+<span id="annotated-cell-2-84"><a href="#annotated-cell-2-84"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-85"><a href="#annotated-cell-2-85"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-86"><a href="#annotated-cell-2-86"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-2-87"><a href="#annotated-cell-2-87"></a>        },</span>
+<span id="annotated-cell-2-88"><a href="#annotated-cell-2-88"></a>        <span class="st">"huc"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-89"><a href="#annotated-cell-2-89"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"hydrologic unit code"</span>,</span>
+<span id="annotated-cell-2-90"><a href="#annotated-cell-2-90"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array HUC codes, any digit level"</span>,</span>
+<span id="annotated-cell-2-91"><a href="#annotated-cell-2-91"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-92"><a href="#annotated-cell-2-92"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"number"</span>,</span>
+<span id="annotated-cell-2-93"><a href="#annotated-cell-2-93"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-94"><a href="#annotated-cell-2-94"></a>            },</span>
+<span id="annotated-cell-2-95"><a href="#annotated-cell-2-95"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-96"><a href="#annotated-cell-2-96"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-97"><a href="#annotated-cell-2-97"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null},</span>
+<span id="annotated-cell-2-98"><a href="#annotated-cell-2-98"></a>        <span class="st">"mainstems"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-99"><a href="#annotated-cell-2-99"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Core-based statistical areas"</span>,</span>
+<span id="annotated-cell-2-100"><a href="#annotated-cell-2-100"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of geoconnex URIs of US river mainstems (available at https://reference.geoconnex.us/collections/mainstems/items)"</span>,</span>
+<span id="annotated-cell-2-101"><a href="#annotated-cell-2-101"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-102"><a href="#annotated-cell-2-102"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-103"><a href="#annotated-cell-2-103"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-104"><a href="#annotated-cell-2-104"></a>            },</span>
+<span id="annotated-cell-2-105"><a href="#annotated-cell-2-105"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-106"><a href="#annotated-cell-2-106"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-107"><a href="#annotated-cell-2-107"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null},</span>
+<span id="annotated-cell-2-108"><a href="#annotated-cell-2-108"></a>        <span class="st">"observedProperties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-109"><a href="#annotated-cell-2-109"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"observedProperties"</span></span>
+<span id="annotated-cell-2-110"><a href="#annotated-cell-2-110"></a>          <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a nested json array of observedProperties and desired relevant methodType, minimum timeSpacing, and period of record (available), such that returned sites must be associated with least one such dataset"</span></span>
+<span id="annotated-cell-2-111"><a href="#annotated-cell-2-111"></a>           <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-112"><a href="#annotated-cell-2-112"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-113"><a href="#annotated-cell-2-113"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-114"><a href="#annotated-cell-2-114"></a>            },</span>
+<span id="annotated-cell-2-115"><a href="#annotated-cell-2-115"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-2-116"><a href="#annotated-cell-2-116"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-2-117"><a href="#annotated-cell-2-117"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null}</span>
+<span id="annotated-cell-2-118"><a href="#annotated-cell-2-118"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-119" class="code-annotation-target"><a href="#annotated-cell-2-119"></a>    <span class="st">"outputs"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-120"><a href="#annotated-cell-2-120"></a>        <span class="st">"path"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-121"><a href="#annotated-cell-2-121"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-2-122"><a href="#annotated-cell-2-122"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of sites meeting the filters specified in the inputs"</span>,</span>
+<span id="annotated-cell-2-123"><a href="#annotated-cell-2-123"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-124"><a href="#annotated-cell-2-124"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-2-125"><a href="#annotated-cell-2-125"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-2-126"><a href="#annotated-cell-2-126"></a>            }</span>
+<span id="annotated-cell-2-127"><a href="#annotated-cell-2-127"></a>        }</span>
+<span id="annotated-cell-2-128"><a href="#annotated-cell-2-128"></a>    },</span>
+<span id="annotated-cell-2-129"><a href="#annotated-cell-2-129"></a>    <span class="st">"example"</span><span class="sc">:</span> { </span>
+<span id="annotated-cell-2-130"><a href="#annotated-cell-2-130"></a>        <span class="st">"inputs"</span><span class="sc">:</span> { </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-131" class="code-annotation-target"><a href="#annotated-cell-2-131"></a>          <span class="st">"geojson"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-132"><a href="#annotated-cell-2-132"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-2-133"><a href="#annotated-cell-2-133"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-134"><a href="#annotated-cell-2-134"></a>              {</span>
+<span id="annotated-cell-2-135"><a href="#annotated-cell-2-135"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-2-136"><a href="#annotated-cell-2-136"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-137"><a href="#annotated-cell-2-137"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"water management area"</span></span>
+<span id="annotated-cell-2-138"><a href="#annotated-cell-2-138"></a>                },</span>
+<span id="annotated-cell-2-139"><a href="#annotated-cell-2-139"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-140"><a href="#annotated-cell-2-140"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-141"><a href="#annotated-cell-2-141"></a>          [</span>
+<span id="annotated-cell-2-142"><a href="#annotated-cell-2-142"></a>            [</span>
+<span id="annotated-cell-2-143"><a href="#annotated-cell-2-143"></a>              <span class="sc">-</span><span class="fl">97.29</span>,</span>
+<span id="annotated-cell-2-144"><a href="#annotated-cell-2-144"></a>              <span class="fl">37.56</span></span>
+<span id="annotated-cell-2-145"><a href="#annotated-cell-2-145"></a>            ],</span>
+<span id="annotated-cell-2-146"><a href="#annotated-cell-2-146"></a>            [</span>
+<span id="annotated-cell-2-147"><a href="#annotated-cell-2-147"></a>              <span class="sc">-</span><span class="fl">97.29</span>,</span>
+<span id="annotated-cell-2-148"><a href="#annotated-cell-2-148"></a>              <span class="fl">37.53</span></span>
+<span id="annotated-cell-2-149"><a href="#annotated-cell-2-149"></a>            ],</span>
+<span id="annotated-cell-2-150"><a href="#annotated-cell-2-150"></a>            [</span>
+<span id="annotated-cell-2-151"><a href="#annotated-cell-2-151"></a>              <span class="sc">-</span><span class="fl">97.25</span>,</span>
+<span id="annotated-cell-2-152"><a href="#annotated-cell-2-152"></a>              <span class="fl">37.53</span></span>
+<span id="annotated-cell-2-153"><a href="#annotated-cell-2-153"></a>            ],</span>
+<span id="annotated-cell-2-154"><a href="#annotated-cell-2-154"></a>            [</span>
+<span id="annotated-cell-2-155"><a href="#annotated-cell-2-155"></a>              <span class="sc">-</span><span class="fl">97.25</span>,</span>
+<span id="annotated-cell-2-156"><a href="#annotated-cell-2-156"></a>              <span class="fl">37.56</span></span>
+<span id="annotated-cell-2-157"><a href="#annotated-cell-2-157"></a>            ],</span>
+<span id="annotated-cell-2-158"><a href="#annotated-cell-2-158"></a>            [</span>
+<span id="annotated-cell-2-159"><a href="#annotated-cell-2-159"></a>              <span class="sc">-</span><span class="fl">97.29</span>,</span>
+<span id="annotated-cell-2-160"><a href="#annotated-cell-2-160"></a>              <span class="fl">37.56</span></span>
+<span id="annotated-cell-2-161"><a href="#annotated-cell-2-161"></a>            ]</span>
+<span id="annotated-cell-2-162"><a href="#annotated-cell-2-162"></a>          ]</span>
+<span id="annotated-cell-2-163"><a href="#annotated-cell-2-163"></a>        ],</span>
+<span id="annotated-cell-2-164"><a href="#annotated-cell-2-164"></a>        <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Polygon"</span></span>
+<span id="annotated-cell-2-165"><a href="#annotated-cell-2-165"></a>                }</span>
+<span id="annotated-cell-2-166"><a href="#annotated-cell-2-166"></a>              }</span>
+<span id="annotated-cell-2-167"><a href="#annotated-cell-2-167"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="7">7</button><span id="annotated-cell-2-168" class="code-annotation-target"><a href="#annotated-cell-2-168"></a>        <span class="st">"states"</span><span class="sc">:</span> [<span class="st">"06"</span>,<span class="st">"04"</span>]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="8">8</button><span id="annotated-cell-2-169" class="code-annotation-target"><a href="#annotated-cell-2-169"></a>        <span class="st">"mainstems"</span><span class="sc">:</span> [<span class="st">"https://geoconnex.us/ref/mainstems/29559"</span>]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="9">9</button><span id="annotated-cell-2-170" class="code-annotation-target"><a href="#annotated-cell-2-170"></a>        <span class="st">"observedProperties"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="10">10</button><span id="annotated-cell-2-171" class="code-annotation-target"><a href="#annotated-cell-2-171"></a>          <span class="st">"name"</span><span class="sc">:</span> <span class="st">"streamflow"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="11">11</button><span id="annotated-cell-2-172" class="code-annotation-target"><a href="#annotated-cell-2-172"></a>          <span class="st">"methodType"</span><span class="sc">:</span> [<span class="st">"in-site observation"</span>,<span class="st">"forecast"</span>],</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="12">12</button><span id="annotated-cell-2-173" class="code-annotation-target"><a href="#annotated-cell-2-173"></a>          <span class="st">"timeSpacing"</span><span class="sc">:</span> <span class="st">"1 hour"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="13">13</button><span id="annotated-cell-2-174" class="code-annotation-target"><a href="#annotated-cell-2-174"></a>          <span class="st">"phenomenonTime"</span><span class="sc">:</span> <span class="st">"2022-01-01/.."</span></span>
+<span id="annotated-cell-2-175"><a href="#annotated-cell-2-175"></a>        }    </span>
+<span id="annotated-cell-2-176"><a href="#annotated-cell-2-176"></a>          }</span>
+<span id="annotated-cell-2-177"><a href="#annotated-cell-2-177"></a>      </span>
+<span id="annotated-cell-2-178"><a href="#annotated-cell-2-178"></a>          </span>
+<span id="annotated-cell-2-179"><a href="#annotated-cell-2-179"></a> </span>
+<span id="annotated-cell-2-180"><a href="#annotated-cell-2-180"></a>      <span class="st">"output"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-181"><a href="#annotated-cell-2-181"></a>        {</span>
+<span id="annotated-cell-2-182"><a href="#annotated-cell-2-182"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-2-183"><a href="#annotated-cell-2-183"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-184"><a href="#annotated-cell-2-184"></a>              {</span>
+<span id="annotated-cell-2-185"><a href="#annotated-cell-2-185"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-2-186"><a href="#annotated-cell-2-186"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-187"><a href="#annotated-cell-2-187"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station A"</span> </span>
+<span id="annotated-cell-2-188"><a href="#annotated-cell-2-188"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000001"</span>, </span>
+<span id="annotated-cell-2-189"><a href="#annotated-cell-2-189"></a>      </span>
+<span id="annotated-cell-2-190"><a href="#annotated-cell-2-190"></a>                },</span>
+<span id="annotated-cell-2-191"><a href="#annotated-cell-2-191"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-192"><a href="#annotated-cell-2-192"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-193"><a href="#annotated-cell-2-193"></a>                    <span class="sc">-</span><span class="fl">79.076</span>,</span>
+<span id="annotated-cell-2-194"><a href="#annotated-cell-2-194"></a>                    <span class="fl">35.89</span></span>
+<span id="annotated-cell-2-195"><a href="#annotated-cell-2-195"></a>                  ],</span>
+<span id="annotated-cell-2-196"><a href="#annotated-cell-2-196"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-2-197"><a href="#annotated-cell-2-197"></a>                }</span>
+<span id="annotated-cell-2-198"><a href="#annotated-cell-2-198"></a>              },</span>
+<span id="annotated-cell-2-199"><a href="#annotated-cell-2-199"></a>              {</span>
+<span id="annotated-cell-2-200"><a href="#annotated-cell-2-200"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-2-201"><a href="#annotated-cell-2-201"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-202"><a href="#annotated-cell-2-202"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station B"</span></span>
+<span id="annotated-cell-2-203"><a href="#annotated-cell-2-203"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000002"</span>,</span>
+<span id="annotated-cell-2-204"><a href="#annotated-cell-2-204"></a>                },</span>
+<span id="annotated-cell-2-205"><a href="#annotated-cell-2-205"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-2-206"><a href="#annotated-cell-2-206"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-2-207"><a href="#annotated-cell-2-207"></a>                    <span class="sc">-</span><span class="fl">79.066</span>,</span>
+<span id="annotated-cell-2-208"><a href="#annotated-cell-2-208"></a>                    <span class="fl">35.896</span></span>
+<span id="annotated-cell-2-209"><a href="#annotated-cell-2-209"></a>                  ],</span>
+<span id="annotated-cell-2-210"><a href="#annotated-cell-2-210"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-2-211"><a href="#annotated-cell-2-211"></a>                }</span>
+<span id="annotated-cell-2-212"><a href="#annotated-cell-2-212"></a>              }</span>
+<span id="annotated-cell-2-213"><a href="#annotated-cell-2-213"></a>            ]</span>
+<span id="annotated-cell-2-214"><a href="#annotated-cell-2-214"></a>          }</span>
+<span id="annotated-cell-2-215"><a href="#annotated-cell-2-215"></a>        }</span>
+<span id="annotated-cell-2-216"><a href="#annotated-cell-2-216"></a>      }</span>
+<span id="annotated-cell-2-217"><a href="#annotated-cell-2-217"></a>    }</span>
+<span id="annotated-cell-2-218"><a href="#annotated-cell-2-218"></a><span class="er">}</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="10" data-code-annotation="1">specification of inputs for POST request</span>
-</dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="11" data-code-annotation="2">the required input of a geojson feature collection of candidate features</span>
-</dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="22,33" data-code-annotation="4">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-2" data-code-lines="22">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="46" data-code-annotation="5">the specification of the output that will be received in the response to the API POST request</span>
+<span data-code-annotation="5" data-code-cell="annotated-cell-2" data-code-lines="119">the specification of the output that will be received in the response to the API POST request</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="56" data-code-annotation="6">a set of example inputs and outputs for this API endpoint</span>
+<span data-code-annotation="6" data-code-cell="annotated-cell-2" data-code-lines="131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167">a set of example inputs and outputs for this API endpoint</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="57" data-code-annotation="7">an example geojson FeatureCollection input</span>
+<span data-code-annotation="7" data-code-cell="annotated-cell-2" data-code-lines="168">an example geojson FeatureCollection input</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="64" data-code-annotation="8">example geojson FeatureCollection includes id property</span>
+<span data-code-annotation="8" data-code-cell="annotated-cell-2" data-code-lines="169">example geojson FeatureCollection includes id property</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="9">9</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="89,90" data-code-annotation="9">example distance and locationType threshold inputs</span>
+<span data-code-annotation="9" data-code-cell="annotated-cell-2" data-code-lines="170">example distance and locationType threshold inputs</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="92" data-code-annotation="10">an example output geojson FeatureCollection</span>
+<span data-code-annotation="10" data-code-cell="annotated-cell-2" data-code-lines="171">an example output geojson FeatureCollection</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="99" data-code-annotation="11">each feature includes the identifier from the input geojson that the feature is matched with</span>
+<span data-code-annotation="11" data-code-cell="annotated-cell-2" data-code-lines="172">each feature includes the identifier from the input geojson that the feature is matched with</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="12">12</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="100" data-code-annotation="12">each feature includes its own identifier</span>
+<span data-code-annotation="12" data-code-cell="annotated-cell-2" data-code-lines="173">each feature includes its own identifier</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="13">13</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="101" data-code-annotation="13">each feature includes the distance between the matched feature and the input feature</span>
+<span data-code-annotation="13" data-code-cell="annotated-cell-2" data-code-lines="174">each feature includes the distance between the matched feature and the input feature</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="processesnavigatefeatures" class="slide level2 smaller">
+<h2>/processes/navigateFeatures</h2>
+<ul>
+<li><p>processes/navigateFeatures = API Documentation of <strong>input</strong> POST body requirements/options and <strong>output</strong> response body geojson format</p></li>
+<li><p>processes/navigateFeatures/execution = endpoint to POST <strong>input</strong>/ retrieve <strong>output</strong> response</p></li>
+<li><p>uri</p></li>
+<li><p>pointLocation</p></li>
+<li><p>y</p></li>
+<li><p>x</p></li>
+<li><p>crs</p></li>
+<li><p>navigation</p></li>
+<li><p>upstream:</p>
+<ul>
+<li>y/n</li>
+<li>tributary order: -1,0,1,2..</li>
+</ul></li>
+<li><p>downstream:</p>
+<ul>
+<li>y/n</li>
+<li>diversion order: -1,0,1,2…</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1"></a>{</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2"></a>    <span class="st">"type"</span><span class="sc">:</span> <span class="st">"process"</span>,</span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3"></a>    <span class="st">"processor"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4"></a>        <span class="st">"name"</span><span class="sc">:</span> <span class="st">"findLocations"</span></span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5"></a>    },</span>
+<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Reference My Locations"</span>,</span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations"</span>,</span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.5.0"</span>,</span>
+<span id="annotated-cell-3-9"><a href="#annotated-cell-3-9"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"findLocations"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-10" class="code-annotation-target"><a href="#annotated-cell-3-10"></a>    <span class="st">"inputs"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-11" class="code-annotation-target"><a href="#annotated-cell-3-11"></a>        <span class="st">"geojson"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-12"><a href="#annotated-cell-3-12"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-3-13"><a href="#annotated-cell-3-13"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of polygons, so that all locations will be within one of the polygons"</span>,</span>
+<span id="annotated-cell-3-14"><a href="#annotated-cell-3-14"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-15"><a href="#annotated-cell-3-15"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-3-16"><a href="#annotated-cell-3-16"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-3-17"><a href="#annotated-cell-3-17"></a>            },</span>
+<span id="annotated-cell-3-18"><a href="#annotated-cell-3-18"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-3-19"><a href="#annotated-cell-3-19"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-3-20"><a href="#annotated-cell-3-20"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-3-21"><a href="#annotated-cell-3-21"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-22" class="code-annotation-target"><a href="#annotated-cell-3-22"></a>        <span class="st">"providers"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-23"><a href="#annotated-cell-3-23"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"provider"</span>,</span>
+<span id="annotated-cell-3-24"><a href="#annotated-cell-3-24"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes"</span>,</span>
+<span id="annotated-cell-3-25"><a href="#annotated-cell-3-25"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-26"><a href="#annotated-cell-3-26"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-3-27"><a href="#annotated-cell-3-27"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-3-28"><a href="#annotated-cell-3-28"></a>            },</span>
+<span id="annotated-cell-3-29"><a href="#annotated-cell-3-29"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-3-30"><a href="#annotated-cell-3-30"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-3-31"><a href="#annotated-cell-3-31"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-3-32"><a href="#annotated-cell-3-32"></a>        },</span>
+<span id="annotated-cell-3-33"><a href="#annotated-cell-3-33"></a>      <span class="st">"locationTypes"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-34"><a href="#annotated-cell-3-34"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Location type"</span>,</span>
+<span id="annotated-cell-3-35"><a href="#annotated-cell-3-35"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of the types of location that the outputs could be. Should be from the codelist provided at the endpoint /locationTypes"</span>,</span>
+<span id="annotated-cell-3-36"><a href="#annotated-cell-3-36"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-37"><a href="#annotated-cell-3-37"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-3-38"><a href="#annotated-cell-3-38"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-3-39"><a href="#annotated-cell-3-39"></a>            },</span>
+<span id="annotated-cell-3-40"><a href="#annotated-cell-3-40"></a>            <span class="st">"minOccurs"</span><span class="sc">:</span> <span class="dv">0</span>,</span>
+<span id="annotated-cell-3-41"><a href="#annotated-cell-3-41"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-3-42"><a href="#annotated-cell-3-42"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
+<span id="annotated-cell-3-43"><a href="#annotated-cell-3-43"></a>        }</span>
+<span id="annotated-cell-3-44"><a href="#annotated-cell-3-44"></a>          </span>
+<span id="annotated-cell-3-45"><a href="#annotated-cell-3-45"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="5">5</button><span id="annotated-cell-3-46" class="code-annotation-target"><a href="#annotated-cell-3-46"></a>    <span class="st">"outputs"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-47"><a href="#annotated-cell-3-47"></a>        <span class="st">"path"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-48"><a href="#annotated-cell-3-48"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-3-49"><a href="#annotated-cell-3-49"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites"</span>,</span>
+<span id="annotated-cell-3-50"><a href="#annotated-cell-3-50"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-51"><a href="#annotated-cell-3-51"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
+<span id="annotated-cell-3-52"><a href="#annotated-cell-3-52"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
+<span id="annotated-cell-3-53"><a href="#annotated-cell-3-53"></a>            }</span>
+<span id="annotated-cell-3-54"><a href="#annotated-cell-3-54"></a>        }</span>
+<span id="annotated-cell-3-55"><a href="#annotated-cell-3-55"></a>    },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="6">6</button><span id="annotated-cell-3-56" class="code-annotation-target"><a href="#annotated-cell-3-56"></a>    <span class="st">"example"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="7">7</button><span id="annotated-cell-3-57" class="code-annotation-target"><a href="#annotated-cell-3-57"></a>        <span class="st">"inputs"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-58"><a href="#annotated-cell-3-58"></a>          <span class="st">"geojson"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-59"><a href="#annotated-cell-3-59"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-3-60"><a href="#annotated-cell-3-60"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-3-61"><a href="#annotated-cell-3-61"></a>              {</span>
+<span id="annotated-cell-3-62"><a href="#annotated-cell-3-62"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-3-63"><a href="#annotated-cell-3-63"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="8">8</button><span id="annotated-cell-3-64" class="code-annotation-target"><a href="#annotated-cell-3-64"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"station A"</span></span>
+<span id="annotated-cell-3-65"><a href="#annotated-cell-3-65"></a>                },</span>
+<span id="annotated-cell-3-66"><a href="#annotated-cell-3-66"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-67"><a href="#annotated-cell-3-67"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-3-68"><a href="#annotated-cell-3-68"></a>                    <span class="sc">-</span><span class="fl">79.07158950388026</span>,</span>
+<span id="annotated-cell-3-69"><a href="#annotated-cell-3-69"></a>                    <span class="fl">35.898135796576824</span></span>
+<span id="annotated-cell-3-70"><a href="#annotated-cell-3-70"></a>                  ],</span>
+<span id="annotated-cell-3-71"><a href="#annotated-cell-3-71"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-3-72"><a href="#annotated-cell-3-72"></a>                }</span>
+<span id="annotated-cell-3-73"><a href="#annotated-cell-3-73"></a>              },</span>
+<span id="annotated-cell-3-74"><a href="#annotated-cell-3-74"></a>              {</span>
+<span id="annotated-cell-3-75"><a href="#annotated-cell-3-75"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-3-76"><a href="#annotated-cell-3-76"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-77"><a href="#annotated-cell-3-77"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"station B"</span></span>
+<span id="annotated-cell-3-78"><a href="#annotated-cell-3-78"></a>                },</span>
+<span id="annotated-cell-3-79"><a href="#annotated-cell-3-79"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-80"><a href="#annotated-cell-3-80"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-3-81"><a href="#annotated-cell-3-81"></a>                    <span class="sc">-</span><span class="fl">79.06653548565708</span>,</span>
+<span id="annotated-cell-3-82"><a href="#annotated-cell-3-82"></a>                    <span class="fl">35.89697449172864</span></span>
+<span id="annotated-cell-3-83"><a href="#annotated-cell-3-83"></a>                  ],</span>
+<span id="annotated-cell-3-84"><a href="#annotated-cell-3-84"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-3-85"><a href="#annotated-cell-3-85"></a>                }</span>
+<span id="annotated-cell-3-86"><a href="#annotated-cell-3-86"></a>              }</span>
+<span id="annotated-cell-3-87"><a href="#annotated-cell-3-87"></a>            ]</span>
+<span id="annotated-cell-3-88"><a href="#annotated-cell-3-88"></a>          },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="9">9</button><span id="annotated-cell-3-89" class="code-annotation-target"><a href="#annotated-cell-3-89"></a>          <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.3</span>,</span>
+<span id="annotated-cell-3-90"><a href="#annotated-cell-3-90"></a>          <span class="st">"locationType"</span><span class="sc">:</span> <span class="st">"streamgage"</span></span>
+<span id="annotated-cell-3-91"><a href="#annotated-cell-3-91"></a>        },</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="10">10</button><span id="annotated-cell-3-92" class="code-annotation-target"><a href="#annotated-cell-3-92"></a>      <span class="st">"output"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-93"><a href="#annotated-cell-3-93"></a>        {</span>
+<span id="annotated-cell-3-94"><a href="#annotated-cell-3-94"></a>            <span class="st">"type"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<span id="annotated-cell-3-95"><a href="#annotated-cell-3-95"></a>            <span class="st">"features"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-3-96"><a href="#annotated-cell-3-96"></a>              {</span>
+<span id="annotated-cell-3-97"><a href="#annotated-cell-3-97"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-3-98"><a href="#annotated-cell-3-98"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="11">11</button><span id="annotated-cell-3-99" class="code-annotation-target"><a href="#annotated-cell-3-99"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station A"</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="12">12</button><span id="annotated-cell-3-100" class="code-annotation-target"><a href="#annotated-cell-3-100"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000001"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="13">13</button><span id="annotated-cell-3-101" class="code-annotation-target"><a href="#annotated-cell-3-101"></a>                  <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.1</span></span>
+<span id="annotated-cell-3-102"><a href="#annotated-cell-3-102"></a>                },</span>
+<span id="annotated-cell-3-103"><a href="#annotated-cell-3-103"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-104"><a href="#annotated-cell-3-104"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-3-105"><a href="#annotated-cell-3-105"></a>                    <span class="sc">-</span><span class="fl">79.076</span>,</span>
+<span id="annotated-cell-3-106"><a href="#annotated-cell-3-106"></a>                    <span class="fl">35.89</span></span>
+<span id="annotated-cell-3-107"><a href="#annotated-cell-3-107"></a>                  ],</span>
+<span id="annotated-cell-3-108"><a href="#annotated-cell-3-108"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-3-109"><a href="#annotated-cell-3-109"></a>                }</span>
+<span id="annotated-cell-3-110"><a href="#annotated-cell-3-110"></a>              },</span>
+<span id="annotated-cell-3-111"><a href="#annotated-cell-3-111"></a>              {</span>
+<span id="annotated-cell-3-112"><a href="#annotated-cell-3-112"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Feature"</span>,</span>
+<span id="annotated-cell-3-113"><a href="#annotated-cell-3-113"></a>                <span class="st">"properties"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-114"><a href="#annotated-cell-3-114"></a>                  <span class="st">"input_id"</span><span class="sc">:</span> <span class="st">"station B"</span></span>
+<span id="annotated-cell-3-115"><a href="#annotated-cell-3-115"></a>                  <span class="st">"id"</span><span class="sc">:</span> <span class="st">"https://geoconnex.us/ref/gages/1000002"</span>,</span>
+<span id="annotated-cell-3-116"><a href="#annotated-cell-3-116"></a>                  <span class="st">"distance_km"</span><span class="sc">:</span> <span class="fl">0.14</span></span>
+<span id="annotated-cell-3-117"><a href="#annotated-cell-3-117"></a>                },</span>
+<span id="annotated-cell-3-118"><a href="#annotated-cell-3-118"></a>                <span class="st">"geometry"</span><span class="sc">:</span> {</span>
+<span id="annotated-cell-3-119"><a href="#annotated-cell-3-119"></a>                  <span class="st">"coordinates"</span><span class="sc">:</span> [</span>
+<span id="annotated-cell-3-120"><a href="#annotated-cell-3-120"></a>                    <span class="sc">-</span><span class="fl">79.06653548565708</span>,</span>
+<span id="annotated-cell-3-121"><a href="#annotated-cell-3-121"></a>                    <span class="fl">35.89697449172864</span></span>
+<span id="annotated-cell-3-122"><a href="#annotated-cell-3-122"></a>                  ],</span>
+<span id="annotated-cell-3-123"><a href="#annotated-cell-3-123"></a>                  <span class="st">"type"</span><span class="sc">:</span> <span class="st">"Point"</span></span>
+<span id="annotated-cell-3-124"><a href="#annotated-cell-3-124"></a>                }</span>
+<span id="annotated-cell-3-125"><a href="#annotated-cell-3-125"></a>              }</span>
+<span id="annotated-cell-3-126"><a href="#annotated-cell-3-126"></a>            ]</span>
+<span id="annotated-cell-3-127"><a href="#annotated-cell-3-127"></a>          }</span>
+<span id="annotated-cell-3-128"><a href="#annotated-cell-3-128"></a>        }</span>
+<span id="annotated-cell-3-129"><a href="#annotated-cell-3-129"></a>      }</span>
+<span id="annotated-cell-3-130"><a href="#annotated-cell-3-130"></a>    }</span>
+<span id="annotated-cell-3-131"><a href="#annotated-cell-3-131"></a><span class="er">}</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-cell="annotated-cell-3" data-code-lines="10">specification of inputs for POST request</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-cell="annotated-cell-3" data-code-lines="11">the required input of a geojson feature collection of candidate features</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-annotation="4" data-code-cell="annotated-cell-3" data-code-lines="22,33">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-annotation="5" data-code-cell="annotated-cell-3" data-code-lines="46">the specification of the output that will be received in the response to the API POST request</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-annotation="6" data-code-cell="annotated-cell-3" data-code-lines="56">a set of example inputs and outputs for this API endpoint</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-annotation="7" data-code-cell="annotated-cell-3" data-code-lines="57">an example geojson FeatureCollection input</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-annotation="8" data-code-cell="annotated-cell-3" data-code-lines="64">example geojson FeatureCollection includes id property</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-annotation="9" data-code-cell="annotated-cell-3" data-code-lines="89,90">example distance and locationType threshold inputs</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-annotation="10" data-code-cell="annotated-cell-3" data-code-lines="92">an example output geojson FeatureCollection</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-annotation="11" data-code-cell="annotated-cell-3" data-code-lines="99">each feature includes the identifier from the input geojson that the feature is matched with</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="12">12</dt>
+<dd>
+<span data-code-annotation="12" data-code-cell="annotated-cell-3" data-code-lines="100">each feature includes its own identifier</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="13">13</dt>
+<dd>
+<span data-code-annotation="13" data-code-cell="annotated-cell-3" data-code-lines="101">each feature includes the distance between the matched feature and the input feature</span>
 </dd>
 </dl>
 </div>
