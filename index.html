@@ -860,23 +860,8 @@
 <section id="processesfindfeatures" class="slide level2 smaller">
 <h2>/processes/findFeatures</h2>
 <ul>
-<li><p>processes/findFeatures = API Documentation of <strong>input</strong> POST body requirements/options and <strong>output</strong> response body geojson format</p></li>
-<li><p>processes/findFeatures/execution = endpoint to POST <strong>input</strong>/ retrieve <strong>output</strong> response</p></li>
-<li><p>geojson</p></li>
-<li><p>census place/ incorporated place/ municipality</p></li>
-<li><p>county</p></li>
-<li><p>state</p></li>
-<li><p>core-based statistical area</p></li>
-<li><p>HUC2,4,6,8,10, or 12</p></li>
-<li><p>mainstem river</p></li>
-<li><p>locationType</p></li>
-<li><p>provider</p></li>
-<li><p>observedProperty</p>
-<ul>
-<li>methodType</li>
-<li>timeSpacing</li>
-<li>phenomenonTime</li>
-</ul></li>
+<li>processes/findFeatures = API Documentation of <strong>input</strong> POST body requirements/options and <strong>output</strong> response body geojson format</li>
+<li>processes/findFeatures/execution = endpoint to POST <strong>input</strong>/ retrieve <strong>output</strong> response</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1"></a>{</span>
@@ -885,14 +870,14 @@
 <span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a>        <span class="st">"name"</span><span class="sc">:</span> <span class="st">"findLocations"</span></span>
 <span id="annotated-cell-2-5"><a href="#annotated-cell-2-5"></a>    },</span>
 <span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>    <span class="st">"title"</span><span class="sc">:</span> <span class="st">"find Locations"</span>,</span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-7" class="code-annotation-target"><a href="#annotated-cell-2-7"></a>    <span class="st">"description"</span><span class="sc">:</span> <span class="st">"POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations"</span>,</span>
 <span id="annotated-cell-2-8"><a href="#annotated-cell-2-8"></a>    <span class="st">"version"</span><span class="sc">:</span> <span class="st">"0.5.0"</span>,</span>
 <span id="annotated-cell-2-9"><a href="#annotated-cell-2-9"></a>    <span class="st">"id"</span><span class="sc">:</span> <span class="st">"findLocations"</span>,</span>
 <span id="annotated-cell-2-10"><a href="#annotated-cell-2-10"></a>    <span class="st">"inputs"</span><span class="sc">:</span> { </span>
 <span id="annotated-cell-2-11"><a href="#annotated-cell-2-11"></a>        <span class="st">"geojson"</span><span class="sc">:</span> { </span>
-<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12"></a>            <span class="st">"title"</span><span class="sc">:</span> <span class="st">"FeatureCollection"</span>,</span>
 <span id="annotated-cell-2-13"><a href="#annotated-cell-2-13"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"A geoJSON FeatureCollection of polygons, so that all locations will be within one of the polygons"</span>,</span>
-<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-14" class="code-annotation-target"><a href="#annotated-cell-2-14"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
 <span id="annotated-cell-2-15"><a href="#annotated-cell-2-15"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
 <span id="annotated-cell-2-16"><a href="#annotated-cell-2-16"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
 <span id="annotated-cell-2-17"><a href="#annotated-cell-2-17"></a>            },</span>
@@ -902,7 +887,7 @@
 <span id="annotated-cell-2-21"><a href="#annotated-cell-2-21"></a>        },</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-22" class="code-annotation-target"><a href="#annotated-cell-2-22"></a>        <span class="st">"providers"</span><span class="sc">:</span> {</span>
 <span id="annotated-cell-2-23"><a href="#annotated-cell-2-23"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"provider"</span>,</span>
-<span id="annotated-cell-2-24"><a href="#annotated-cell-2-24"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes"</span>,</span>
+<span id="annotated-cell-2-24"><a href="#annotated-cell-2-24"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes"</span>, </span>
 <span id="annotated-cell-2-25"><a href="#annotated-cell-2-25"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
 <span id="annotated-cell-2-26"><a href="#annotated-cell-2-26"></a>                <span class="st">"type"</span><span class="sc">:</span> <span class="st">"object"</span>,</span>
 <span id="annotated-cell-2-27"><a href="#annotated-cell-2-27"></a>                <span class="st">"contentMediaType"</span><span class="sc">:</span> <span class="st">"application/json"</span></span>
@@ -1099,6 +1084,18 @@
 <span id="annotated-cell-2-218"><a href="#annotated-cell-2-218"></a><span class="er">}</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-cell="annotated-cell-2" data-code-lines="7">specification of inputs for POST request</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-cell="annotated-cell-2" data-code-lines="12">the required input of a geojson feature collection of candidate features</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-annotation="3" data-code-cell="annotated-cell-2" data-code-lines="14">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
+</dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
 <span data-code-annotation="4" data-code-cell="annotated-cell-2" data-code-lines="22">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
@@ -1187,7 +1184,7 @@
 <span id="annotated-cell-3-19"><a href="#annotated-cell-3-19"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
 <span id="annotated-cell-3-20"><a href="#annotated-cell-3-20"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
 <span id="annotated-cell-3-21"><a href="#annotated-cell-3-21"></a>        },</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-22" class="code-annotation-target"><a href="#annotated-cell-3-22"></a>        <span class="st">"providers"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-22" class="code-annotation-target"><a href="#annotated-cell-3-22"></a>        <span class="st">"providers"</span><span class="sc">:</span> {</span>
 <span id="annotated-cell-3-23"><a href="#annotated-cell-3-23"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"provider"</span>,</span>
 <span id="annotated-cell-3-24"><a href="#annotated-cell-3-24"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes"</span>,</span>
 <span id="annotated-cell-3-25"><a href="#annotated-cell-3-25"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
@@ -1198,7 +1195,7 @@
 <span id="annotated-cell-3-30"><a href="#annotated-cell-3-30"></a>            <span class="st">"maxOccurs"</span><span class="sc">:</span> <span class="dv">1</span>,</span>
 <span id="annotated-cell-3-31"><a href="#annotated-cell-3-31"></a>            <span class="st">"metadata"</span><span class="sc">:</span> null</span>
 <span id="annotated-cell-3-32"><a href="#annotated-cell-3-32"></a>        },</span>
-<span id="annotated-cell-3-33"><a href="#annotated-cell-3-33"></a>      <span class="st">"locationTypes"</span><span class="sc">:</span> {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-33" class="code-annotation-target"><a href="#annotated-cell-3-33"></a>      <span class="st">"locationTypes"</span><span class="sc">:</span> {</span>
 <span id="annotated-cell-3-34"><a href="#annotated-cell-3-34"></a>          <span class="st">"title"</span><span class="sc">:</span> <span class="st">"Location type"</span>,</span>
 <span id="annotated-cell-3-35"><a href="#annotated-cell-3-35"></a>            <span class="st">"description"</span><span class="sc">:</span> <span class="st">"a json array of the types of location that the outputs could be. Should be from the codelist provided at the endpoint /locationTypes"</span>,</span>
 <span id="annotated-cell-3-36"><a href="#annotated-cell-3-36"></a>            <span class="st">"schema"</span><span class="sc">:</span> {</span>
@@ -1307,9 +1304,13 @@
 <dd>
 <span data-code-annotation="2" data-code-cell="annotated-cell-3" data-code-lines="11">the required input of a geojson feature collection of candidate features</span>
 </dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-annotation="3" data-code-cell="annotated-cell-3" data-code-lines="22">the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)</span>
+</dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-cell="annotated-cell-3" data-code-lines="22,33">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-3" data-code-lines="33">the required input of the locationType that the input features represent and that the reference feature subset will be matched to</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="5">5</dt>
 <dd>

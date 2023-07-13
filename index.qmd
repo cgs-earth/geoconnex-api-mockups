@@ -348,19 +348,6 @@ Learn more: [geoconnex.us](https://geoconnex.us)
 * processes/findFeatures = API Documentation of **input** POST body requirements/options and **output** response body geojson format
 * processes/findFeatures/execution = endpoint to POST **input**/ retrieve **output** response
 
-- geojson
-- census place/ incorporated place/ municipality
-- county
-- state
-- core-based statistical area
-- HUC2,4,6,8,10, or 12
-- mainstem river
-- locationType
-- provider
-- observedProperty
-   * methodType
-   * timeSpacing
-   * phenomenonTime
 
 
 ```{r}
@@ -372,14 +359,14 @@ Learn more: [geoconnex.us](https://geoconnex.us)
         "name": "findLocations"
     },
     "title": "find Locations",
-    "description": "POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations",
+    "description": "POST a nested array of query parameters, retrieve a paginated geojson response of filtered locations", # <1>
     "version": "0.5.0",
     "id": "findLocations",
     "inputs": { 
         "geojson": { 
-            "title": "FeatureCollection",
+            "title": "FeatureCollection", # <2>
             "description": "A geoJSON FeatureCollection of polygons, so that all locations will be within one of the polygons",
-            "schema": {
+            "schema": { # <3>
                 "type": "object",
                 "contentMediaType": "application/json"
             },
@@ -389,7 +376,7 @@ Learn more: [geoconnex.us](https://geoconnex.us)
         },
         "providers": { # <4>
           "title": "provider",
-            "description": "a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes",
+            "description": "a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes", 
             "schema": {
                 "type": "object",
                 "contentMediaType": "application/json"
@@ -644,7 +631,7 @@ Learn more: [geoconnex.us](https://geoconnex.us)
             "maxOccurs": 1,
             "metadata": null
         },
-        "providers": { # <4>
+        "providers": { # <3>
           "title": "provider",
             "description": "a json array of the providers of datasets outputs could be. Should be from the codelist provided at the endpoint /locationTypes",
             "schema": {
