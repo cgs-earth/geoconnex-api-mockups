@@ -290,6 +290,10 @@ Note that the map is interactive as before. At this point, ask if they have, con
 go through imagined workflow, ask if they have questions, concerns, suggestions at a high level for other services, or a different configuration of services, that could be useful to a data user. Then explain that we'll go through what we have designed in more detail to get some finer grained feedback.
 :::
 
+## /processes/findFeatures use case {.smaller}
+
+-   As a data user, I would use **findFeatures** to discover all real-world features that organizations of interest have published metadata about, fitltered to only my area of interest
+
 ## /processes/findFeatures inputs {.smaller}
 
 | input              | number of elements | example or description                     |
@@ -337,6 +341,10 @@ Say this describes the attributes available in an output dataset. If they ask if
 ::: footer
 Learn more: [geoconnex.us](https://geoconnex.us)
 :::
+
+## /processes/navigateFeatures use case {.smaller}
+
+-   As a data user, I would use **navigateFeatures** to discover all real-world features that organizations of interest have published metadata about, that are hydrologically relevant (eg upstream or downstream of) to a point that I am interested in.
 
 ## /processes/navigateFeatures inputs and outputs {.smaller}
 
@@ -494,7 +502,7 @@ An table of dataset metadata with the following fields
 :::
 
 :::{.notes}
-TO reiterate, our idea was that you would use one or both of findFeatures and navigateFeatures to get a list of URIs. You could then pass those URIs and the dataset query parameters to retrieve a list of datasets. Having already procured information about the locations, you would input desired dataset attributes including observed property, methods, and temporal coverage and resolution. The set of metadata you would retrieve would include that information, including which URI the dataset is about, as well as a special property, conformsTo, which would link out to a web resource that descirbes how to use that dataset. Since geoconnex is an index, it is open to all source formats. Depending on the dataset, conformsTo might point to an API or data model documentation page, a data dictionary file, or narrative documentation of the dataset. 
+To reiterate, our idea was that you would use one or both of findFeatures and navigateFeatures to get a list of URIs. You could then pass those URIs and the dataset query parameters to retrieve a list of datasets. Having already procured information about the locations, you would input desired dataset attributes including observed property, methods, and temporal coverage and resolution. The set of metadata you would retrieve would include that information, including which URI the dataset is about, as well as a special property, conformsTo, which would link out to a web resource that descirbes how to use that dataset. Since geoconnex is an index, it is open to all source formats. Depending on the dataset, conformsTo might point to an API or data model documentation page, a data dictionary file, or narrative documentation of the dataset. 
 
 Do you ahve any questions or concerns about the inputs and outputs of the FindDatasets Process? 
 
