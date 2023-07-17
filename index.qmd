@@ -66,6 +66,12 @@ matches <- gages %>% filter(uri %in% sample$match_id)
 matches$input_id <- sample$provider_id
 matches$match_distance_m <- sample$match_distance_m
 
+htmlize <- function(url){
+  paste0("<a href=",url,">",url,"</a>")
+}
+
+matches$uri <- htmlize(matches$uri)
+
 sample <- sample %>% select(name, provider_id)
 
 
@@ -86,15 +92,15 @@ counties <- sf::read_sf(httr::POST("https://reference.geoconnex.us/processes/int
 
 Geoconnex is a knowledge graph incorporating relationships between:
 
--   hydrologic features (rivers, waterbodies, aquifers, catchments/watersheds)
--   cataloging features (counties, states, HUCs, administrative boundaries)
 -   organizational data locations (stream gages, water quality stations, wells, dams)
--   reference locations (locations that many organizations collect data about. e.g. a given well often has different datasets managed by science agencies for scientific purposes, a state engineer for water rights administration, and a water utility for operational water abstraction)
+-   reference features (locations that many organizations collect data about. e.g. a given well often has different datasets managed by science agencies for scientific purposes, a state engineer for water rights administration, and a water utility for operational water abstraction)
+    -   hydrologic features (rivers, waterbodies, aquifers, catchments/watersheds)
+    -   cataloging features (counties, states, HUCs, administrative boundaries)
 
 ::: notes
 Thank you for participating etc. We are asking for feedback on the API for geoconnex. Geoconnex is a knowldege graph that aims to allow data users to discover relationships between real-world hydrologic features, cataloging features, organizational monitoring locations with data about them, and reference locations that serve as organizational monitoring locations common across multiple organizations.
 
-What I'll do for you today is introduce the main use cases we imagine for the geoconnex API, and then go through a number of endpoints we are in the early design phases of. This is truly the first draft so your input could have a dramatic effect on the production API. Thus, rather than presenting fully specified API HTTP requests, and json payloards for requests and responses, I will describe the basic structure of the queries we aim to make possible, and the inputs and outputs that we are thinking about implementing.
+What I'll do for you today is introduce the main use cases we imagine for the geoconnex API, and then go through a number of endpoints we are in the early design phases of. This is truly the first draft so your input could have a dramatic effect on the production API. Thus, rather than presenting fully specified API HTTP requests, and json payloads for requests and responses, I will describe the basic structure of the queries we aim to make possible, and the inputs and outputs that we are thinking about implementing.
 :::
 
 ## Introduction {.smaller}
@@ -102,7 +108,7 @@ What I'll do for you today is introduce the main use cases we imagine for the ge
 ![Geoconnex System Technical Diagram](images/diagram.png)
 
 ::: notes
-Geoconnex itself will be a metadata catalog that includes minimally standardized metadata about all sites (eg gages, wells, dams, public water systems, water quality sample stations, etc.) that all participating organizations (eg federal, state, local, Tribal, NGO, academic) publish data about. The geoconnex API will allow programmatic access to this metadata catalog. The Geoconnex API will thus provide data discovery services, but not necessarily observation/model data access directly. It will tell users that data on certain subjects exist, and where to find that data, like a library catalog. It will not directly provide the observed values. However, It will point users to relevant datasets with as much useful metadata as possible. First I'll introduce you to the two high level use cases we imagine this API meeting, and then show you mockups of the API endpoints, their inputs, and responses.
+Geoconnex itself will be a metadata catalog that includes minimally standardized metadata about all sites (eg gages, wells, dams, public water systems, water quality sample stations, etc.) that all participating organizations (eg federal, state, local, Tribal, NGO, academic) publish data about. In this diagram, we are focusing on the data publisher, reference.geoconnex.us, the data user, and api.geoconnex.us. In the geoconenx system, data publishers publish metadata about datasets that they collect that are about certian common reference features across many data publishers.These common features we call "reference features". The geoconnex system aggregates the metadata that data publishers provide, and provides centralized access to the resulting metadata catalog. The geoconnex API will allow programmatic access to this metadata catalog. The Geoconnex API will thus provide data discovery services, but not necessarily observation/model data access directly. It will tell users that data on certain subjects exist, and where to find that data, like a library catalog. It will not directly provide the observed values. However, It will point users to relevant datasets with as much useful metadata as possible. First I'll introduce you to the two high level use cases we imagine this API meeting, and then show you mockups of the API endpoints, their inputs, and responses.
 :::
 
 ## Outline
@@ -164,29 +170,25 @@ THe top level endpoint for the geoconnex APIs will be api.geoconnex.us. There wi
 
 ## Top-level Endpoints {.smaller}
 
-::: columns
-::: incremental
 https://api.geoconnex.us...
 
 -   /processes [^1]
 -   /locationTypes [^2]
--   /catalogingFeatureCollections [^3]
--   /catalogingFeatures/{catalogingFeatureType} [^4]
+-   /FeatureCollections [^3]
+-   /Features/{catalogingFeatureType} [^4]
 -   /providers [^5]
 -   /observedProperties [^6]
 -   /methodTypes [^7]
 -   /methods [^8]
 -   /timeSpacing [^9]
-:::
-:::
 
 [^1]: an array of API endpoints in the [OGC-API Processes](https://ogcapi.ogc.org/processes/) standard for more specific queries that may use the below as query parameters
 
 [^2]: a nested json array of types of locations available and their definition for each (e.g. \[{"id":"dam", "name":"dam", "description": "a structure creating an impounded body of water on a stream")},{"name":"stream", "description": "a flowing body of water on the surface"}\])
 
-[^3]: types of areal summary features (e.g. HUC, catchment, county, state)
+[^3]: types of hydrologic (eg river, aquifer) and cataloging (e.g. HUC, catchment, county, state, municipality) features that data may be about or relevant to
 
-[^4]: an array of the names and identifiers for areal summary features of a given type
+[^4]: an array of the names and identifiers the reference features of a given type
 
 [^5]: an array of identifiers, names, and URLs for data publication systems and their parent organizations (eg, nwis, National Water Information System, waterdata.usgs.gov, usgs.gov)
 
@@ -207,7 +209,7 @@ THe first endpoint, processes, will describe the actual metadata search and retr
 Data discovery tools will follow the [OGC-API Processes](https://ogcapi.ogc.org/processes) standard, and thus we refer to them as processes. The following tools are proposed:
 
 | process name           | description                                                                                                                       |
-|--------------------|----------------------------------------------------|
+|-------------------------|----------------------------------------------|
 | referenceMyLocations   | POST a geospatial dataset of your own locations, find candidate geoconnex reference locations that may correspond to them already |
 | findFeatures [^10]     | GET or POST query parameters to find features of relevance                                                                        |
 | navigateFeatures [^11] | GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier                      |
@@ -225,9 +227,13 @@ Data discovery tools will follow the [OGC-API Processes](https://ogcapi.ogc.org/
 
 **referenceMyLocation** Inputs:
 
--   input data: a geospatial dataset with at least an ID field l
+-   input data: a geospatial dataset with at least an ID field
 
--   locationType: from /locationType codelist (eg "gage", "well", "dam")
+-   locationType: from **/locationType** codelist (eg "gage", "well", "dam")
+
+::: notes
+Note that throughout we are showing the conceptual input and outputs rather than fully specifying for example, JSON structures, given where we are in the design process. Just explain that the endpoint as currently designed takes 2 inputs: a geospatial dataset and text locationType corresponding to a member of the locationType codelist from the top level endpoints slide.
+:::
 
 ## /processes Data publisher use case example {.smaller}
 
@@ -243,6 +249,10 @@ Input:
 mapview(sample,layer.name="input gages")
 ```
 
+::: notes
+This is meant to show an example input, and the next slide will visualize the example output. Note that map is zoomable and clickable. Let them know this is just for visualization pruposes for the type of input that would be provided. Just explain, and move on to next
+:::
+
 ## /processes Data publisher use case example {.smaller}
 
 POST to /processes/referenceMyLocations
@@ -256,183 +266,73 @@ mapview(sample,layer.name="input gages") + mapview(matches,layer.name="matching 
 ```
 
 ::: notes
-Read use case ask if they have any questions, concerns, suggestions at a high level for other services that could be useful to a data publisher
+Note that the map is interactive as before. At this point, ask if they have, concerns, suggestions at a high level for:
+
+1.  other inputs they think should be there
+2.  other fields that the output should have
+3.  formats we should think about supporting for the inputs and outputs
+4.  other services that could be useful to a data publisher
 :::
 
 ## /processes Data user imagined workflow {.smaller}
 
-1.  use **findFeatures** discover locations within a bounding box, radius around a point, or arbitrary spatial polygon
+::: incremental
+1.  use **findFeatures** discover locations within a bounding box, radius around a point, or arbitrary spatial polygon, or relevant to **reference feature** (eg a river or aquifer) or **cataloging feature** (eg a an administrative boundary or HUC)
 
     -   receive a geospatial dataset, including attribute id populated with geoconnex http URIs (e.g. https://geoconnex.us/usgs/monitoring-location/1000001)
-
-```{r, result="asis", echo=FALSE}
-mapview(gages)
-```
 
 2.  If desired, use **navigateFeatures** to find all sites downstream and/or upstream of a site identified by a geoconnex http URI or a latitude/longitude
 
 3.  use **findDatasets**, given a list of URIs and query parameters for provider, observedProperty, period of record, etc., be given links to datasets relevant to your question that are about the locations found by **findFeatures** and/or **navigateFeatures** calls
-
-::: notes
-go through imagined workflow, ask if they have questions, concerns, suggestions at a high level for other services, or a different configuration of services, that could bee useful to a data user.
 :::
 
-## /processes/findLocations inputs and outputs {.smaller}
-
-## /processes/findLocations example {.smaller}
-
 ::: notes
-noes
+go through imagined workflow, ask if they have questions, concerns, suggestions at a high level for other services, or a different configuration of services, that could be useful to a data user. Then explain that we'll go through what we have designed in more detail to get some finer grained feedback.
 :::
 
-```{r}
-#| eval: FALSE
-#| echo: TRUE
-{
-    "type": "process",
-    "processor": {
-        "name": "referenceMyLocations"
-    },
-    "title": "Reference My Locations",
-    "description": "POST a geojson of your own locations, find candidate geoconnex reference locations that may correspond to them already.",
-    "version": "0.5.0",
-    "id": "referenceMyLocations",
-    "inputs": { # <1>
-        "geojson": { # <2>
-            "title": "FeatureCollection",
-            "description": "A geoJSON FeatureCollection of points of potential reference features",
-            "schema": {
-                "type": "object",
-                "contentMediaType": "application/json"
-            },
-            "minOccurs": 1,
-            "maxOccurs": 1,
-            "metadata": null
-        },
-        "distance_threshold_km": { # <3>
-          "title": "Distance threshold (km)",
-            "description": "Maximum distance from input features to return candidate reference features",
-            "schema": {
-                "type": "number",
-                "default": "0.1"
-            },
-            "minOccurs": 0,
-            "maxOccurs": 1,
-            "metadata": null
-        },
-      "locationType": { # <4>
-          "title": "Location type",
-            "description": "the type of location that the input represents. Should be from the codelist provided at the endpoint /locationTypes",
-            "schema": {
-                "type": "string"
-            },
-            "minOccurs": 0,
-            "maxOccurs": 1,
-            "metadata": null
-        }
-          
-        },
-    "outputs": { # <5>
-        "path": {
-            "title": "FeatureCollection",
-            "description": "A geoJSON FeatureCollection of sites likely to be the same as the POSTed sites",
-            "schema": {
-                "type": "object",
-                "contentMediaType": "application/json"
-            }
-        }
-    },
-    "example": { # <6>
-        "inputs": { # <7>
-          "geojson": {
-            "type": "FeatureCollection",
-            "features": [
-              {
-                "type": "Feature",
-                "properties": {
-                  "id": "station A" # <8>
-                },
-                "geometry": {
-                  "coordinates": [
-                    -79.07158950388026,
-                    35.898135796576824
-                  ],
-                  "type": "Point"
-                }
-              },
-              {
-                "type": "Feature",
-                "properties": {
-                  "id": "station B"
-                },
-                "geometry": {
-                  "coordinates": [
-                    -79.06653548565708,
-                    35.89697449172864
-                  ],
-                  "type": "Point"
-                }
-              }
-            ]
-          },
-          "distance_km": 0.3, # <9>
-          "locationType": "streamgage"  # <9>
-        },
-      "output": { # <10>
-        {
-            "type": "FeatureCollection",
-            "features": [
-              {
-                "type": "Feature",
-                "properties": {
-                  "input_id": "station A" # <11>
-                  "id": "https://geoconnex.us/ref/gages/1000001", # <12>
-                  "distance_km": 0.1 # <13>
-                },
-                "geometry": {
-                  "coordinates": [
-                    -79.076,
-                    35.89
-                  ],
-                  "type": "Point"
-                }
-              },
-              {
-                "type": "Feature",
-                "properties": {
-                  "input_id": "station B"
-                  "id": "https://geoconnex.us/ref/gages/1000002",
-                  "distance_km": 0.14
-                },
-                "geometry": {
-                  "coordinates": [
-                    -79.06653548565708,
-                    35.89697449172864
-                  ],
-                  "type": "Point"
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-}
-```
+## /processes/findFeatures inputs {.smaller}
 
-1.  specification of inputs for POST request
-2.  the required input of a geojson feature collection of candidate features
-3.  the optional input of a distance in kilometers for which reference features that distance or closer indicate a possible match (default is 0.1km)
-4.  the required input of the locationType that the input features represent and that the reference feature subset will be matched to
-5.  the specification of the output that will be received in the response to the API POST request
-6.  a set of example inputs and outputs for this API endpoint
-7.  an example geojson FeatureCollection input
-8.  example geojson FeatureCollection includes id property
-9.  example distance and locationType threshold inputs
-10. an example output geojson FeatureCollection
-11. each feature includes the identifier from the input geojson that the feature is matched with
-12. each feature includes its own identifier
-13. each feature includes the distance between the matched feature and the input feature
+| input              | number of elements | example or description                     |
+|------------------------|------------------------|------------------------|
+| locationTypes      | min:0, max: inf    | `["gages", "wells"]`                       |
+| providers          | min:0, max: inf    | NULL [^13], or `["nwis","rise"]`           |
+| catalogingFeatures | min:1, max: inf    | `{"hu02:"14", "state":["CA","AZ"]}`        |
+| hydrologicFeature  | min:0, max: inf    | `["https://geoconnex.us/ref/mainstems/1"]` |
+| polygon            | min:0, max:1       | any multipolygon or polygon geometry       |
+| bbox               | min:0, max:1       | xmin, xmax, ymin, ymax                     |
+| radius             | min: 0, max: 1     | lat, lon, distance in km                   |
+
+[^13]: retrieves from all providers
+
+::: notes
+Explain that this is a table describing all imagined possible inputs. THe only required input is that at least 1 cataloging feature should be specified, although moultiple can be. Explain that across inputs, the implied boolean operator is "and", but within inputs, if you put multiple, the inplied operator is "or". Ask If there are questions or concerns about any of these inputs. Ask if any other inputs would be desirable.
+:::
+
+## /processes/findFeatures output {.smaller}
+
+geospatial dataset of all locations meeting input field criteria, with fields:
+
+-   **uri** eg [https://geoconnex.us/foo](https://geoconnex.us/%7Bfoo%7D){.uri}
+
+-   **name** (by provider) eg
+
+    -   name: `"colorado river at bridge x"`, provider: `"nwis"`
+
+    -   name: `"station WQX1234"`, provider: `"storet"`
+
+-   **locationType** (eg `"stream"`)
+
+-   **Cataloging Features** uri for every catalogingFeatureCollection eg:
+
+    -   **hu02:** <https://geoconnex.us/ref/hu02/14>
+
+    -   **county:** <https://geoconnex.us/ref/counties/06025>
+
+-   all relevant **Hydrologic Features** eg: mainstem: <https://geoconnex.us/ref/mainstems/29559>
+
+::: notes
+Say this describes the attributes available in an output dataset. If they ask if there are coordinates, say it would be some kind of geospatial output, whether the features end up being points or lines or polygons. Once done, ask if they have any concerns about these outputs. If they wish anything were different, or if they think more or less attributes should be there, or if they think any important attributes are missing.
+:::
 
 ::: footer
 Learn more: [geoconnex.us](https://geoconnex.us)
@@ -440,33 +340,169 @@ Learn more: [geoconnex.us](https://geoconnex.us)
 
 ## /processes/navigateFeatures inputs and outputs {.smaller}
 
+::: columns
+::: {.column width="40%"}
+#### inputs
 
--   uri
+-   uri **or** pointLocation (lat/lon)
+-   upstream: `null`, `tributaries`, or `mainstem`
+-   downstream: `null`, `diversions`, or `mainstem`
+-   distance: integer (km)
+-   locationType: text^[to pre-filter results by location type]
+-   provider: text^[to pre-filter results by provider]
+-   catalogingFeatures: array of uri[^14]
+:::
 
--   pointLocation
+::: {.column width="60%"}
+#### outputs
 
--   y
+-   mainstem geospatial feature
+-   tributaries geospatial feature collection
+-   diversions geospatial feature collection
+-   relevant geospatial dataset, with attributes:
+    -   uri: <https://geoconnex.us/foo>
 
--   x
+    -   hydro_relation:
 
--   crs
+        -   "upstream mainstem/tributary" or "downstream mainstem/diversion"
 
--   navigation
+        -   distance_km: integer
 
--   upstream:
+    -   all attributes as from **findFeatures**
+:::
+:::
 
-    -   y/n
-    -   tributary order: -1,0,1,2..
+:::{.notes}
+The main use case of this process is to take a single uri (which is an already registered location in geoconnex) or point, and delineate the relevant hydrology upstream and downstream, and then to retrieve all other sites in geoconnex that are hydrologically relevant. The output will include 4 objects: 3 geospatial datasets indicating the mainstem, tributary, and diversion streams relevant to the query point, and then a dataset of all indexed geoconnex locations, with all available attributes that would be found in the preivously introduced findLocations Process. Do you have any questions or concerns about the inputs or outputs? If things jsut aren't clear, let me go through the example ont he next two slides
+:::
 
--   downstream:
+[^14]: useful if you want to restrict hydrologic navigation to certain non-hydrologic boundaries
 
-    -   y/n
-    -   diversion order: -1,0,1,2...
+## /processes/navigateFeatures example inputs {.smaller}
 
-## /processes/navigateFeatures example {.smaller}
+inputs:
 
+lat: `35.45`
+lon: `-105.14`
+upstream: `tributaries`
+downstream: `mainstem`
+distance: 3000
+catalogingFeatures: <https://geoconnex.us/ref/states/35>
+
+```{r, echo=FALSE, results="asis"}
+input_point <-st_as_sf(st_sfc(st_point(c(-105.14,35.45)), crs=4326))
+input_catalogingFeature <- sf::read_sf("https://geoconnex.us/ref/states/35")
+
+mapview(input_point,col.regions="purple") + mapview(input_catalogingFeature, col.region="green")
+```
+
+:::{.notes}
+Here we show an input at a point, going upstreamm including tributaries and downstream only the mainstem, a maximum distance of 3000km, and we want to filter the results to only the state of New Mexico. THe map visualizes the inputs. 
+:::
+
+## /processes/navigateFeatures example outputs {.smaller}
+
+outputs:
+
+
+```{r, echo=FALSE, results="asis"}
+input_point <-st_as_sf(st_sfc(st_point(c(-105.14,35.45)), crs=4326))
+input_catalogingFeature <- sf::read_sf("https://geoconnex.us/ref/states/35")
+
+UM <- "https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UM/flowlines?f=json&distance=3000"
+DM <- "https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/DM/flowlines?f=json&distance=3000"
+UT <- "https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UT/flowlines?f=json&distance=3000"
+
+UM <- sf::read_sf(UM)
+DM <- sf::read_sf(DM)
+
+mainstem <- bind_rows(UM,DM)
+mainstem$name <- "Pecos River/ Rio Grande"
+upstream_tributaries <- sf::read_sf(UT)%>% mutate(name='tributaries') 
+
+mainstem <- st_intersection(mainstem,input_catalogingFeature)
+
+um <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UM/wade?f=json&distance=3000")
+dm <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/DM/wade?f=json&distance=3000")
+ut <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UT/wade?f=json&distance=3000")
+
+foundLocations <- bind_rows(um,dm,ut) %>% st_intersection(input_catalogingFeature)
+
+
+
+um <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UM/nmwdi-st?f=json&distance=3000")
+dm <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/DM/nmwdi-st?f=json&distance=3000")
+ut <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UT/nmwdi-st?f=json&distance=3000")
+
+foundLocations2 <- bind_rows(um,dm,ut) %>% st_intersection(input_catalogingFeature)
+
+um <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UM/nwissite?f=json&distance=3000")
+dm <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/DM/nwissite?f=json&distance=3000")
+ut <- sf::read_sf("https://labs.waterdata.usgs.gov/api/nldi/linked-data/comid/20815828/navigation/UT/nwissite?f=json&distance=3000")
+
+foundLocations3 <- bind_rows(um,dm,ut) %>% st_intersection(input_catalogingFeature)
+
+foundLocations4 <- bind_rows(foundLocations,foundLocations2,foundLocations3) %>% select(uri,sourceName,geometry)
+
+
+
+
+mapview(mainstem,zcol='name', lwd=3, color="black") + 
+  mapview(upstream_tributaries,zcol='name') + 
+  mapview(input_point,col.regions="purple") + 
+  mapview(input_catalogingFeature, col.regions="green") +
+  mapview(foundLocations4,layer.name="foundLocations",zcol='sourceName')
+```
+
+:::{.notes}
+Here we show THe map visualizes the output. Do note the actual output would likely be geojson, with a map like this a s apossible html output. Feel free to zoom in. Note that we dont include the distance output attribute in this demonstration. Do you have any questions or concerns about the inputs or outputs? Do you have any suggestions for ways they could be different?
+:::
 
 ## /processes/findDatasets inputs and outputs {.smaller}
 
-## /processes/findDatasets example {.smaller}
+::: columns
+::: {.column width="40%"}
+#### inputs
 
+-   **uri**: array (many URIs)
+-   **providers**: `null`(all) or array of 1 or more providers
+-   **observedProperties**: `null`(all) or array of 1 or more observed Property codes
+-   **methodTypes** or **methods**^[to avoid conflicts between specifying a certain in-situ method and the methodType 'forecast", for example]
+-   **timeSpacing**: the maximum (lowest resolution) timespacing desired
+-   **minYear**: the earliest year you want returned datasets to have coverage over
+-   **maxYear**: the latest year you want returned datasets to have coverage over
+
+:::
+
+::: {.column width="60%"}
+#### outputs
+
+An table of dataset metadata with the following fields
+
+-   **url**: url for where each dataset lives
+-   **about_uri**: the URI for the geoconnex location each dataset is about
+-   **provider**: code from **/providers**
+-   **observedProperty**: code from **/observedProperties**
+-   **methodType**: code from **/methodType**
+-   **method**:  code from **/methods**
+-   **timeSpacing**: code from **/timeSpacing**
+-   **minYear**: integer
+-   **maxYear**: integer
+-   **conformsTo**: a url to a website describing the API, data model, or data dictionary relevant to the specific dataset
+
+:::
+:::
+
+:::{.notes}
+TO reiterate, our idea was that you would use one or both of findFeatures and navigateFeatures to get a list of URIs. You could then pass those URIs and the dataset query parameters to retrieve a list of datasets. Having already procured information about the locations, you would input desired dataset attributes including observed property, methods, and temporal coverage and resolution. The set of metadata you would retrieve would include that information, including which URI the dataset is about, as well as a special property, conformsTo, which would link out to a web resource that descirbes how to use that dataset. Since geoconnex is an index, it is open to all source formats. Depending on the dataset, conformsTo might point to an API or data model documentation page, a data dictionary file, or narrative documentation of the dataset. 
+
+Do you ahve any questions or concerns about the inputs and outputs of the FindDatasets Process? 
+
+Thinking back on the whole workflow, now that you've seen the design from end to end, any additional questions, concerns or suggestions?
+:::
+
+## THANK YOU
+
+Feel free to continue to peruse this presentation
+
+Send any additional feedback to konda@lincolninst.edu
