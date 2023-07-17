@@ -105,7 +105,7 @@ What I'll do for you today is introduce the main use cases we imagine for the ge
 
 ## Introduction {.smaller}
 
-![Geoconnex System Technical Diagram](images/diagram.png)
+![](images/screenshot.png)
 
 ::: notes
 Geoconnex itself will be a metadata catalog that includes minimally standardized metadata about all sites (eg gages, wells, dams, public water systems, water quality sample stations, etc.) that all participating organizations (eg federal, state, local, Tribal, NGO, academic) publish data about. In this diagram, we are focusing on the data publisher, reference.geoconnex.us, the data user, and api.geoconnex.us. In the geoconenx system, data publishers publish metadata about datasets that they collect that are about certian common reference features across many data publishers.These common features we call "reference features". The geoconnex system aggregates the metadata that data publishers provide, and provides centralized access to the resulting metadata catalog. The geoconnex API will allow programmatic access to this metadata catalog. The Geoconnex API will thus provide data discovery services, but not necessarily observation/model data access directly. It will tell users that data on certain subjects exist, and where to find that data, like a library catalog. It will not directly provide the observed values. However, It will point users to relevant datasets with as much useful metadata as possible. First I'll introduce you to the two high level use cases we imagine this API meeting, and then show you mockups of the API endpoints, their inputs, and responses.
@@ -118,7 +118,7 @@ Geoconnex itself will be a metadata catalog that includes minimally standardized
 -   Endpoints, requests, and responses
 
 ::: notes
-The Geoconnex API we have designed around two main user groups, data publishers looking to get their datasets represented in the system, and data analysts or tool developers who need to discover water datasets across all organizations that might be relevant to their questions
+The Geoconnex API we have designed around two main user groups, data publishers looking to get their datasets represented in the system, and data analysts or tool developers who need to discover water datasets across all organizations that might be relevant to their questions. I'll then give a deeper dive to ask for your feedback about our designes for API endpoitns, and their requests (or inputs) and their responses (or outputs)
 :::
 
 ## User Story - Water Data Publisher
@@ -172,6 +172,8 @@ THe top level endpoint for the geoconnex APIs will be api.geoconnex.us. There wi
 
 https://api.geoconnex.us...
 
+::: columns
+::: {.column width="40%"}
 -   /processes [^1]
 -   /locationTypes [^2]
 -   /FeatureCollections [^3]
@@ -181,6 +183,18 @@ https://api.geoconnex.us...
 -   /methodTypes [^7]
 -   /methods [^8]
 -   /timeSpacing [^9]
+:::
+
+::: {.column width="60%"}
+#### example codelist: methods
+
+| id                          | provider | name     | description                                             | methodType          | url                                              |
+|------------|------------|------------|------------|------------|------------|
+| noaa-ahps                   | ahps     | ahps     | NOAA Advanced Hydrological Prediction Service           | forecast            | <https://water.weather.gov/ahps/about/about.php> |
+| usgs-streamflow             | nwis     | WSP-2175 | Streamflow measurement and computation                  | in-situ observation | <https://pubs.usgs.gov/wsp/wsp2175/wsp2175.pdf>  |
+| usgs-groundwater_level-tape | nwis     | GWPD1    | Measuring water levels by use of a graduated steel tape | in-situ observation | <https://pubs.usgs.gov/tm/1a1/pdf/GWPD1.pdf>     |
+:::
+:::
 
 [^1]: an array of API endpoints in the [OGC-API Processes](https://ogcapi.ogc.org/processes/) standard for more specific queries that may use the below as query parameters
 
@@ -209,7 +223,7 @@ THe first endpoint, processes, will describe the actual metadata search and retr
 Data discovery tools will follow the [OGC-API Processes](https://ogcapi.ogc.org/processes) standard, and thus we refer to them as processes. The following tools are proposed:
 
 | process name           | description                                                                                                                       |
-|-------------------------|----------------------------------------------|
+|--------------------------|----------------------------------------------|
 | referenceMyLocations   | POST a geospatial dataset of your own locations, find candidate geoconnex reference locations that may correspond to them already |
 | findFeatures [^10]     | GET or POST query parameters to find features of relevance                                                                        |
 | navigateFeatures [^11] | GET all hydrologically relevant monitoring features for a given longitude and latitude or feature identifier                      |
@@ -223,7 +237,7 @@ Data discovery tools will follow the [OGC-API Processes](https://ogcapi.ogc.org/
 
 ## /processes Data publisher use case {.smaller}
 
--   As a data publisher, would use **referenceMyLocations** to see if any existing locations in the database exist that are likely the same site/ real-world object as sits I want to publish data about. I could then add links in my metadata that I publish to ensure others know I have data about the same site.
+-   As a data publisher, would use **referenceMyLocations** to see if any existing locations in the database exist that are likely the same site/ real-world object as sites I want to publish data about. I could then add links in my metadata that I publish to ensure others know I have data about the same site.
 
 **referenceMyLocation** Inputs:
 
@@ -356,9 +370,9 @@ Learn more: [geoconnex.us](https://geoconnex.us)
 -   upstream: `null`, `tributaries`, or `mainstem`
 -   downstream: `null`, `diversions`, or `mainstem`
 -   distance: integer (km)
--   locationType: text^[to pre-filter results by location type]
--   provider: text^[to pre-filter results by provider]
--   catalogingFeatures: array of uri[^14]
+-   locationType: text[^14]
+-   provider: text[^15]
+-   catalogingFeatures: array of uri[^16]
 :::
 
 ::: {.column width="60%"}
@@ -380,22 +394,21 @@ Learn more: [geoconnex.us](https://geoconnex.us)
 :::
 :::
 
-:::{.notes}
+[^14]: to pre-filter results by location type
+
+[^15]: to pre-filter results by provider
+
+[^16]: useful if you want to restrict hydrologic navigation to certain non-hydrologic boundaries
+
+::: notes
 The main use case of this process is to take a single uri (which is an already registered location in geoconnex) or point, and delineate the relevant hydrology upstream and downstream, and then to retrieve all other sites in geoconnex that are hydrologically relevant. The output will include 4 objects: 3 geospatial datasets indicating the mainstem, tributary, and diversion streams relevant to the query point, and then a dataset of all indexed geoconnex locations, with all available attributes that would be found in the preivously introduced findLocations Process. Do you have any questions or concerns about the inputs or outputs? If things jsut aren't clear, let me go through the example ont he next two slides
 :::
-
-[^14]: useful if you want to restrict hydrologic navigation to certain non-hydrologic boundaries
 
 ## /processes/navigateFeatures example inputs {.smaller}
 
 inputs:
 
-lat: `35.45`
-lon: `-105.14`
-upstream: `tributaries`
-downstream: `mainstem`
-distance: 3000
-catalogingFeatures: <https://geoconnex.us/ref/states/35>
+lat: `35.45` lon: `-105.14` upstream: `tributaries` downstream: `mainstem` distance: 3000 catalogingFeatures: <https://geoconnex.us/ref/states/35>
 
 ```{r, echo=FALSE, results="asis"}
 input_point <-st_as_sf(st_sfc(st_point(c(-105.14,35.45)), crs=4326))
@@ -404,14 +417,13 @@ input_catalogingFeature <- sf::read_sf("https://geoconnex.us/ref/states/35")
 mapview(input_point,col.regions="purple") + mapview(input_catalogingFeature, col.region="green")
 ```
 
-:::{.notes}
-Here we show an input at a point, going upstreamm including tributaries and downstream only the mainstem, a maximum distance of 3000km, and we want to filter the results to only the state of New Mexico. THe map visualizes the inputs. 
+::: notes
+Here we show an input at a point, going upstreamm including tributaries and downstream only the mainstem, a maximum distance of 3000km, and we want to filter the results to only the state of New Mexico. THe map visualizes the inputs.
 :::
 
 ## /processes/navigateFeatures example outputs {.smaller}
 
 outputs:
-
 
 ```{r, echo=FALSE, results="asis"}
 input_point <-st_as_sf(st_sfc(st_point(c(-105.14,35.45)), crs=4326))
@@ -462,8 +474,20 @@ mapview(mainstem,zcol='name', lwd=3, color="black") +
   mapview(foundLocations4,layer.name="foundLocations",zcol='sourceName')
 ```
 
-:::{.notes}
-Here we show THe map visualizes the output. Do note the actual output would likely be geojson, with a map like this a s apossible html output. Feel free to zoom in. Note that we dont include the distance output attribute in this demonstration. Do you have any questions or concerns about the inputs or outputs? Do you have any suggestions for ways they could be different?
+::: notes
+Here we show a map which visualizes the output. Do note the actual output would likely be geojson, with a map like this as a possible html output. Feel free to zoom in. Note that we dont include the distance output attribute in this demonstration. Do you have any questions or concerns about the inputs or outputs? Do you have any suggestions for ways they could be different?
+:::
+
+## /processes/findDatasets use case {.smaller}
+
+-   As a data user, I would use **findDatasets** to discover all datasets about topics I am interested about, that are relevant to sites a set of sites in the geoconnex system that I am already interested in.
+
+-   **Inputs:** a list of geoconnex URIs from **findFeatures** and/or **navigateFeatures**, and query parameters to filter datasets relevant to my topic of interest
+
+-   **Outputs:** a table or array of dataset metadata, including which geoconnex URI datasets are relevant to.
+
+::: notes
+read through use case. Explain that the next slide will go into more detail about the inputs and outputs, and that we'd lvoe their feedback on specifically the inputs and outputs that woould be most useful to add, or that are not useful and could be reomved or changed.
 :::
 
 ## /processes/findDatasets inputs and outputs {.smaller}
@@ -475,11 +499,10 @@ Here we show THe map visualizes the output. Do note the actual output would like
 -   **uri**: array (many URIs)
 -   **providers**: `null`(all) or array of 1 or more providers
 -   **observedProperties**: `null`(all) or array of 1 or more observed Property codes
--   **methodTypes** or **methods**^[to avoid conflicts between specifying a certain in-situ method and the methodType 'forecast", for example]
+-   **methodTypes** or **methods**[^17]
 -   **timeSpacing**: the maximum (lowest resolution) timespacing desired
 -   **minYear**: the earliest year you want returned datasets to have coverage over
 -   **maxYear**: the latest year you want returned datasets to have coverage over
-
 :::
 
 ::: {.column width="60%"}
@@ -492,19 +515,20 @@ An table of dataset metadata with the following fields
 -   **provider**: code from **/providers**
 -   **observedProperty**: code from **/observedProperties**
 -   **methodType**: code from **/methodType**
--   **method**:  code from **/methods**
+-   **method**: code from **/methods**
 -   **timeSpacing**: code from **/timeSpacing**
 -   **minYear**: integer
 -   **maxYear**: integer
 -   **conformsTo**: a url to a website describing the API, data model, or data dictionary relevant to the specific dataset
-
 :::
 :::
 
-:::{.notes}
-To reiterate, our idea was that you would use one or both of findFeatures and navigateFeatures to get a list of URIs. You could then pass those URIs and the dataset query parameters to retrieve a list of datasets. Having already procured information about the locations, you would input desired dataset attributes including observed property, methods, and temporal coverage and resolution. The set of metadata you would retrieve would include that information, including which URI the dataset is about, as well as a special property, conformsTo, which would link out to a web resource that descirbes how to use that dataset. Since geoconnex is an index, it is open to all source formats. Depending on the dataset, conformsTo might point to an API or data model documentation page, a data dictionary file, or narrative documentation of the dataset. 
+[^17]: to avoid conflicts between specifying a certain in-situ method and the methodType 'forecast", for example
 
-Do you ahve any questions or concerns about the inputs and outputs of the FindDatasets Process? 
+::: notes
+To reiterate, our idea was that you would use one or both of findFeatures and navigateFeatures to get a list of URIs. You could then pass those URIs and the dataset query parameters to retrieve a list of datasets. Having already procured information about the locations, you would input desired dataset attributes including observed property, methods, and temporal coverage and resolution. The set of metadata you would retrieve would include that information, including which URI the dataset is about, as well as a special property, conformsTo, which would link out to a web resource that descirbes how to use that dataset. Since geoconnex is an index, it is open to all source formats. Depending on the dataset, conformsTo might point to an API or data model documentation page, a data dictionary file, or narrative documentation of the dataset.
+
+Do you ahve any questions or concerns about the inputs and outputs of the FindDatasets Process?
 
 Thinking back on the whole workflow, now that you've seen the design from end to end, any additional questions, concerns or suggestions?
 :::
@@ -513,4 +537,4 @@ Thinking back on the whole workflow, now that you've seen the design from end to
 
 Feel free to continue to peruse this presentation
 
-Send any additional feedback to konda@lincolninst.edu
+Send any additional feedback to konda\@lincolninst.edu
