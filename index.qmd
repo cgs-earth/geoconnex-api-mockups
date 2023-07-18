@@ -90,18 +90,27 @@ counties <- sf::read_sf(httr::POST("https://reference.geoconnex.us/processes/int
 
 ## Introduction {.smaller}
 
-Geoconnex is a knowledge graph incorporating relationships between:
+Geoconnex is a decentralized metadata catalog that incorporates information about data collected by any organization publishing water data, including the spatial, temporal, and topical subjects of that data.
 
--   organizational data locations (stream gages, water quality stations, wells, dams)
--   reference features (locations that many organizations collect data about. e.g. a given well often has different datasets managed by science agencies for scientific purposes, a state engineer for water rights administration, and a water utility for operational water abstraction)
-    -   hydrologic features (rivers, waterbodies, aquifers, catchments/watersheds)
-    -   cataloging features (counties, states, HUCs, administrative boundaries)
+We are developing an API to allow programmatic access to this catalog
+
+-   for potential new data publishing organizations to enrich their own metadata
+
+-   for data analysts and tool developers to discover water metadata, like a specialized Google search for water data.
 
 ::: notes
 Thank you for participating etc. We are asking for feedback on the API for geoconnex. Geoconnex is a knowldege graph that aims to allow data users to discover relationships between real-world hydrologic features, cataloging features, organizational monitoring locations with data about them, and reference locations that serve as organizational monitoring locations common across multiple organizations.
 
 What I'll do for you today is introduce the main use cases we imagine for the geoconnex API, and then go through a number of endpoints we are in the early design phases of. This is truly the first draft so your input could have a dramatic effect on the production API. Thus, rather than presenting fully specified API HTTP requests, and json payloads for requests and responses, I will describe the basic structure of the queries we aim to make possible, and the inputs and outputs that we are thinking about implementing.
 :::
+
+## Introduction {.smaller}
+
+What kind of water data do you work with?
+
+How do you normally find water data?
+
+What, if any, challenges do you have finding water data from particular or unfamiliar sources?
 
 ## Introduction {.smaller}
 
